@@ -11,7 +11,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        widget.cpp \
     startscreen.cpp \
     buttons.cpp \
     tiltnroll.cpp \
@@ -21,7 +20,7 @@ SOURCES += main.cpp\
     freestylescreen.cpp \
     audioengine.cpp
 
-HEADERS  += widget.h \
+HEADERS  += \
     startscreen.h \
     buttons.h \
     tiltnroll.h \

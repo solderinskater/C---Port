@@ -56,7 +56,7 @@ SettingsScreen::SettingsScreen(QWidget *parent)
         btnGroup->addButton(buttonElectro);
         btnGroup->addButton(buttonGuitars);
         btnGroup->addButton(buttonHipHop);
-        btnGroup->setExclusive(true);
+        btnGroup->setExclusive(false);
 
         buttonElectro->setCheckable(true);
         buttonGuitars->setCheckable(true);
