@@ -4,32 +4,29 @@
 #
 #-------------------------------------------------
 
-QT       += core gui multimedia phonon
+QT       += core gui
 
 TARGET = TiltNRoll
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        widget.cpp \
     startscreen.cpp \
     buttons.cpp \
     tiltnroll.cpp \
     playscreen.cpp \
     settingsscreen.cpp \
     singleplayerscreen.cpp \
-    freestylescreen.cpp \
-    audioengine.cpp
+    freestylescreen.cpp
 
-HEADERS  += widget.h \
+HEADERS  += \
     startscreen.h \
     buttons.h \
     tiltnroll.h \
     playscreen.h \
     settingsscreen.h \
     singleplayerscreen.h \
-    freestylescreen.h \
-    audioengine.h
+    freestylescreen.h
 
 CONFIG += mobility
 MOBILITY = systeminfo
