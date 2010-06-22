@@ -1,0 +1,4 @@
+C++ port of the Push2010 code of the Soldering Skaters
+==========================================================
+
+Copyright 2010 Alexander Lenhardt, Erik Weitnauer
