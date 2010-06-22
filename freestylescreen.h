@@ -23,7 +23,6 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include <QtGui>
 #include <QMap>
 #include <QStringList>
-#include "audioengine.h"
 
 //class Trick
 //{

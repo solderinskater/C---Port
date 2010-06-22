@@ -152,12 +152,14 @@ void FreestyleScreen::trickEvent(QString trickid, int time)
 
 void FreestyleScreen::showEvent(QShowEvent *e)
 {
+    Q_UNUSED(e)
     start();
 }
 
 
 void FreestyleScreen::hideEvent(QHideEvent *e)
 {
+    Q_UNUSED(e)
     pause();
 }
 
