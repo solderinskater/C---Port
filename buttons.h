@@ -32,9 +32,13 @@ public:
 class AnimatedButton : public QPushButton
 {
         Q_OBJECT
+        Q_PROPERTY(QString image READ image WRITE setImage)
 
 public:
         AnimatedButton(QString caption, QString image_name, QList<int> timeList, QString addStyle="");
+
+        QString image() const;
+        void    setImage(const QString& im);
 
 protected:
         void	timerEvent(QTimerEvent * ev);
@@ -46,7 +50,7 @@ private:
         QList<int>	time_list;
         QString		image_name;
         QString		add_style, base_style;
-        int			counter,max_count,tid;
+        int		counter,max_count,tid;
 };
 
 
