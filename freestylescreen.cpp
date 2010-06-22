@@ -1,0 +1,186 @@
+/* 
+Copyright 2010 Keywan Tonekaboni, Florian Fusco, Stefanie Schirmer, Alexander Lenhard, Erik Weitnauer <eweitnauer at gmail.com>
+
+This file is part of Soldering Skaters Nokia Push Project.
+
+Soldering Skaters Nokia Push Project is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Soldering Skaters Nokia Push Project is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#include "freestylescreen.h"
+#include <QSound>
+
+FreestyleScreen::FreestyleScreen(QWidget *parent) :
+    QFrame(parent)
+{
+    levellist << 200 << 800 << 1000 << 2000 <<100000;
+    tricklabelcount = 4;
+    points = 0;
+    level = 1;
+    qDebug("Build game screen freestyle");
+    setStyleSheet(QString("FreestyleScreen {background-image: url(:/images/PLAYMODES.jpg);}")+
+                  "QLabel {color: #86bc10; font-size:24px; font-family:Adore64; text-align:center; background-color: transparent;}"+
+      "#timelabel {font-size: 30px;}"+
+      "#levellabel {font-size: 30px;}"+
+      "#pointslabel {font-size: 90px;}"+
+      "#tricklabel1 {font-size: 45px;}"+
+      "#tricklabel2 {font-size: 20px;}"+
+      "#tricklabel3 {font-size: 15px;}"+
+      "#tricklabel4 {font-size: 10px;}"+
+      "#musicwidget {font-size: 24px;}");
+    QVBoxLayout* layout = new QVBoxLayout();
+    setLayout(layout);
+
+    tricksDone << "Ollie" << "Nollie" << "180" << "McTwist!!!";
+    QHBoxLayout* upperbar = new QHBoxLayout();
+    timewidget = new QLabel("");
+    timewidget->setObjectName("timelabel");
+    timewidget->setAlignment(Qt::AlignLeft);
+    levelwidget = new QLabel(" ");
+
+    calculateLevel(level, points);
+    levelwidget->setAlignment(Qt::AlignRight);
+    levelwidget->setObjectName("levellabel");
+
+    upperbar->addWidget(timewidget);
+    upperbar->addWidget(new QLabel(""));
+    upperbar->addWidget(levelwidget);
+    layout->addLayout(upperbar);
+
+    pointswidget = new QLabel(QString::number(points));
+    pointswidget->setAlignment(Qt::AlignCenter);
+    pointswidget->setObjectName("pointslabel");
+    layout->addWidget(pointswidget);
+
+    QVBoxLayout* tricklistlayout = new QVBoxLayout();
+    for (int i=0; i<tricklabelcount;i++) {
+        QLabel* label = new QLabel(" ");
+        label->setObjectName("tricklabel"+QString::number(i+1));
+        label->setAlignment(Qt::AlignCenter);
+        if(tricksDone.size()> i)
+            label->setText(tricksDone[i]);
+        tricklistlayout->addWidget(label);
+        tricklabels << label;
+    }
+    layout->addLayout(tricklistlayout);
+
+    QLabel* musicwidget = new QLabel("Playing This Song");
+    musicwidget->setAlignment(Qt::AlignCenter);
+    musicwidget->setObjectName("musicwidget");
+   //layout->addWidget(musicwidget);
+
+    connect(&updateTimer, SIGNAL(timeout()), this, SLOT(updateTimeLabel()));
+    connect(parent, SIGNAL(trickEvent(QString, int)), this, SLOT(trickEvent(QString, int)));
+    updateTimeLabel();
+}
+
+void FreestyleScreen::mousePressEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event)
+    QSound s1("dnb.wav");
+//    QSound s2("dnb2.wav");
+    s1.play();
+//     s2.play();
+  //  new AudioEngine;
+
+    if(isPaused())
+        start();
+    else
+        pause();
+}
+
+void FreestyleScreen::updateTimeLabel()
+{
+    static int s=0;
+    timewidget->setText(QString().sprintf("%.2d:%.2d",s/60, s%60));
+    s++;
+    update();
+}
+
+void FreestyleScreen::calculateLevel(int old_level, int points)
+{
+    static int level = 1;
+    level = 1;
+    int val;
+    foreach(val,levellist) {
+        if(points>val)
+            level += 1;
+    }
+    if(old_level != level) {
+        qDebug("Trying to set level to %d", level);
+        //emit changeLevelTo(level);
+    }
+    levelwidget->setText("lvl " + QString::number(level));
+}
+
+
+void FreestyleScreen::update_trick_list(QStringList tricks_done)
+{
+    Q_UNUSED(tricks_done)
+
+    for(int i=0; i<tricklabelcount;i++) {
+        if(tricksDone.size() > i)
+            tricklabels[i]->setText(tricksDone[i]);
+        else
+            tricklabels[i]->setText(" ");
+    }
+}
+
+void FreestyleScreen::trickEvent(QString trickid, int time)
+{
+    Q_UNUSED(time)
+
+    if(isPaused())
+        return;
+
+    points += tricklist[trickid] * 50;
+    calculateLevel(level, points);
+    pointswidget->setText(QString::number(points));
+    update_trick_list(tricksDone);
+}
+
+
+void FreestyleScreen::showEvent(QShowEvent *e)
+{
+    start();
+}
+
+
+void FreestyleScreen::hideEvent(QHideEvent *e)
+{
+    pause();
+}
+
+void FreestyleScreen::start()
+{
+    updateTimer.start(1000);
+}
+
+void FreestyleScreen::pause()
+{
+    updateTimer.stop();
+    emit showPauseScreen();
+}
+
+void FreestyleScreen::finish()
+{
+    updateTimer.stop();
+    /*
+     ... show highscores etc.
+     */
+}
+
+bool FreestyleScreen::isPaused() const
+{
+    return !updateTimer.isActive();
+}

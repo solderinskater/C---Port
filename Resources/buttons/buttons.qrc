@@ -1,0 +1,37 @@
+<RCC>
+    <qresource prefix="/TnR/buttons" >
+        <file> socialnetwork_BR.png</file>
+        <file>big.png</file>
+        <file>elektro.png</file>
+        <file>elektro_BR.png</file>
+        <file>hip-hop.png</file>
+        <file>hip-hop_BR.png</file>
+        <file>multiplayer.png</file>
+        <file>pause_quit.png</file>
+        <file>pause_resume.png</file>
+        <file>regular.png</file>
+        <file>regular_BR.png</file>
+        <file>rock_goofy.png</file>
+        <file>rock_goofy_BR.png</file>
+        <file>settings.png</file>
+        <file>settings_BR.png</file>
+        <file>shareOnTwitter_off.png</file>
+        <file>shareOnTwitter_on.png</file>
+        <file>singleplayer.png</file>
+        <file>small.png</file>
+        <file>socialnetwork.png</file>
+        <file>toggle_off.png</file>
+        <file>toggle_off_new.png</file>
+        <file>toggle_off_old.png</file>
+        <file>toggle_on.png</file>
+        <file>toggle_on_old.png</file>
+    </qresource>
+    <qresource prefix="/TnR/buttons/Round" >
+        <file>pressed.svg</file>
+        <file>hovered.svg</file>
+        <file>normal.svg</file>
+    </qresource>
+    <qresource prefix="/TnR/screens" >
+        <file>TnR.css</file>
+    </qresource>
+</RCC>

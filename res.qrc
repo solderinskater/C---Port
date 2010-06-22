@@ -1,0 +1,69 @@
+<RCC>
+    <qresource prefix="/buttons">
+        <file>Resources/buttons/ socialnetwork_BR.png</file>
+        <file>Resources/buttons/big.png</file>
+        <file>Resources/buttons/elektro.png</file>
+        <file>Resources/buttons/elektro_BR.png</file>
+        <file>Resources/buttons/hip-hop.png</file>
+        <file>Resources/buttons/hip-hop_BR.png</file>
+        <file>Resources/buttons/hovered.svg</file>
+        <file>Resources/buttons/multiplayer.png</file>
+        <file>Resources/buttons/normal.svg</file>
+        <file>Resources/buttons/pause_quit.png</file>
+        <file>Resources/buttons/pause_resume.png</file>
+        <file>Resources/buttons/pressed.svg</file>
+        <file>Resources/buttons/regular.png</file>
+        <file>Resources/buttons/regular_BR.png</file>
+        <file>Resources/buttons/rock_goofy.png</file>
+        <file>Resources/buttons/rock_goofy_BR.png</file>
+        <file>Resources/buttons/settings.png</file>
+        <file>Resources/buttons/settings_BR.png</file>
+        <file>Resources/buttons/shareOnTwitter_off.png</file>
+        <file>Resources/buttons/shareOnTwitter_on.png</file>
+        <file>Resources/buttons/singleplayer.png</file>
+        <file>Resources/buttons/small.png</file>
+        <file>Resources/buttons/socialnetwork.png</file>
+        <file>Resources/buttons/toggle_off.png</file>
+        <file>Resources/buttons/toggle_off_new.png</file>
+        <file>Resources/buttons/toggle_off_old.png</file>
+        <file>Resources/buttons/toggle_on.png</file>
+        <file>Resources/buttons/toggle_on_old.png</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>Resources/images/back.png</file>
+        <file>Resources/images/background_playerscreen.png</file>
+        <file>Resources/images/background_playmodes.png</file>
+        <file>Resources/images/background_settings.png</file>
+        <file>Resources/images/challenge.png</file>
+        <file>Resources/images/cheese.jpg</file>
+        <file>Resources/images/explosion_kickflip.png</file>
+        <file>Resources/images/explosion_ollie.png</file>
+        <file>Resources/images/Explosion_TEST.png</file>
+        <file>Resources/images/freestyle.png</file>
+        <file>Resources/images/highscore.png</file>
+        <file>Resources/images/highscorescreen.png</file>
+        <file>Resources/images/highscoreScreen_anschnitt.png</file>
+        <file>Resources/images/highscoreScreenMockup.png</file>
+        <file>Resources/images/multiplayer.png</file>
+        <file>Resources/images/pauseScreen_mockUp.png</file>
+        <file>Resources/images/pauseScreenBackground.png</file>
+        <file>Resources/images/play.png</file>
+        <file>Resources/images/PLAYERZ.jpg</file>
+        <file>Resources/images/PLAYMODES.jpg</file>
+        <file>Resources/images/quit.png</file>
+        <file>Resources/images/settings.png</file>
+        <file>Resources/images/singleplayer.png</file>
+        <file>Resources/images/startscreen.jpg</file>
+        <file>Resources/images/transp.gif</file>
+        <file>Resources/images/transp.png</file>
+    </qresource>
+    <qresource prefix="/anims">
+        <file>Resources/anims/rauchmonster07.png</file>
+        <file>Resources/anims/rauchmonster01.png</file>
+        <file>Resources/anims/rauchmonster02.png</file>
+        <file>Resources/anims/rauchmonster03.png</file>
+        <file>Resources/anims/rauchmonster04.png</file>
+        <file>Resources/anims/rauchmonster05.png</file>
+        <file>Resources/anims/rauchmonster06.png</file>
+    </qresource>
+</RCC>

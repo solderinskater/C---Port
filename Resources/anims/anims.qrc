@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/anims">
+        <file>rauchmonster07.png</file>
+        <file>rauchmonster01.png</file>
+        <file>rauchmonster02.png</file>
+        <file>rauchmonster03.png</file>
+        <file>rauchmonster04.png</file>
+        <file>rauchmonster05.png</file>
+        <file>rauchmonster06.png</file>
+    </qresource>
+</RCC>
