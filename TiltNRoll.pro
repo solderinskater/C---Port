@@ -46,3 +46,6 @@ RESOURCES += \
     Resources/buttons/btn.qrc \
     Resources/anims/anims.qrc \
     Resources/sounds/sounds.qrc
+
+OTHER_FILES += \
+    .gitignore
