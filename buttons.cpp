@@ -44,6 +44,17 @@ AnimatedButton::AnimatedButton(QString caption, QString iname, QList<int> timeLi
         tid = startTimer(time_list[counter]);
 }
 
+void AnimatedButton::setImage(const QString &im)
+{
+    setStyleSheet(base_style+"background-image: url("+im+");"+add_style);
+}
+
+QString AnimatedButton::image() const
+{
+    return "BRAAA";
+}
+
+
 void AnimatedButton::timerEvent(QTimerEvent *ev)
 {
         if(ev->timerId() == tid) {
