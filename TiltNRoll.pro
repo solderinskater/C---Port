@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     playscreen.cpp \
     settingsscreen.cpp \
     singleplayerscreen.cpp \
-    freestylescreen.cpp
+    freestylescreen.cpp \
+    graph.cpp
 
 HEADERS  += \
     startscreen.h \
@@ -26,7 +27,8 @@ HEADERS  += \
     playscreen.h \
     settingsscreen.h \
     singleplayerscreen.h \
-    freestylescreen.h
+    freestylescreen.h \
+    graph.h
 
 CONFIG += mobility
 MOBILITY = systeminfo
@@ -42,7 +44,8 @@ RESOURCES += \
     Resources/images/img.qrc \
     Resources/buttons/btn.qrc \
     Resources/anims/anims.qrc \
-    Resources/sounds/sounds.qrc
+    Resources/sounds/sounds.qrc \
+    Resources/tnr.qrc
 
 OTHER_FILES += \
     .gitignore
