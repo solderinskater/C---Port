@@ -22,62 +22,55 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 
 #include <QtGui>
 
-class SkateLabel : public QLabel
-{
+class SkateLabel : public QLabel {
 public:
-  SkateLabel(QString caption, QString add_style="", bool centered=false);
+    SkateLabel(QString caption, QString add_style="", bool centered=false);
 };
 
 
-class AnimatedButton : public QPushButton
-{
-        Q_OBJECT
-        Q_PROPERTY(QString image READ image WRITE setImage)
+class AnimatedButton : public QPushButton {
+    Q_OBJECT
 
 public:
-        AnimatedButton(QString caption, QString image_name, QList<int> timeList, QString addStyle="");
-
-        QString image() const;
-        void    setImage(const QString& im);
+    AnimatedButton(QString caption, QString image_name, QList<int> timeList, QString addStyle="");
 
 protected:
-        void	timerEvent(QTimerEvent * ev);
+    void	timerEvent(QTimerEvent * ev);
 
-        void	update_style();
-        QString	get_image_name();
+    void	update_style();
+    QString	get_image_name();
 
 private:
-        QList<int>	time_list;
-        QString		image_name;
-        QString		add_style, base_style;
-        int		counter,max_count,tid;
+    int		counter,max_count,tid;
+    QList<int>	time_list;
+    QString		image_name;
+    QString		add_style, base_style;
 };
 
 
 class ShinyButton : public QPushButton
 {
 public:
-        ShinyButton(QString caption, QString image_name, QString addStyle="");
+    ShinyButton(QString caption, QString image_name, QString addStyle="");
 };
 
 
 
-class TogglePushButton : public QPushButton
-{
+class TogglePushButton : public QPushButton {
 public:
-        TogglePushButton(QString caption, bool initialState=false, QString image_name="toggle");
+    TogglePushButton(QString caption, bool initialState=false, QString image_name="toggle");
 
-        void update_style();
-        bool toggle_state();
-        bool is_active();
-        void set_state(bool on);
+    void update_style();
+    bool toggle_state();
+    bool is_active();
+    void set_state(bool on);
 
 protected:
-        void mousePressEvent(QMouseEvent *e);
+    void mousePressEvent(QMouseEvent *e);
 
 private:
-        QString	image_name;
-        QString	add_style, base_style;
-        bool state;
+    QString	image_name;
+    QString	add_style, base_style;
+    bool state;
 };
 #endif // BUTTONS_H
