@@ -17,7 +17,9 @@ SOURCES += main.cpp\
     playscreen.cpp \
     settingsscreen.cpp \
     singleplayerscreen.cpp \
-    freestylescreen.cpp
+    freestylescreen.cpp \
+    pausescreen.cpp \
+    timeline.cpp
 
 HEADERS  += \
     startscreen.h \
@@ -26,7 +28,9 @@ HEADERS  += \
     playscreen.h \
     settingsscreen.h \
     singleplayerscreen.h \
-    freestylescreen.h
+    freestylescreen.h \
+    pausescreen.h \
+    timeline.h
 
 CONFIG += mobility
 MOBILITY = systeminfo
@@ -45,4 +49,5 @@ RESOURCES += \
     Resources/sounds/sounds.qrc
 
 OTHER_FILES += \
-    .gitignore
+    .gitignore \
+    hours.txt

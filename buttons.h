@@ -21,6 +21,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #define BUTTONS_H
 
 #include <QtGui>
+#include <timeline.h>
 
 class SkateLabel : public QLabel {
 public:
@@ -32,17 +33,18 @@ class AnimatedButton : public QPushButton {
     Q_OBJECT
 
 public:
-    AnimatedButton(QString caption, QString image_name, QList<int> timeList, QString addStyle="");
+    AnimatedButton(QString caption, QString image_name, TimeLine *timeLine, QString addStyle="");
+    void start();
+    void stop();
+
+public Q_SLOTS:
+    void updateImage(int frame);
 
 protected:
-    void	timerEvent(QTimerEvent * ev);
-
-    void	update_style();
-    QString	get_image_name();
+    QString	get_image_name(int num);
 
 private:
-    int		counter,max_count,tid;
-    QList<int>	time_list;
+    TimeLine *timeLine;
     QString		image_name;
     QString		add_style, base_style;
 };

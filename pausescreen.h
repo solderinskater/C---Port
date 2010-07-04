@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright 2010 Keywan Tonekaboni, Florian Fusco, Stefanie Schirmer, Alexander Lenhard, Erik Weitnauer <eweitnauer at gmail.com>
 
 This file is part of Soldering Skaters Nokia Push Project.
@@ -17,32 +17,33 @@ You should have received a copy of the GNU General Public License
 along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TILTNROLL_H
-#define TILTNROLL_H
+#ifndef PAUSESCREEN_H
+#define PAUSESCREEN_H
 
-#include <QtGui>
+#include <QFrame>
+#include <buttons.h>
+#include <timeline.h>
 
-class TiltNRoll : public QStackedWidget
+class PauseScreen : public QFrame
 {
-        Q_OBJECT
-
+    Q_OBJECT
 public:
-        explicit TiltNRoll(QWidget *parent = 0);
-        ~TiltNRoll();
+    explicit PauseScreen(QWidget *parent = 0);
 
-protected slots:
-        void onStart();
-        void onPlay();
-        void onSettings();
-        void onQuit();
+signals:
+    void endGamePressed();
+    void resumePressed();
 
-        void onSingleplayer();
-        void onMultiplayer();
-        void onFreestyle();
-        void onChallenge();
-        void onPause();
-        void onHighscore();
+protected:
+    void showEvent(QShowEvent *e);
+    void hideEvent(QHideEvent *e);
 
+private:
+    QVBoxLayout *layout, *vbox;
+    QHBoxLayout *hbox, *hbox2;
+    ShinyButton *buttonResume, *buttonEndGame;
+    AnimatedButton *rauchmonster;
+    TimeLine *timeLine;
 };
 
-#endif // TILTNROLL_H
+#endif // PAUSESCREEN_H

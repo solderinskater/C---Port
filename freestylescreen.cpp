@@ -80,7 +80,7 @@ FreestyleScreen::FreestyleScreen(QWidget *parent) :
    //layout->addWidget(musicwidget);
 
     connect(&updateTimer, SIGNAL(timeout()), this, SLOT(updateTimeLabel()));
-    connect(parent, SIGNAL(trickEvent(QString, int)), this, SLOT(trickEvent(QString, int)));
+    //connect(parent, SIGNAL(trickEvent(QString, int)), this, SLOT(trickEvent(QString, int)));
     updateTimeLabel();
 }
 
@@ -160,7 +160,7 @@ void FreestyleScreen::showEvent(QShowEvent *e)
 void FreestyleScreen::hideEvent(QHideEvent *e)
 {
     Q_UNUSED(e)
-    pause();
+    updateTimer.stop();
 }
 
 void FreestyleScreen::start()

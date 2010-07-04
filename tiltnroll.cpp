@@ -23,6 +23,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "settingsscreen.h"
 #include "singleplayerscreen.h"
 #include "freestylescreen.h"
+#include "pausescreen.h"
 
 TiltNRoll::TiltNRoll(QWidget *parent)
         : QStackedWidget(parent)
@@ -48,8 +49,15 @@ TiltNRoll::TiltNRoll(QWidget *parent)
         addWidget(s4);
 
         FreestyleScreen *s5 = new FreestyleScreen();
+        connect(s5, SIGNAL(showPauseScreen()), this, SLOT(onPause()));
      //   connect(s4, SIGNAL(backPressed()), this, SLOT(onPlay()));
         addWidget(s5);
+
+        PauseScreen *s6 = new PauseScreen();
+        qDebug("added!");
+        connect(s6, SIGNAL(resumePressed()), this, SLOT(onFreestyle()));
+        connect(s6, SIGNAL(endGamePressed()), this, SLOT(onHighscore()));
+        addWidget(s6);
 
         QSize s(640,360);
         resize(s);
@@ -99,11 +107,14 @@ void TiltNRoll::onFreestyle()
 {
     setCurrentIndex(4);
 }
-void TiltNRoll::onChallenge()
-{
-    setCurrentIndex(6);
-}
 void TiltNRoll::onPause()
 {
+    setCurrentIndex(5);
+}
+void TiltNRoll::onChallenge()
+{
     setCurrentIndex(7);
+}
+void TiltNRoll::onHighscore() {
+    setCurrentIndex(8);
 }

@@ -31,45 +31,31 @@ SkateLabel::SkateLabel(QString caption, QString add_style, bool centered)
 
 
 
-AnimatedButton::AnimatedButton(QString caption, QString iname, QList<int> timeList, QString addStyle)
-        : QPushButton(caption), counter(0), time_list(timeList), image_name(iname), add_style(addStyle)
+AnimatedButton::AnimatedButton(QString caption, QString iname, TimeLine *timeLine, QString addStyle)
+        : QPushButton(caption), timeLine(timeLine), image_name(iname), add_style(addStyle)
 {
-        max_count = timeList.size();
     base_style = "margin:0px; height: 74px; color: #86bc10; background-color: transparent; font-family:Adore64;font-size:28px; background-repeat:no-repeat; background-position: center;";
-
-        setFlat(true);
-
-        update_style();
-
-        tid = startTimer(time_list[counter]);
+    setFlat(true);
+    connect(this->timeLine, SIGNAL(frameChanged(int)), this, SLOT(updateImage(int)));
 }
 
-void AnimatedButton::timerEvent(QTimerEvent *ev)
-{
-        if(ev->timerId() == tid) {
-                counter = ++counter % max_count;
-                update_style();
-                killTimer(tid);
-                tid = startTimer(time_list[counter]);
-        }
+void AnimatedButton::updateImage(int frame) {
+    setStyleSheet(base_style + "background-image: url(" + get_image_name(frame)
+                  + ");" + add_style);
 }
 
-
-void AnimatedButton::update_style()
-{
-        setStyleSheet(base_style+"background-image: url("+get_image_name()+");"+add_style);
+QString AnimatedButton::get_image_name(int num) {
+    QString s = ":/anims/%1%2.png";
+    return s.arg(image_name).arg(num,2,10,QChar('0'));
 }
 
-QString AnimatedButton::get_image_name()
-{
-    //QString name = "./images/anims/" + image_name;
-    //if counter+1 < 10: name += "0";
-    //name += str(counter+1) + ".png";
-    //return name;
-
-    return QString().sprintf(":/anims/%s%02d.png",image_name.toAscii(), ++counter);
+void AnimatedButton::start() {
+    timeLine->start();
 }
 
+void AnimatedButton::stop() {
+    timeLine->stop();
+}
 
 ShinyButton::ShinyButton(QString caption, QString image_name, QString addStyle) : QPushButton(caption)
 {
