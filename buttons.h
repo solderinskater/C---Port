@@ -33,9 +33,10 @@ class AnimatedButton : public QPushButton {
     Q_OBJECT
 
 public:
-    AnimatedButton(QString caption, QString image_name, TimeLine *timeLine, QString addStyle="");
+    AnimatedButton(QString caption, QString image_name, QList<int> timeIntervals, QString addStyle="");
     void start();
     void stop();
+    TimeLine& getTimeLine() { return timeLine; }
 
 public Q_SLOTS:
     void updateImage(int frame);
@@ -44,9 +45,9 @@ protected:
     QString	get_image_name(int num);
 
 private:
-    TimeLine *timeLine;
-    QString		image_name;
-    QString		add_style, base_style;
+    TimeLine timeLine;
+    QString	 image_name;
+    QString	 add_style, base_style;
 };
 
 

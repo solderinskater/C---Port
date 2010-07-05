@@ -19,9 +19,8 @@ PauseScreen::PauseScreen(QWidget *parent) :
     layout->addLayout(hbox);
     hbox2 = new QHBoxLayout();
     QList<int> intervals; intervals << 2000 << 700 << 200 << 100 << 100 << 100 << 100;
-    timeLine = new TimeLine(intervals);
-    timeLine->setFrameRange(1,7);
-    rauchmonster = new AnimatedButton("", "rauchmonster", timeLine, "margin-left: 20px; width: 332px; height: 354px;");
+    rauchmonster = new AnimatedButton("", "rauchmonster", intervals, "margin-left: 20px; width: 332px; height: 354px;");
+    rauchmonster->getTimeLine().setFrameRange(1,7);
     hbox2->addWidget(rauchmonster);
     hbox2->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
     vbox = new QVBoxLayout();

@@ -31,12 +31,12 @@ SkateLabel::SkateLabel(QString caption, QString add_style, bool centered)
 
 
 
-AnimatedButton::AnimatedButton(QString caption, QString iname, TimeLine *timeLine, QString addStyle)
-        : QPushButton(caption), timeLine(timeLine), image_name(iname), add_style(addStyle)
+AnimatedButton::AnimatedButton(QString caption, QString iname, QList<int> timeIntervals, QString addStyle)
+        : QPushButton(caption), timeLine(timeIntervals), image_name(iname), add_style(addStyle)
 {
     base_style = "margin:0px; height: 74px; color: #86bc10; background-color: transparent; font-family:Adore64;font-size:28px; background-repeat:no-repeat; background-position: center;";
     setFlat(true);
-    connect(this->timeLine, SIGNAL(frameChanged(int)), this, SLOT(updateImage(int)));
+    connect(&timeLine, SIGNAL(frameChanged(int)), this, SLOT(updateImage(int)));
 }
 
 void AnimatedButton::updateImage(int frame) {
@@ -50,11 +50,11 @@ QString AnimatedButton::get_image_name(int num) {
 }
 
 void AnimatedButton::start() {
-    timeLine->start();
+    timeLine.start();
 }
 
 void AnimatedButton::stop() {
-    timeLine->stop();
+    timeLine.stop();
 }
 
 ShinyButton::ShinyButton(QString caption, QString image_name, QString addStyle) : QPushButton(caption)
