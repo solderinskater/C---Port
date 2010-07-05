@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     singleplayerscreen.cpp \
     freestylescreen.cpp \
     pausescreen.cpp \
-    timeline.cpp
+    timeline.cpp \
+    graph.cpp
 
 HEADERS  += \
     startscreen.h \
@@ -30,7 +31,8 @@ HEADERS  += \
     singleplayerscreen.h \
     freestylescreen.h \
     pausescreen.h \
-    timeline.h
+    timeline.h \
+    graph.h
 
 CONFIG += mobility
 MOBILITY = systeminfo
@@ -46,7 +48,8 @@ RESOURCES += \
     Resources/images/img.qrc \
     Resources/buttons/btn.qrc \
     Resources/anims/anims.qrc \
-    Resources/sounds/sounds.qrc
+    Resources/sounds/sounds.qrc \
+    Resources/tnr.qrc
 
 OTHER_FILES += \
     .gitignore \

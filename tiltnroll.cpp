@@ -26,50 +26,113 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "pausescreen.h"
 
 TiltNRoll::TiltNRoll(QWidget *parent)
-        : QStackedWidget(parent)
+        : QStackedWidget(parent), m_channel(0), m_embedded(true)
 {
-        StartScreen *s1 = new StartScreen();
-        addWidget(s1);
-        connect(s1, SIGNAL(playPressed()), this, SLOT(onPlay()));
-        connect(s1, SIGNAL(settingsPressed()), this, SLOT(onSettings()));
-        connect(s1, SIGNAL(quitPressed()), this, SLOT(onQuit()));
+    // start screen (tab 0)
+    StartScreen *s1 = new StartScreen();
+    addWidget(s1);
+    connect(s1, SIGNAL(playPressed()), this, SLOT(onPlay()));
+    connect(s1, SIGNAL(settingsPressed()), this, SLOT(onSettings()));
+    connect(s1, SIGNAL(quitPressed()), this, SLOT(onQuit()));
 
-        PlayScreen *s2 = new PlayScreen();
-        connect(s2, SIGNAL(backPressed()), this, SLOT(onStart()));
-        connect(s2, SIGNAL(singlePlayerPressed()), this, SLOT(onSingleplayer()));
-        addWidget(s2);
+    // play screen (tab 1)
+    PlayScreen *s2 = new PlayScreen();
+    connect(s2, SIGNAL(backPressed()), this, SLOT(onStart()));
+    connect(s2, SIGNAL(singlePlayerPressed()), this, SLOT(onSingleplayer()));
+    addWidget(s2);
 
-        SettingsScreen *s3 = new SettingsScreen();
-        connect(s3, SIGNAL(backPressed()), this, SLOT(onStart()));
-        addWidget(s3);
+    // settings screen (tab 2)
+    SettingsScreen *s3 = new SettingsScreen();
+    connect(s3, SIGNAL(backPressed()), this, SLOT(onStart()));
+    //addWidget(s3);
 
-        SingleplayerScreen *s4 = new SingleplayerScreen();
-        connect(s4, SIGNAL(backPressed()), this, SLOT(onPlay()));
-        connect(s4, SIGNAL(freestylePressed()), this, SLOT(onFreestyle()));
-        addWidget(s4);
+    // DEBUG
+    addWidget(createGraph());
 
-        FreestyleScreen *s5 = new FreestyleScreen();
-        connect(s5, SIGNAL(showPauseScreen()), this, SLOT(onPause()));
-     //   connect(s4, SIGNAL(backPressed()), this, SLOT(onPlay()));
-        addWidget(s5);
+    // single player screen (tab 3)
+    SingleplayerScreen *s4 = new SingleplayerScreen();
+    connect(s4, SIGNAL(backPressed()), this, SLOT(onPlay()));
+    connect(s4, SIGNAL(freestylePressed()), this, SLOT(onFreestyle()));
+    addWidget(s4);
 
-        PauseScreen *s6 = new PauseScreen();
-        qDebug("added!");
-        connect(s6, SIGNAL(resumePressed()), this, SLOT(onFreestyle()));
-        connect(s6, SIGNAL(endGamePressed()), this, SLOT(onHighscore()));
-        addWidget(s6);
+    // freestyle screen (tab 4)
+    FreestyleScreen *s5 = new FreestyleScreen();
+    connect(s5, SIGNAL(showPauseScreen()), this, SLOT(onPause()));
+    //   connect(s4, SIGNAL(backPressed()), this, SLOT(onPlay()));
+    addWidget(s5);
 
-        QSize s(640,360);
-        resize(s);
-        setMinimumSize(s);
-        setMaximumSize(s);
+    // pause screen (tab 5)
+    PauseScreen *s6 = new PauseScreen();
+    qDebug("added!");
+    connect(s6, SIGNAL(resumePressed()), this, SLOT(onFreestyle()));
+    connect(s6, SIGNAL(endGamePressed()), this, SLOT(onStart()));
+    addWidget(s6);
 
-        onStart();
+    QSize s(640,360);
+    resize(s);
+    setMinimumSize(s);
+    setMaximumSize(s);
+    setStyle(new QPlastiqueStyle());
+    qApp->setOverrideCursor(Qt::BlankCursor);
+    setWindowState(Qt::WindowFullScreen);
+    onStart();
 }
 
 TiltNRoll::~TiltNRoll()
 {
 
+}
+
+QWidget* TiltNRoll::createGraph()
+{
+    QWidget *page = new QWidget();
+    QVBoxLayout *toplay = new QVBoxLayout(page);
+
+    QWidget *group = new QGroupBox(tr("Realtime Data"), page);
+    QGridLayout *grid = new QGridLayout(group);
+
+    toplay->addWidget(group);
+
+    // create sinus graph and model
+    m_graph = new Graph(group);
+    m_graph->setStyle(new QWindowsStyle());
+    m_graph->setProperty("isEmbedded", m_embedded);
+    m_graph->setFocusPolicy(Qt::NoFocus);
+    if (!m_embedded)
+        m_graph->setRenderHints(QPainter::Antialiasing);
+
+    grid->addWidget(m_graph, 0, 0, 1, 4);
+
+    QLabel *label = new QLabel(tr("Choose channel"), group);
+    grid->addWidget(label, 1, 1, Qt::AlignRight);
+    QComboBox *chooser = new QComboBox(group);
+    chooser->addItems(QStringList() << tr("Accel X") << tr("Accel Y") << tr("Accel Z"));
+    connect(chooser, SIGNAL(currentIndexChanged(int)), this, SLOT(showGraph(int)));
+    grid->addWidget(chooser, 1, 2);
+
+
+    m_graphTimer = new QTimer();
+    connect(m_graphTimer, SIGNAL(timeout()), this, SLOT(getData()));
+    showGraph(0);
+    return page;
+
+}
+
+void TiltNRoll::showGraph(int idx)
+{
+    m_graph->setXRange(200);
+    m_graph->setYMinMax(-5, 10);
+    m_graphTimer->stop();
+    m_channel = idx;
+    m_graph->clear();
+    m_tick = 0;
+    m_graphTimer->start(33);
+}
+
+void TiltNRoll::getData()
+{
+    ++m_tick;
+    m_graph->addPoint(QPointF(m_tick, m_channel + (qrand()%10)*0.1));
 }
 
 void TiltNRoll::onStart()

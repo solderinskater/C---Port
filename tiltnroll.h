@@ -21,6 +21,8 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #define TILTNROLL_H
 
 #include <QtGui>
+#include "graph.h"
+#include <QPlastiqueStyle>
 
 class TiltNRoll : public QStackedWidget
 {
@@ -29,6 +31,8 @@ class TiltNRoll : public QStackedWidget
 public:
         explicit TiltNRoll(QWidget *parent = 0);
         ~TiltNRoll();
+
+        QWidget* createGraph();
 
 protected slots:
         void onStart();
@@ -43,6 +47,16 @@ protected slots:
         void onPause();
         void onHighscore();
 
+        void showGraph(int);
+
+        void getData();
+
+private:
+        Graph*  m_graph;
+        int     m_channel;
+        QTimer* m_graphTimer;
+        int     m_tick;
+        bool    m_embedded;
 };
 
 #endif // TILTNROLL_H

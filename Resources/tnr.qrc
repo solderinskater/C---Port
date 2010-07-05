@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>tnr.css</file>
+    </qresource>
+</RCC>

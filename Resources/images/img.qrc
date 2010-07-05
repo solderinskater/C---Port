@@ -27,5 +27,4 @@
         <file>transp.png</file>
         <file>background_settings.png</file>
     </qresource>
-    <qresource prefix="/new/prefix1"/>
 </RCC>
