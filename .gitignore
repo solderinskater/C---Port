@@ -1,1 +1,10 @@
+.make.cache
+ABLD.BAT
+Makefile*
+TiltNRoll.loc
+TiltNRoll.rss
+TiltNRoll_*
+bld.inf
+moc
+rcc
 *.user

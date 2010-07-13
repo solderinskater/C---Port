@@ -1,0 +1,7 @@
+* highscore screen
+* connection to bluetooth
+* resize graphics
+
+minor:
+* remove rectangle around button when focussed
+* button too large in single/multiplayer screen

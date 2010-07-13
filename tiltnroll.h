@@ -45,7 +45,11 @@ protected slots:
         void onFreestyle();
         void onChallenge();
         void onPause();
+        void onEnterName();
         void onHighscore();
+
+        void checkHighscore();
+        void addToHighscore(QString);
 
         void showGraph(int);
 

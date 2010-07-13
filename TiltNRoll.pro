@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     freestylescreen.cpp \
     pausescreen.cpp \
     timeline.cpp \
-    graph.cpp
+    graph.cpp \
+    enternamescreen.cpp
 
 HEADERS  += \
     startscreen.h \
@@ -32,7 +33,8 @@ HEADERS  += \
     freestylescreen.h \
     pausescreen.h \
     timeline.h \
-    graph.h
+    graph.h \
+    enternamescreen.h
 
 CONFIG += mobility
 MOBILITY = systeminfo
@@ -53,4 +55,5 @@ RESOURCES += \
 
 OTHER_FILES += \
     .gitignore \
-    hours.txt
+    hours.txt \
+    todo.txt

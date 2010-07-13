@@ -24,48 +24,54 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "singleplayerscreen.h"
 #include "freestylescreen.h"
 #include "pausescreen.h"
+#include <enternamescreen.h>
 
 TiltNRoll::TiltNRoll(QWidget *parent)
         : QStackedWidget(parent), m_channel(0), m_embedded(true)
 {
     // start screen (tab 0)
-    StartScreen *s1 = new StartScreen();
-    addWidget(s1);
-    connect(s1, SIGNAL(playPressed()), this, SLOT(onPlay()));
-    connect(s1, SIGNAL(settingsPressed()), this, SLOT(onSettings()));
-    connect(s1, SIGNAL(quitPressed()), this, SLOT(onQuit()));
+    StartScreen *s0 = new StartScreen();
+    addWidget(s0);
+    connect(s0, SIGNAL(playPressed()), this, SLOT(onPlay()));
+    connect(s0, SIGNAL(settingsPressed()), this, SLOT(onSettings()));
+    connect(s0, SIGNAL(quitPressed()), this, SLOT(onQuit()));
 
     // play screen (tab 1)
-    PlayScreen *s2 = new PlayScreen();
-    connect(s2, SIGNAL(backPressed()), this, SLOT(onStart()));
-    connect(s2, SIGNAL(singlePlayerPressed()), this, SLOT(onSingleplayer()));
-    addWidget(s2);
+    PlayScreen *s1 = new PlayScreen();
+    connect(s1, SIGNAL(backPressed()), this, SLOT(onStart()));
+    connect(s1, SIGNAL(singlePlayerPressed()), this, SLOT(onSingleplayer()));
+    addWidget(s1);
 
     // settings screen (tab 2)
-    SettingsScreen *s3 = new SettingsScreen();
-    connect(s3, SIGNAL(backPressed()), this, SLOT(onStart()));
-    //addWidget(s3);
+    SettingsScreen *s2 = new SettingsScreen();
+    connect(s2, SIGNAL(backPressed()), this, SLOT(onStart()));
+    //addWidget(s2);
 
     // DEBUG
     addWidget(createGraph());
 
     // single player screen (tab 3)
-    SingleplayerScreen *s4 = new SingleplayerScreen();
-    connect(s4, SIGNAL(backPressed()), this, SLOT(onPlay()));
-    connect(s4, SIGNAL(freestylePressed()), this, SLOT(onFreestyle()));
-    addWidget(s4);
+    SingleplayerScreen *s3 = new SingleplayerScreen();
+    connect(s3, SIGNAL(backPressed()), this, SLOT(onPlay()));
+    connect(s3, SIGNAL(freestylePressed()), this, SLOT(onFreestyle()));
+    addWidget(s3);
 
     // freestyle screen (tab 4)
-    FreestyleScreen *s5 = new FreestyleScreen();
-    connect(s5, SIGNAL(showPauseScreen()), this, SLOT(onPause()));
-    //   connect(s4, SIGNAL(backPressed()), this, SLOT(onPlay()));
-    addWidget(s5);
+    FreestyleScreen *s4 = new FreestyleScreen();
+    connect(s4, SIGNAL(showPauseScreen()), this, SLOT(onPause()));
+    addWidget(s4);
 
     // pause screen (tab 5)
-    PauseScreen *s6 = new PauseScreen();
+    PauseScreen *s5 = new PauseScreen();
     qDebug("added!");
-    connect(s6, SIGNAL(resumePressed()), this, SLOT(onFreestyle()));
-    connect(s6, SIGNAL(endGamePressed()), this, SLOT(onStart()));
+    connect(s5, SIGNAL(resumePressed()), this, SLOT(onFreestyle()));
+    connect(s5, SIGNAL(endGamePressed()), this, SLOT(checkHighscore()));
+    addWidget(s5);
+
+    // enter name screen (tab 6)
+    EnterNameScreen *s6 = new EnterNameScreen();
+    qDebug("added!");
+    connect(s6, SIGNAL(nameEntered(QString)), this, SLOT(addToHighscore(QString)));
     addWidget(s6);
 
     QSize s(640,360);
@@ -174,10 +180,22 @@ void TiltNRoll::onPause()
 {
     setCurrentIndex(5);
 }
+void TiltNRoll::onEnterName() {
+    setCurrentIndex(6);
+}
+
 void TiltNRoll::onChallenge()
 {
     setCurrentIndex(7);
 }
 void TiltNRoll::onHighscore() {
     setCurrentIndex(8);
+}
+void TiltNRoll::checkHighscore() {
+    qDebug("checkHighscore called");
+    onEnterName();
+}
+
+void TiltNRoll::addToHighscore(QString name) {
+    qDebug("addToHighscore called");
 }
