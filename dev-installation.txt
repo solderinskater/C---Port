@@ -1,0 +1,22 @@
+So this is what you need to do (adopted from [1]):
+OK 1. Download and install Nokia Ovi Suite from [2]
+NO 2. Download and install ActivePerl 5.8.x from [3]
+NO 3. Download and install the S60 Symbian^3 SDK 0.8 from [4]
+   this is newer than 5th edition and for the N8
+   when asked whether to install the ARM toolchain, choose yes
+NO 4. Download and install Open C / C++ from [5]
+   XXX does not work, searches for S60 SDK 3rd edition
+OK 5. Download and install TRK (s60_tb_9_2_app_trk_3_2_7.sisx) on the N8 from [6]
+NO 6. Download and install the Qt Symbian Libraries from [7]
+OK 7. Download QtCreator and install
+
+NO 8. In Projects settings, choose the Nokia Symbian_3 SDK and enter the CSL/GCCE
+   path in its "Verwaltung" dialog
+
+[1] http://www.nokiausa.com/get-support-and-software/software/nokia-suites-for-your-pc#
+[2] http://labs.trolltech.com/blogs/2009/12/03/tutorial-videos-qt-development-for-symbian/
+[3] http://www.activestate.com/activeperl/downloads
+[4] http://www.forum.nokia.com/info/sw.nokia.com/id/ec866fab-4b76-49f6-b5a5-af0631419e9c/S60_All_in_One_SDKs.html
+[5] http://www.forum.nokia.com/info/sw.nokia.com/id/91d89929-fb8c-4d66-bea0-227e42df9053/Open_C_SDK_Plug-In.html
+[6] http://tools.ext.nokia.com/trk/
+[7] http://qt.nokia.com/downloads

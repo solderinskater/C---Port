@@ -78,7 +78,7 @@ TiltNRoll::TiltNRoll(QWidget *parent)
     resize(s);
     setMinimumSize(s);
     setMaximumSize(s);
-    setStyle(new QPlastiqueStyle());
+   //setStyle(new QPlastiqueStyle());
     qApp->setOverrideCursor(Qt::BlankCursor);
     setWindowState(Qt::WindowFullScreen);
     onStart();

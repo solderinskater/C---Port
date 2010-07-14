@@ -5,3 +5,4 @@ Erik
 04.07.2010  2h      TimeLine for AnimatedButton
             1h      Debugging
 13.07.2010  1.5h    Enter Name Screen
+14.07.2010  3.5h    Setup Qt Creator so it builds for the N8, install TRK on N8

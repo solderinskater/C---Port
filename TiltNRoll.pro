@@ -56,4 +56,5 @@ RESOURCES += \
 OTHER_FILES += \
     .gitignore \
     hours.txt \
-    todo.txt
+    todo.txt \
+    dev-installation.txt
