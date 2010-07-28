@@ -8,3 +8,4 @@ bld.inf
 moc
 rcc
 *.user
+*.sis

@@ -47,9 +47,12 @@ public:
     explicit FreestyleScreen(QWidget *parent = 0);
 
     bool isPaused() const;
+    int getPoints() const;
+    int getLevel() const;
 
 signals:
     void showPauseScreen();
+    void levelChanged(int);
 
 public slots:
     void trickEvent(QString trickId, int time);
@@ -65,8 +68,8 @@ protected:
     void showEvent(QShowEvent *e);
     void mousePressEvent(QMouseEvent *e);
 
-    void calculateLevel(int old_level, int points);
-    void update_trick_list(QStringList tricks_done);
+    void updateLevel();
+    void updateTrickList();
 
 private:
     QList<int>          levellist;

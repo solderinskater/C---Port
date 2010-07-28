@@ -25,6 +25,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "freestylescreen.h"
 #include "pausescreen.h"
 #include <enternamescreen.h>
+#include <highscorescreen.h>
 
 TiltNRoll::TiltNRoll(QWidget *parent)
         : QStackedWidget(parent), m_channel(0), m_embedded(true)
@@ -54,12 +55,13 @@ TiltNRoll::TiltNRoll(QWidget *parent)
     SingleplayerScreen *s3 = new SingleplayerScreen();
     connect(s3, SIGNAL(backPressed()), this, SLOT(onPlay()));
     connect(s3, SIGNAL(freestylePressed()), this, SLOT(onFreestyle()));
+    connect(s3, SIGNAL(highscorePressed()), this, SLOT(onHighscore()));
     addWidget(s3);
 
     // freestyle screen (tab 4)
-    FreestyleScreen *s4 = new FreestyleScreen();
-    connect(s4, SIGNAL(showPauseScreen()), this, SLOT(onPause()));
-    addWidget(s4);
+    freestyle_screen = new FreestyleScreen();
+    connect(freestyle_screen, SIGNAL(showPauseScreen()), this, SLOT(onPause()));
+    addWidget(freestyle_screen);
 
     // pause screen (tab 5)
     PauseScreen *s5 = new PauseScreen();
@@ -73,6 +75,11 @@ TiltNRoll::TiltNRoll(QWidget *parent)
     qDebug("added!");
     connect(s6, SIGNAL(nameEntered(QString)), this, SLOT(addToHighscore(QString)));
     addWidget(s6);
+
+    // highscore screen (tab 7)
+    HighscoreScreen *s7 = new HighscoreScreen(&highscore);
+    connect(s7, SIGNAL(backPressed()), this, SLOT(onStart()));
+    addWidget(s7);
 
     QSize s(640,360);
     resize(s);
@@ -183,19 +190,25 @@ void TiltNRoll::onPause()
 void TiltNRoll::onEnterName() {
     setCurrentIndex(6);
 }
-
-void TiltNRoll::onChallenge()
-{
+void TiltNRoll::onHighscore() {
+    qDebug("onHighscore()");
     setCurrentIndex(7);
 }
-void TiltNRoll::onHighscore() {
+void TiltNRoll::onChallenge()
+{
     setCurrentIndex(8);
 }
+
 void TiltNRoll::checkHighscore() {
-    qDebug("checkHighscore called");
-    onEnterName();
+    int points = freestyle_screen->getPoints();
+    if (highscore.isHighscore(points)) onEnterName();
+    else onHighscore();
 }
 
 void TiltNRoll::addToHighscore(QString name) {
-    qDebug("addToHighscore called");
+    int points = freestyle_screen->getPoints();
+    int level = freestyle_screen->getLevel();
+    highscore.addToHighscore(Highscore::Hero(name, points, level));
+    highscore.save();
+    onHighscore();
 }

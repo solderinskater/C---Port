@@ -25,7 +25,7 @@ FreestyleScreen::FreestyleScreen(QWidget *parent) :
 {
     levellist << 200 << 800 << 1000 << 2000 <<100000;
     tricklabelcount = 4;
-    points = 0;
+    points = 100;
     level = 1;
     qDebug("Build game screen freestyle");
     setStyleSheet(QString("FreestyleScreen {background-image: url(:/images/PLAYMODES.jpg);}")+
@@ -48,7 +48,7 @@ FreestyleScreen::FreestyleScreen(QWidget *parent) :
     timewidget->setAlignment(Qt::AlignLeft);
     levelwidget = new QLabel(" ");
 
-    calculateLevel(level, points);
+    updateLevel();
     levelwidget->setAlignment(Qt::AlignRight);
     levelwidget->setObjectName("levellabel");
 
@@ -107,27 +107,20 @@ void FreestyleScreen::updateTimeLabel()
     update();
 }
 
-void FreestyleScreen::calculateLevel(int old_level, int points)
+void FreestyleScreen::updateLevel()
 {
-    static int level = 1;
-    level = 1;
+    int old_level = level;
     int val;
-    foreach(val,levellist) {
-        if(points>val)
-            level += 1;
-    }
+    level = 1;
+    foreach(val,levellist) if(points>val) level += 1;
     if(old_level != level) {
-        qDebug("Trying to set level to %d", level);
-        //emit changeLevelTo(level);
+        emit levelChanged(level);
     }
     levelwidget->setText("lvl " + QString::number(level));
 }
 
 
-void FreestyleScreen::update_trick_list(QStringList tricks_done)
-{
-    Q_UNUSED(tricks_done)
-
+void FreestyleScreen::updateTrickList() {
     for(int i=0; i<tricklabelcount;i++) {
         if(tricksDone.size() > i)
             tricklabels[i]->setText(tricksDone[i]);
@@ -144,10 +137,19 @@ void FreestyleScreen::trickEvent(QString trickid, int time)
         return;
 
     points += tricklist[trickid] * 50;
-    calculateLevel(level, points);
+    updateLevel();
     pointswidget->setText(QString::number(points));
-    update_trick_list(tricksDone);
+    updateTrickList();
 }
+
+int FreestyleScreen::getPoints() const {
+    return points;
+}
+
+int FreestyleScreen::getLevel() const {
+    return level;
+}
+
 
 
 void FreestyleScreen::showEvent(QShowEvent *e)

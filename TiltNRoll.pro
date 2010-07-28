@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     pausescreen.cpp \
     timeline.cpp \
     graph.cpp \
-    enternamescreen.cpp
+    enternamescreen.cpp \
+    highscore.cpp \
+    highscorescreen.cpp
 
 HEADERS  += \
     startscreen.h \
@@ -34,7 +36,9 @@ HEADERS  += \
     pausescreen.h \
     timeline.h \
     graph.h \
-    enternamescreen.h
+    enternamescreen.h \
+    highscore.h \
+    highscorescreen.h
 
 CONFIG += mobility
 MOBILITY = systeminfo

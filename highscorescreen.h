@@ -17,33 +17,43 @@ You should have received a copy of the GNU General Public License
 along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ENTERNAMESCREEN_H
-#define ENTERNAMESCREEN_H
+#ifndef HIGHSCORESCREEN_H
+#define HIGHSCORESCREEN_H
 
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QLineEdit>
 #include <buttons.h>
+#include <highscore.h>
 
-class EnterNameScreen : public QFrame
+/// Screen that shows a list of the 10 best players.
+/** On construction, a Highscore object pointer is passed to the HighscoreScreen
+  class and each time the screen becomes visible, this data is used to build the
+  highscore list. */
+class HighscoreScreen : public QFrame
 {
     Q_OBJECT
 public:
-    explicit EnterNameScreen(QWidget *parent = 0);
+    explicit HighscoreScreen(Highscore *highscore, QWidget *parent = 0);
 
 signals:
-    void nameEntered(QString);
+    void backPressed();
 
-protected slots:
-    void commitName();
+protected:
+    /// returns one line of the highscore list from a Hero object
+    QString heroToString(Highscore::Hero h);
+    /// sets the highscore list to the data the highscore member points to
+    void updateLabel();
+    /// calls updateLabel()
+    void showEvent(QShowEvent *e);
 
 private:
-    QHBoxLayout *layout, *hbox1, *hbox2;
-    QVBoxLayout *entryLayout;
-    QLineEdit* edit;
-    ShinyButton *buttonOk;
+    Highscore *highscore;
+    QHBoxLayout *layout;
+    ShinyButton *buttonBack;
+    QVBoxLayout *vbox1;
+    SkateLabel *highscorelabel;
 
 };
 
-#endif // ENTERNAMESCREEN_H
+#endif // HIGHSCORESCREEN_H
