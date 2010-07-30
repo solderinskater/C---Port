@@ -4,8 +4,8 @@ PauseScreen::PauseScreen(QWidget *parent) :
     QFrame(parent)
 {
     qDebug("Build pause window");
-    setStyleSheet("PauseScreen {background-image: url(:/images/pauseScreenBackground.png);"
-      "background-color: transparent; background-position: top left;}");
+    setStyleSheet("PauseScreen {background-image: url(:/backgrounds/pause.png);"
+      "background-color: black; background-position: top left;}");
 
     layout = new QVBoxLayout();
     setLayout(layout);

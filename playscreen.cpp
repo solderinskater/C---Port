@@ -24,7 +24,7 @@ PlayScreen::PlayScreen(QWidget *parent)
 {
         qDebug("Build play window");
 
-        setStyleSheet("PlayScreen {background-image: url(:/images/background_playerscreen.png); background-color : transparent; }");
+        setStyleSheet("PlayScreen {background-image: url(:/backgrounds/play.png); background-color : black; }");
 
         layout = new QVBoxLayout();
         setLayout(layout);

@@ -3,7 +3,7 @@
 
 HighscoreScreen::HighscoreScreen(Highscore *highscore, QWidget *parent):
         QFrame(parent), highscore(highscore) {
-    setStyleSheet("HighscoreScreen {background-image: url(:/images/highscorescreen.png);"
+    setStyleSheet("HighscoreScreen {background-image: url(:/backgrounds/highscore.png);"
       "background-repeat: no-repeat; background-position: top left;"
       "background-color: black;}");
     layout = new QHBoxLayout();

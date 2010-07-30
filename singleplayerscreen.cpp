@@ -24,7 +24,7 @@ SingleplayerScreen::SingleplayerScreen(QWidget *parent) :
     QFrame(parent)
 {
     qDebug("Build singleplayer window");
-    setStyleSheet("SingleplayerScreen {background-image: url(:/images/background_playmodes.png);}");
+    setStyleSheet("SingleplayerScreen {background-image: url(:/backgrounds/singleplayer.png); background-color: black;}");
 
     QVBoxLayout* layout = new QVBoxLayout();
     setLayout(layout);

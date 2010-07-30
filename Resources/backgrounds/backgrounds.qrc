@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/backgrounds">
+        <file>backgrounds.qrc</file>
+        <file>freestyle.jpg</file>
+        <file>highscore.png</file>
+        <file>pause.png</file>
+        <file>settings.png</file>
+        <file>singleplayer.png</file>
+        <file>start.jpg</file>
+        <file>play.png</file>
+    </qresource>
+</RCC>

@@ -1,5 +1,6 @@
 So this is what you need to do (adopted from [1]):
 OK 1. Download and install Nokia Ovi Suite from [2]
+    this makes QtCreator detect the phone
 NO 2. Download and install ActivePerl 5.8.x from [3]
 NO 3. Download and install the S60 Symbian^3 SDK 0.8 from [4]
    this is newer than 5th edition and for the N8
