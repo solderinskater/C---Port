@@ -11,8 +11,8 @@ PauseScreen::PauseScreen(QWidget *parent) :
     setLayout(layout);
 
     hbox = new QHBoxLayout();
-    buttonResume = new ShinyButton("resume","pause_resume", "width:286;");
-    buttonEndGame = new ShinyButton("end game","pause_resume", "width:286;");
+    buttonResume = new ShinyButton("resume","medium", "width:286;");
+    buttonEndGame = new ShinyButton("end game","medium", "width:286;");
     hbox->addWidget(buttonResume);
     hbox->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
     hbox->addWidget(buttonEndGame);

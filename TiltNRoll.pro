@@ -52,14 +52,13 @@ symbian {
 }
 
 RESOURCES += \
-    Resources/buttons/btn.qrc \
-    Resources/anims/anims.qrc \
-    Resources/sounds/sounds.qrc \
     Resources/tnr.qrc \
-    Resources/backgrounds/backgrounds.qrc
+    Resources/images.qrc \
+    Resources/sounds.qrc
 
 OTHER_FILES += \
     .gitignore \
     hours.txt \
     todo.txt \
-    dev-installation.txt
+    dev-installation.txt \
+    hours_private.txt
