@@ -32,10 +32,12 @@ StartScreen::StartScreen(QWidget *parent) :
         ShinyButton *buttonPlay     = new ShinyButton("play","big");
         ShinyButton *buttonSettings = new ShinyButton("settings", "big");
         ShinyButton *buttonQuit     = new ShinyButton("quit","big");
+        ShinyButton *buttonSimul     = new ShinyButton("simulator","big");
 
         connect(buttonPlay,     SIGNAL(clicked()), this, SIGNAL(playPressed()));
         connect(buttonSettings, SIGNAL(clicked()), this, SIGNAL(settingsPressed()));
         connect(buttonQuit,     SIGNAL(clicked()), this, SIGNAL(quitPressed()));
+        connect(buttonSimul,     SIGNAL(clicked()), this, SIGNAL(simulPressed()));
 
         QSpacerItem* spacer = new QSpacerItem(640, 250, QSizePolicy::Fixed, QSizePolicy::Fixed);
 //        layout->addWidget(new QLabel(""));
@@ -44,7 +46,8 @@ StartScreen::StartScreen(QWidget *parent) :
         layout->insertSpacerItem(0,spacer);
         layout->addWidget(buttonPlay);
         layout->addWidget(buttonSettings);
-        layout->addWidget(buttonQuit);
+//        layout->addWidget(buttonQuit);
+        layout->addWidget(buttonSimul);
 //        layout->addWidget(new QLabel(""));
 
 }

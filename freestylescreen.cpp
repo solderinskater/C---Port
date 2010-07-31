@@ -19,6 +19,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 
 #include "freestylescreen.h"
 #include <QSound>
+#include <trickdetector.h>
 
 FreestyleScreen::FreestyleScreen(QWidget *parent) :
     QFrame(parent)
@@ -80,7 +81,7 @@ FreestyleScreen::FreestyleScreen(QWidget *parent) :
    //layout->addWidget(musicwidget);
 
     connect(&updateTimer, SIGNAL(timeout()), this, SLOT(updateTimeLabel()));
-    //connect(parent, SIGNAL(trickEvent(QString, int)), this, SLOT(trickEvent(QString, int)));
+    connect(TrickDetector::instance(), SIGNAL(trickEvent(QString, int)), this, SLOT(trickEvent(QString, int)));
     updateTimeLabel();
 }
 

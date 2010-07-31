@@ -1,5 +1,5 @@
-/*
-Copyright 2010 Keywan Tonekaboni, Florian Fusco, Stefanie Schirmer, Alexander Lenhard, Erik Weitnauer <eweitnauer at gmail.com>
+/* 
+Copyright 2010 Keywan Tonekaboni, Florian Fusco, Stefanie Schirmer, Alexander Lenhardt, Erik Weitnauer <eweitnauer at gmail.com>
 
 This file is part of Soldering Skaters Nokia Push Project.
 
@@ -17,23 +17,31 @@ You should have received a copy of the GNU General Public License
 along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef STARTSCREEN_H
-#define STARTSCREEN_H
+#ifndef IOCAPTURE_H
+#define IOCAPTURE_H
 
-#include <QWidget>
-#include "buttons.h"
+#include <QtGui>
 
-class StartScreen : public QFrame
+class IOCapture : public QObject
 {
+
     Q_OBJECT
+
 public:
-    explicit StartScreen(QWidget *parent = 0);
+
+    virtual QString errorString() =0;
+
+public slots:
+    virtual void start() =0;
+    virtual void stop() =0;
+    virtual void open() =0;
+    virtual void close() =0;
+
 
 signals:
-        void playPressed();
-        void settingsPressed();
-        void quitPressed();
-        void simulPressed();
+    void dataCaptured(QString);
+
+
 };
 
-#endif // STARTSCREEN_H
+#endif // IOCAPTURE_H

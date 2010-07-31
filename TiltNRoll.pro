@@ -23,7 +23,33 @@ SOURCES += main.cpp\
     graph.cpp \
     enternamescreen.cpp \
     highscore.cpp \
-    highscorescreen.cpp
+    highscorescreen.cpp \
+    simulator/tricksimulator.cpp \
+    newmat/svd.cpp \
+    newmat/submat.cpp \
+    newmat/sort.cpp \
+    newmat/solution.cpp \
+    newmat/newmatrm.cpp \
+    newmat/newmatnl.cpp \
+    newmat/newmatex.cpp \
+    newmat/newmat9.cpp \
+    newmat/newmat8.cpp \
+    newmat/newmat7.cpp \
+    newmat/newmat6.cpp \
+    newmat/newmat5.cpp \
+    newmat/newmat4.cpp \
+    newmat/newmat3.cpp \
+    newmat/newmat2.cpp \
+    newmat/newmat1.cpp \
+    newmat/newfft.cpp \
+    newmat/myexcept.cpp \
+    newmat/jacobi.cpp \
+    newmat/hholder.cpp \
+    newmat/fft.cpp \
+    newmat/evalue.cpp \
+    newmat/cholesky.cpp \
+    newmat/bandmat.cpp \
+    trickdetector.cpp
 
 HEADERS  += \
     startscreen.h \
@@ -38,7 +64,22 @@ HEADERS  += \
     graph.h \
     enternamescreen.h \
     highscore.h \
-    highscorescreen.h
+    highscorescreen.h \
+    simulator/tricksimulator.h \
+    newmat/solution.h \
+    newmat/precisio.h \
+    newmat/newmatrm.h \
+    newmat/newmatrc.h \
+    newmat/newmatnl.h \
+    newmat/newmatio.h \
+    newmat/newmatap.h \
+    newmat/newmat.h \
+    newmat/myexcept.h \
+    newmat/include.h \
+    newmat/controlw.h \
+    newmat/boolean.h \
+    trickdetector.h \
+    IOCapture.h
 
 CONFIG += mobility
 MOBILITY = systeminfo
@@ -55,7 +96,8 @@ RESOURCES += \
     Resources/buttons/btn.qrc \
     Resources/anims/anims.qrc \
     Resources/sounds/sounds.qrc \
-    Resources/tnr.qrc
+    Resources/tnr.qrc \
+    Resources/simulator/Simulator.qrc
 
 OTHER_FILES += \
     .gitignore \

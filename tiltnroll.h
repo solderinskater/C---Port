@@ -49,6 +49,7 @@ protected slots:
         void onPause();
         void onEnterName();
         void onHighscore();
+        void onSimul();
 
         void checkHighscore();
         void addToHighscore(QString);

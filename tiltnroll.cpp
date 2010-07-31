@@ -26,6 +26,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "pausescreen.h"
 #include <enternamescreen.h>
 #include <highscorescreen.h>
+#include <simulator/tricksimulator.h>
 
 TiltNRoll::TiltNRoll(QWidget *parent)
         : QStackedWidget(parent), m_channel(0), m_embedded(true)
@@ -36,6 +37,7 @@ TiltNRoll::TiltNRoll(QWidget *parent)
     connect(s0, SIGNAL(playPressed()), this, SLOT(onPlay()));
     connect(s0, SIGNAL(settingsPressed()), this, SLOT(onSettings()));
     connect(s0, SIGNAL(quitPressed()), this, SLOT(onQuit()));
+    connect(s0, SIGNAL(simulPressed()), this, SLOT(onSimul()));
 
     // play screen (tab 1)
     PlayScreen *s1 = new PlayScreen();
@@ -80,6 +82,11 @@ TiltNRoll::TiltNRoll(QWidget *parent)
     HighscoreScreen *s7 = new HighscoreScreen(&highscore);
     connect(s7, SIGNAL(backPressed()), this, SLOT(onStart()));
     addWidget(s7);
+
+    // TrickSimulator (tab 8)
+    TrickSimulator* sim = TrickSimulator::instance();
+    connect(sim, SIGNAL(backPressed()), this, SLOT(onStart()));
+    addWidget(sim->widget());
 
     QSize s(640,360);
     resize(s);
@@ -194,9 +201,15 @@ void TiltNRoll::onHighscore() {
     qDebug("onHighscore()");
     setCurrentIndex(7);
 }
+void TiltNRoll::onSimul()
+{
+    qDebug("onSimul()");
+    setCurrentIndex(8);
+}
+
 void TiltNRoll::onChallenge()
 {
-    setCurrentIndex(8);
+    setCurrentIndex(9);
 }
 
 void TiltNRoll::checkHighscore() {
