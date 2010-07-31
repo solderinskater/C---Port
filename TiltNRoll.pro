@@ -87,20 +87,20 @@ MOBILITY = systeminfo
 symbian {
     TARGET.UID3 = 0xe0c33b86
     # TARGET.CAPABILITY += 
-    TARGET.EPOCSTACKSIZE = 0x14000
-    TARGET.EPOCHEAPSIZE = 0x020000 0x800000
+    TARGET.EPOCSTACKSIZE = 0x14000 # 80 kB
+    #TARGET.EPOCHEAPSIZE = 0x020000 0x800000 # Min 128 kB, Max 8 Mb
+    TARGET.EPOCHEAPSIZE = 0x020000 0x2000000 # Min 128 kB, Max 32 Mb
 }
 
 RESOURCES += \
-    Resources/images/img.qrc \
-    Resources/buttons/btn.qrc \
-    Resources/anims/anims.qrc \
-    Resources/sounds/sounds.qrc \
     Resources/tnr.qrc \
+    Resources/images.qrc \
+    Resources/sounds.qrc \
     Resources/simulator/Simulator.qrc
 
 OTHER_FILES += \
     .gitignore \
     hours.txt \
     todo.txt \
-    dev-installation.txt
+    dev-installation.txt \
+    hours_private.txt

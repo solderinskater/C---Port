@@ -24,7 +24,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 StartScreen::StartScreen(QWidget *parent) :
     QFrame(parent)
 {
-        setStyleSheet("StartScreen {background-image: url(:/images/startscreen.jpg);}");
+    setStyleSheet("StartScreen {background-image: url(:/backgrounds/start.jpg); background-color: black;}");
 
         QBoxLayout *layout = new QBoxLayout(QBoxLayout::TopToBottom);
         setLayout(layout);

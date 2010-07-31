@@ -25,7 +25,7 @@ SettingsScreen::SettingsScreen(QWidget *parent)
 {
         qDebug("Build settings window");
 
-        setStyleSheet("SettingsScreen {background-image: url(:/images/background_settings.png); background-color : transparent }"+
+        setStyleSheet("SettingsScreen {background-image: url(:/backgrounds/settings.png); background-color: black;}"+
                       QString("QLabel {color: #86bc10;font-size:24px; font-family:Adore64;}"));
 
         QVBoxLayout* layout = new QVBoxLayout();

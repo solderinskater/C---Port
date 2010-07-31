@@ -29,7 +29,7 @@ FreestyleScreen::FreestyleScreen(QWidget *parent) :
     points = 100;
     level = 1;
     qDebug("Build game screen freestyle");
-    setStyleSheet(QString("FreestyleScreen {background-image: url(:/images/PLAYMODES.jpg);}")+
+    setStyleSheet(QString("FreestyleScreen {background-image: url(:/backgrounds/freestyle.jpg);}")+
                   "QLabel {color: #86bc10; font-size:24px; font-family:Adore64; text-align:center; background-color: transparent;}"+
       "#timelabel {font-size: 30px;}"+
       "#levellabel {font-size: 30px;}"+

@@ -5,3 +5,15 @@
 minor:
 * remove rectangle around button when focussed
 * button too large in single/multiplayer screen
+
+[Qt Message] QImage: out of memory, returning null image
+
+./startscreen.cpp:27: /images/startscreen.jpg
+./settingsscreen.cpp:28: /images/background_settings.png
+./highscorescreen.cpp:6: /images/highscorescreen.png
+./enternamescreen.cpp:7: /images/highscorescreen.png
+
+./singleplayerscreen.cpp:27: /images/background_playmodes.png
+./playscreen.cpp:27: /images/background_playerscreen.png
+./freestylescreen.cpp:31: /images/PLAYMODES.jpg
+./pausescreen.cpp:7: /images/pauseScreenBackground.png

@@ -24,8 +24,9 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "singleplayerscreen.h"
 #include "freestylescreen.h"
 #include "pausescreen.h"
-#include <enternamescreen.h>
-#include <highscorescreen.h>
+#include "enternamescreen.h"
+#include "highscorescreen.h"
+#include "highscore.h"
 #include <simulator/tricksimulator.h>
 
 TiltNRoll::TiltNRoll(QWidget *parent)
@@ -48,10 +49,10 @@ TiltNRoll::TiltNRoll(QWidget *parent)
     // settings screen (tab 2)
     SettingsScreen *s2 = new SettingsScreen();
     connect(s2, SIGNAL(backPressed()), this, SLOT(onStart()));
-    //addWidget(s2);
+    addWidget(s2);
 
     // DEBUG
-    addWidget(createGraph());
+    //addWidget(createGraph());
 
     // single player screen (tab 3)
     SingleplayerScreen *s3 = new SingleplayerScreen();
@@ -79,7 +80,7 @@ TiltNRoll::TiltNRoll(QWidget *parent)
     addWidget(s6);
 
     // highscore screen (tab 7)
-    HighscoreScreen *s7 = new HighscoreScreen(&highscore);
+    HighscoreScreen *s7 = new HighscoreScreen(&hs);
     connect(s7, SIGNAL(backPressed()), this, SLOT(onStart()));
     addWidget(s7);
 
@@ -214,14 +215,14 @@ void TiltNRoll::onChallenge()
 
 void TiltNRoll::checkHighscore() {
     int points = freestyle_screen->getPoints();
-    if (highscore.isHighscore(points)) onEnterName();
+    if (hs.isHighscore(points)) onEnterName();
     else onHighscore();
 }
 
 void TiltNRoll::addToHighscore(QString name) {
     int points = freestyle_screen->getPoints();
     int level = freestyle_screen->getLevel();
-    highscore.addToHighscore(Highscore::Hero(name, points, level));
-    highscore.save();
+    hs.addToHighscore(Highscore::Hero(name, points, level));
+    hs.save();
     onHighscore();
 }

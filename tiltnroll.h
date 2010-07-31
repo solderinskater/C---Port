@@ -22,9 +22,8 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 
 #include <QtGui>
 #include "graph.h"
-#include <QPlastiqueStyle>
-#include <highscore.h>
-#include <freestylescreen.h>
+#include "highscore.h"
+#include "freestylescreen.h"
 
 class TiltNRoll : public QStackedWidget
 {
@@ -65,7 +64,7 @@ private:
         int     m_tick;
         bool    m_embedded;
 
-        Highscore highscore;
+        Highscore hs;
         FreestyleScreen *freestyle_screen;
 };
 

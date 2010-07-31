@@ -4,7 +4,7 @@ EnterNameScreen::EnterNameScreen(QWidget *parent) :
     QFrame(parent)
 {
     qDebug("Build enter name screen");
-    setStyleSheet("EnterNameScreen {background-image: url(:/images/highscorescreen.png);"
+    setStyleSheet("EnterNameScreen {background-image: url(:/backgrounds/highscore.png);"
                   "background-color: black; background-position: top left; background-repeat: no-repeat}");
 
     layout = new QHBoxLayout();

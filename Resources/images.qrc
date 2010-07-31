@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/">
+        <file>buttons/big.png</file>
+        <file>buttons/medium.png</file>
+        <file>buttons/multiplayer.png</file>
+        <file>buttons/singleplayer.png</file>
+        <file>buttons/small.png</file>
+        <file>backgrounds/freestyle.jpg</file>
+        <file>backgrounds/highscore.png</file>
+        <file>backgrounds/pause.png</file>
+        <file>backgrounds/play.png</file>
+        <file>backgrounds/settings.png</file>
+        <file>backgrounds/singleplayer.png</file>
+        <file>backgrounds/start.jpg</file>
+        <file>anims/rauchmonster01.png</file>
+        <file>anims/rauchmonster02.png</file>
+        <file>anims/rauchmonster03.png</file>
+        <file>anims/rauchmonster04.png</file>
+        <file>anims/rauchmonster05.png</file>
+        <file>anims/rauchmonster06.png</file>
+        <file>anims/rauchmonster07.png</file>
+    </qresource>
+</RCC>

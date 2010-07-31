@@ -1,7 +1,18 @@
+QLabel 
+{
+	background-color: Transparent;
+	background-image: none;
+	color: Green;
+	font-size:46px;
+	font-style:oblique;
+	font-weight:bold; 
+}
+
 Graph { 
     color: white; 
     background-color: qlineargradient(x1:0, y1:1, x2:0, y2:0, stop:0 rgb(59, 57, 60), stop:0.3 rgb(95, 95, 95), stop:1 rgb(74, 72, 74));
 }
+
 Graph[isEmbedded=true] { 
     color: white; 
     background-color: rgb(95,95,95);
