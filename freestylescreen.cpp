@@ -24,6 +24,11 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 FreestyleScreen::FreestyleScreen(QWidget *parent) :
     QFrame(parent)
 {
+    tricklist["Ollie"] = 50;
+    tricklist["Nollie"] = 75;
+    tricklist["180"] = 100;
+    tricklist["McTwist"] = 1000;
+
     levellist << 200 << 800 << 1000 << 2000 <<100000;
     tricklabelcount = 4;
     points = 100;
@@ -137,7 +142,7 @@ void FreestyleScreen::trickEvent(QString trickid, int time)
     if(isPaused())
         return;
 
-    points += tricklist[trickid] * 50;
+    points += tricklist[trickid];
     updateLevel();
     pointswidget->setText(QString::number(points));
     updateTrickList();

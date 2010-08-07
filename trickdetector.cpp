@@ -30,22 +30,27 @@ TrickDetector* TrickDetector::instance()
 TrickDetector::TrickDetector(QObject *parent) :
         QObject(parent), W(100,1), m_isInit(false), buffer(10)
 {
-    bias = 4.0;
+    bias = 0.0;
 }
 
 void TrickDetector::init(QList<double> weightVector)
 {
     W.ReSize(weightVector.size(), 1);
+    buffer.resize(124);
+    qDebug("W size: %d",weightVector.size());
     int i=1;
     foreach(double v, weightVector)
     {
         W(i++,1) = v;
     }
     m_isInit = true;
+    curSmp = 0;
 }
 
 void TrickDetector::addSample(QString smp)
 {
+    static RingBuffer buf(10);
+    static double cnt = 0;
     if(!m_isInit)
     {
         qDebug("[TrickDetector] Set a weight vector first!");
@@ -54,22 +59,38 @@ void TrickDetector::addSample(QString smp)
 
     QStringList s = smp.split(",");
     QList<double> d;
-    foreach(QString str, s)
-        d << str.toDouble();
-
+//    foreach(QString str, s)
+    for(int i=0;i<2;i++)
+        d << s[i].toDouble();
+    curSmp++;
     buffer.add(d);
+    QList<double> dd;
+    dd << cnt << cnt*1000;
+    cnt++;
+    buf.add(dd);
 
-    if(buffer.isFilled())
+    if(buffer.isFilled()) {
         classify();
+        Matrix m = buf.getBuffer();
+        RowVector v;
+        v = m.AsRow();
+        QList<double> k;
+        for(int i=0; i<v.Ncols();i++)
+            k << v(i+1);
+        qDebug()<<k;
+        qDebug("---");
+    }
 }
 
 void TrickDetector::classify()
 {
     Matrix data = buffer.getBuffer();
-    RowVector v = data.Row(1);
-    double score = (W.Row(1)*data.Row(1).t()).AsScalar() + bias;
+    RowVector v = data.AsRow();
+//    v -= v.Sum()/v.Nrows();
+    double score = DotProduct(W,v) + bias;
+
     if(score>0) {
-        qDebug()<<score;
+        qDebug("N: %d / Score: %.4f / Smp: %d",v.Nrows(), score,curSmp);
         emit trickEvent("Ollie",0);
     }
 }

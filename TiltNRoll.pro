@@ -105,4 +105,5 @@ OTHER_FILES += \
     hours.txt \
     todo.txt \
     dev-installation.txt \
-    hours_private.txt
+    hours_private.txt \
+    Resources/tnr.css
