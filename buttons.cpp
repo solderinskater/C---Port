@@ -20,27 +20,24 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "buttons.h"
 
 SkateLabel::SkateLabel(QString caption, QString add_style, bool centered)
-        : QLabel(caption)
-{
-    setStyleSheet("color: #86bc10; font-size:24px; font-family:Adore64; text-align:center;"+add_style);
-
-        if(centered)
-                setAlignment(Qt::AlignCenter);
-
+        : QLabel(caption) {
+    setStyleSheet("color: #86bc10;"
+        "font-size:20px;font-family:Adore64;text-align:center;"
+        "font-weight:normal;font-style:normal;"
+        + add_style);
+    if(centered) setAlignment(Qt::AlignCenter);
 }
 
 
 
 AnimatedButton::AnimatedButton(QString caption, QString iname, QList<int> timeIntervals, QString addStyle)
-        : QPushButton(caption), timeLine(timeIntervals), image_name(iname), add_style(addStyle)
-{
-    base_style = "margin:0px; height: 74px; color: #86bc10; background-color: transparent; font-family:Adore64;font-size:28px; background-repeat:no-repeat; background-position: center;";
+        : QPushButton(caption), timeLine(timeIntervals), image_name(iname), add_style(addStyle) {
     setFlat(true);
     connect(&timeLine, SIGNAL(frameChanged(int)), this, SLOT(updateImage(int)));
 }
 
 void AnimatedButton::updateImage(int frame) {
-    setStyleSheet(base_style + "background-image: url(" + get_image_name(frame)
+    setStyleSheet("background-image: url(" + get_image_name(frame)
                   + ");" + add_style);
 }
 
@@ -57,13 +54,9 @@ void AnimatedButton::stop() {
     timeLine.stop();
 }
 
-ShinyButton::ShinyButton(QString caption, QString image_name, QString addStyle) : QPushButton(caption)
-{
+ShinyButton::ShinyButton(QString caption, QString image_name, QString addStyle) : QPushButton(caption) {
     setFlat(true);
-    setStyleSheet("QPushButton{color: rgba(200,200,200,128); margin:0px; height: 65px; background-color: transparent; font-family:Adore64; font-size:24px; background-repeat:no-repeat; background-position: center; background-image: url(:/buttons/"+image_name+".png);"+addStyle+"}"
-                  +"QPushButton:checked{color: #86bc10;}"
-                  +"QPushButton:pressed{color: #86bc10;}");
-
+    setStyleSheet("background-image: url(:/buttons/"+image_name+".png);"+addStyle);
 }
 
 
@@ -72,16 +65,15 @@ TogglePushButton::TogglePushButton(QString caption, bool initialState, QString i
     state = initialState;
     image_name = image_name;
     setFlat(true);
-    base_style = "height: 74px; background-color: transparent; font-size:28px;font-family:Adore64; color: #86bc10; background-repeat:no-repeat; background-position: center;";
     update_style();
 }
 
 void TogglePushButton::update_style()
 {
         if(state)
-            setStyleSheet(base_style+"background-image: url(:/buttons/"+image_name+"_on.png);color: #86bc10;");
+            setStyleSheet("background-image: url(:/buttons/"+image_name+"_on.png);color: #86bc10;");
         else
-            setStyleSheet(base_style+"background-image: url(:/buttons/"+image_name+"_off.png);color: #324606;");
+            setStyleSheet("background-image: url(:/buttons/"+image_name+"_off.png);color: #324606;");
 }
 
 bool TogglePushButton::toggle_state()

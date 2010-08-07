@@ -3,7 +3,8 @@
 
 HighscoreScreen::HighscoreScreen(Highscore *highscore, QWidget *parent):
         QFrame(parent), highscore(highscore) {
-    setStyleSheet("HighscoreScreen {background-image: url(:/backgrounds/highscore.png);"
+    qDebug() << "Building highscore screen...";
+    setStyleSheet("HighscoreScreen {background-image: url(:/backgrounds/highscore_new.png);"
       "background-repeat: no-repeat; background-position: top left;"
       "background-color: black;}");
     layout = new QHBoxLayout();
@@ -12,11 +13,11 @@ HighscoreScreen::HighscoreScreen(Highscore *highscore, QWidget *parent):
     buttonBack = new ShinyButton("back", "small", "width:178;");
     vbox1 = new QVBoxLayout();
     vbox1->addWidget(buttonBack);
-    vbox1->addItem(new QSpacerItem(0,0,QSizePolicy::Minimum,QSizePolicy::Expanding));
+    vbox1->addStretch();
     layout->addLayout(vbox1);
 
-    highscorelabel = new SkateLabel(" ","font-size: 30px;margin-right: 3px;");
-    layout->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
+    highscorelabel = new SkateLabel(" ","font-size: 26px;margin-right: 15px;");
+    layout->addStretch();
     layout->addWidget(highscorelabel);
 
     connect(buttonBack, SIGNAL(clicked()), this, SIGNAL(backPressed()));

@@ -47,7 +47,7 @@ protected:
 private:
     TimeLine timeLine;
     QString	 image_name;
-    QString	 add_style, base_style;
+    QString	 add_style;
 };
 
 
@@ -73,7 +73,7 @@ protected:
 
 private:
     QString	image_name;
-    QString	add_style, base_style;
+    QString	add_style;
     bool state;
 };
 #endif // BUTTONS_H

@@ -23,30 +23,28 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 SingleplayerScreen::SingleplayerScreen(QWidget *parent) :
     QFrame(parent)
 {
-    qDebug("Build singleplayer window");
-    setStyleSheet("SingleplayerScreen {background-image: url(:/backgrounds/singleplayer.png); background-color: black;}");
+    qDebug() << "Building singleplayer screen...";
+    setStyleSheet("SingleplayerScreen {background-image: url(:/backgrounds/singleplayer_new.png); background-color: black;}");
 
     QVBoxLayout* layout = new QVBoxLayout();
     setLayout(layout);
+    layout->setSpacing(10);
+
     ShinyButton* buttonBack = new ShinyButton("back", "small", "width:178;");
     QHBoxLayout* hbox1 = new QHBoxLayout();
     hbox1->addWidget(buttonBack);
-    hbox1->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
+    hbox1->addStretch();
     layout->addLayout(hbox1);
 
-    layout->addWidget(new QLabel(""));
     ShinyButton* buttonChallenge = new ShinyButton("challenge","big");
     layout->addWidget(buttonChallenge);
     ShinyButton* buttonFreestyle = new ShinyButton("freestyle","big");
     layout->addWidget(buttonFreestyle);
     ShinyButton* buttonHighscore = new ShinyButton("highscore","big");
     layout->addWidget(buttonHighscore);
-    layout->addWidget(new QLabel(""));
-    layout->addWidget(new QLabel(""));
 
     connect(buttonBack,         SIGNAL(clicked()), this, SIGNAL(backPressed()));
     connect(buttonChallenge,    SIGNAL(clicked()), this, SIGNAL(challendePressed()));
     connect(buttonFreestyle,    SIGNAL(clicked()), this, SIGNAL(freestylePressed()));
     connect(buttonHighscore,    SIGNAL(clicked()), this, SIGNAL(highscorePressed()));
-
 }

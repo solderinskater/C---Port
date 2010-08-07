@@ -19,5 +19,19 @@
         <file>anims/rauchmonster05.png</file>
         <file>anims/rauchmonster06.png</file>
         <file>anims/rauchmonster07.png</file>
+        <file>buttons/multiplayer_new.png</file>
+        <file>buttons/singleplayer_new.png</file>
+        <file>backgrounds/highscore_new.png</file>
+        <file>backgrounds/highscore_prev.png</file>
+        <file>backgrounds/pause_new.png</file>
+        <file>backgrounds/pause_prev.png</file>
+        <file>backgrounds/play_new.png</file>
+        <file>backgrounds/play_prev.png</file>
+        <file>backgrounds/settings_new.png</file>
+        <file>backgrounds/settings_prev.png</file>
+        <file>backgrounds/singleplayer_new.png</file>
+        <file>backgrounds/singleplayer_prev.png</file>
+        <file>backgrounds/start_new.png</file>
+        <file>backgrounds/start_prev.png</file>
     </qresource>
 </RCC>

@@ -1,11 +1,20 @@
-QLabel 
-{
+QPushButton {
+	color: #86bc10;
+	margin:0px;
+  height: 72px;
+	font-family:Adore64;
+	font-size:22px;
+  background-repeat:no-repeat;
+  background-position: center;
+  background-color: transparent;
+}
+
+QLabel {
 	background-color: Transparent;
 	background-image: none;
-	color: Green;
-	font-size:46px;
-	font-style:oblique;
-	font-weight:bold; 
+	color: #86bc10;
+	font-family:Adore64;
+	text-align:center;
 }
 
 Graph { 

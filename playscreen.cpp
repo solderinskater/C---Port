@@ -22,9 +22,9 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 PlayScreen::PlayScreen(QWidget *parent)
         : QFrame(parent)
 {
-        qDebug("Build play window");
+        qDebug() << "Building play screen...";
 
-        setStyleSheet("PlayScreen {background-image: url(:/backgrounds/play.png); background-color : black; }");
+        setStyleSheet("PlayScreen {background-image: url(:/backgrounds/play_new.png); background-color : black; }");
 
         layout = new QVBoxLayout();
         setLayout(layout);
@@ -33,15 +33,15 @@ PlayScreen::PlayScreen(QWidget *parent)
 
         hbox1		= new QHBoxLayout();
         hbox1->addWidget(buttonBack);
-        spacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding);
-        hbox1->addItem(spacer);
+        hbox1->addStretch();
         layout->addLayout(hbox1);
+        layout->addSpacing(20);
 
         hbox2 = new QHBoxLayout();
-        buttonSingle = new ShinyButton("singleplayer", "singleplayer", "padding-top:195px; height: 293px;");
+        buttonSingle = new ShinyButton("singleplayer", "singleplayer_new", "padding-top:187px; height: 255px;");
         hbox2->addWidget(buttonSingle);
 
-        buttonMulti = new ShinyButton("multiplayer", "multiplayer", "padding-top:195px; height: 293px;");
+        buttonMulti = new ShinyButton("multiplayer", "multiplayer_new", "padding-top:187px; height: 255px;");
         hbox2->addWidget(buttonMulti);
         layout->addLayout(hbox2);
 

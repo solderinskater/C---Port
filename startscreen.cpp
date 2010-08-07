@@ -24,9 +24,10 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 StartScreen::StartScreen(QWidget *parent) :
     QFrame(parent)
 {
-    setStyleSheet("StartScreen {background-image: url(:/backgrounds/start.jpg); background-color: black;}");
+    qDebug() << "Building start screen...";
+    setStyleSheet("StartScreen {background-image: url(:/backgrounds/start_new.png); background-color: black;}");
 
-        QBoxLayout *layout = new QBoxLayout(QBoxLayout::TopToBottom);
+        QVBoxLayout *layout = new QVBoxLayout();
         setLayout(layout);
 
         ShinyButton *buttonPlay     = new ShinyButton("play","big");
@@ -39,15 +40,10 @@ StartScreen::StartScreen(QWidget *parent) :
         connect(buttonQuit,     SIGNAL(clicked()), this, SIGNAL(quitPressed()));
         connect(buttonSimul,     SIGNAL(clicked()), this, SIGNAL(simulPressed()));
 
-        QSpacerItem* spacer = new QSpacerItem(640, 250, QSizePolicy::Fixed, QSizePolicy::Fixed);
-//        layout->addWidget(new QLabel(""));
-//        layout->addWidget(new QLabel(""));
-//        layout->addWidget(new QLabel(""));
-        layout->insertSpacerItem(0,spacer);
+        layout->setSpacing(10);
+        layout->addSpacing(105);
         layout->addWidget(buttonPlay);
         layout->addWidget(buttonSettings);
-//        layout->addWidget(buttonQuit);
         layout->addWidget(buttonSimul);
-//        layout->addWidget(new QLabel(""));
-
+        layout->addStretch();
 }

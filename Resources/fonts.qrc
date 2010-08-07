@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>fonts/Adore64.ttf</file>
+    </qresource>
+</RCC>

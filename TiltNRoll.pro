@@ -79,7 +79,8 @@ HEADERS  += \
     newmat/controlw.h \
     newmat/boolean.h \
     trickdetector.h \
-    IOCapture.h
+    IOCapture.h \
+    documentation.h
 
 CONFIG += mobility
 MOBILITY = systeminfo
@@ -96,7 +97,8 @@ RESOURCES += \
     Resources/tnr.qrc \
     Resources/images.qrc \
     Resources/sounds.qrc \
-    Resources/simulator/Simulator.qrc
+    Resources/simulator/Simulator.qrc \
+    Resources/fonts.qrc
 
 OTHER_FILES += \
     .gitignore \

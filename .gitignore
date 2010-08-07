@@ -10,3 +10,5 @@ rcc
 *.user
 *.sis
 hours_private.txt
+moc_*.cpp
+qrc_*.cpp

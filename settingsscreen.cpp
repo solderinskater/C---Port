@@ -23,10 +23,9 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 SettingsScreen::SettingsScreen(QWidget *parent)
         : QFrame(parent)
 {
-        qDebug("Build settings window");
+        qDebug() << "Building settings screen...";
 
-        setStyleSheet("SettingsScreen {background-image: url(:/backgrounds/settings.png); background-color: black;}"+
-                      QString("QLabel {color: #86bc10;font-size:24px; font-family:Adore64;}"));
+        setStyleSheet("SettingsScreen {background-image: url(:/backgrounds/settings_new.png); background-color: black;}");
 
         QVBoxLayout* layout = new QVBoxLayout();
         setLayout(layout);
@@ -36,12 +35,11 @@ SettingsScreen::SettingsScreen(QWidget *parent)
 
         hbox1 = new QHBoxLayout();
         hbox1->addWidget(buttonBack);
-        hbox1->addItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
+        hbox1->addStretch();
         QLabel* caption = new QLabel("settings");
         caption->setStyleSheet("font-size:35px; padding: 0px; margin: 0px 53px 21px 0px;");
         hbox1->addWidget(caption);
         layout->addLayout(hbox1);
-
 
         QLabel* music = new QLabel("Music Style");
         music->setStyleSheet("font-size:30px; margin-left:30px");
@@ -84,21 +82,7 @@ SettingsScreen::SettingsScreen(QWidget *parent)
         stance->addWidget(buttonGoofy);
         layout->addLayout(stance);
 
-//        connect(buttonRegular, SIGNAL("clicked()"), buttonGoofy.toggle_state);
-//        connect(buttonGoofy, SIGNAL("clicked()"), buttonRegular.toggle_state);
-
-//        networklabel = QLabel("Social Networks");
-//        networklabel->setStyleSheet("font-size:30px; margin-left:40px");
-//        layout->addWidget(networklabel);
-//        networks = QHBoxLayout();
-//        buttonTwitter  = TogglePushButton("share on twitter", parent->Twitter, "shareOnTwitter");
-
-//        networks->addWidget(buttonTwitter);
-//        layout->addLayout(networks);
-
-//        layout->addWidget(QLabel(""));
-
-    loadSettings();
+        loadSettings();
 }
 
 
