@@ -43,6 +43,10 @@ public:
         buf[tail%buf.size()] = sample;
         tail++;
     }
+    void print() const
+    {
+        qDebug() << buf;
+    }
 
     Matrix getBuffer() const
     {
@@ -93,6 +97,7 @@ private:
     RingBuffer buffer;
     bool m_isInit;
     double bias;
+    int curSmp;
 };
 
 #endif // TRICKDETECTOR_H

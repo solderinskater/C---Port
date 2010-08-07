@@ -76,7 +76,7 @@ void TrickSimulator::open()
         while(!line.isNull())
         {
             lda_w << line.toDouble();
-            line = stream.readLine();
+            line = stream2.readLine();
         }
     }
     f.close();
