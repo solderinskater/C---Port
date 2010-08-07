@@ -26,6 +26,9 @@ SkateLabel::SkateLabel(QString caption, QString add_style, bool centered)
         "font-weight:normal;font-style:normal;"
         + add_style);
     if(centered) setAlignment(Qt::AlignCenter);
+    QPalette p(qApp->palette());
+    p.setColor(QPalette::Text,QColor(0,0,0,0));
+    setPalette(p);
 }
 
 
@@ -34,11 +37,17 @@ AnimatedButton::AnimatedButton(QString caption, QString iname, QList<int> timeIn
         : QPushButton(caption), timeLine(timeIntervals), image_name(iname), add_style(addStyle) {
     setFlat(true);
     connect(&timeLine, SIGNAL(frameChanged(int)), this, SLOT(updateImage(int)));
+    QPalette p(qApp->palette());
+    p.setColor(QPalette::Text,QColor(0,0,0,0));
+    setPalette(p);
 }
 
 void AnimatedButton::updateImage(int frame) {
     setStyleSheet("background-image: url(" + get_image_name(frame)
                   + ");" + add_style);
+    QPalette p(qApp->palette());
+    p.setColor(QPalette::Text,QColor(0,0,0,0));
+    setPalette(p);
 }
 
 QString AnimatedButton::get_image_name(int num) {
@@ -57,47 +66,50 @@ void AnimatedButton::stop() {
 ShinyButton::ShinyButton(QString caption, QString image_name, QString addStyle) : QPushButton(caption) {
     setFlat(true);
     setStyleSheet("background-image: url(:/buttons/"+image_name+".png);"+addStyle);
+    QPalette p(qApp->palette());
+    p.setColor(QPalette::Text,QColor(0,0,0,0));
+    setPalette(p);
 }
 
 
-TogglePushButton::TogglePushButton(QString caption, bool initialState, QString image_name) : QPushButton(caption)
-{
-    state = initialState;
-    image_name = image_name;
-    setFlat(true);
-    update_style();
-}
+//TogglePushButton::TogglePushButton(QString caption, bool initialState, QString image_name) : QPushButton(caption)
+//{
+//    state = initialState;
+//    image_name = image_name;
+//    setFlat(true);
+//    update_style();
+//}
 
-void TogglePushButton::update_style()
-{
-        if(state)
-            setStyleSheet("background-image: url(:/buttons/"+image_name+"_on.png);color: #86bc10;");
-        else
-            setStyleSheet("background-image: url(:/buttons/"+image_name+"_off.png);color: #324606;");
-}
+//void TogglePushButton::update_style()
+//{
+//        if(state)
+//            setStyleSheet("background-image: url(:/buttons/"+image_name+"_on.png);color: #86bc10;");
+//        else
+//            setStyleSheet("background-image: url(:/buttons/"+image_name+"_off.png);color: #324606;");
+//}
 
-bool TogglePushButton::toggle_state()
-{
-        state = !state;
-        update_style();
-        return state;
-}
+//bool TogglePushButton::toggle_state()
+//{
+//        state = !state;
+//        update_style();
+//        return state;
+//}
 
-bool TogglePushButton::is_active()
-{
-        return state;
-}
+//bool TogglePushButton::is_active()
+//{
+//        return state;
+//}
 
-void TogglePushButton::set_state(bool on)
-{
-        state = on;
-        update_style();
-}
+//void TogglePushButton::set_state(bool on)
+//{
+//        state = on;
+//        update_style();
+//}
 
-void TogglePushButton::mousePressEvent(QMouseEvent *e)
-{
-        if(e->button() == Qt::LeftButton)
-                toggle_state();
+//void TogglePushButton::mousePressEvent(QMouseEvent *e)
+//{
+//        if(e->button() == Qt::LeftButton)
+//                toggle_state();
 
-        QPushButton::mousePressEvent(e);
-}
+//        QPushButton::mousePressEvent(e);
+//}

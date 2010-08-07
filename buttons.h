@@ -59,21 +59,21 @@ public:
 
 
 
-class TogglePushButton : public QPushButton {
-public:
-    TogglePushButton(QString caption, bool initialState=false, QString image_name="toggle");
+//class TogglePushButton : public QPushButton {
+//public:
+//    TogglePushButton(QString caption, bool initialState=false, QString image_name="toggle");
 
-    void update_style();
-    bool toggle_state();
-    bool is_active();
-    void set_state(bool on);
+//    void update_style();
+//    bool toggle_state();
+//    bool is_active();
+//    void set_state(bool on);
 
-protected:
-    void mousePressEvent(QMouseEvent *e);
+//protected:
+//    void mousePressEvent(QMouseEvent *e);
 
-private:
-    QString	image_name;
-    QString	add_style;
-    bool state;
-};
+//private:
+//    QString	image_name;
+//    QString	add_style;
+//    bool state;
+//};
 #endif // BUTTONS_H

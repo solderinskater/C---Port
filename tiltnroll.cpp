@@ -32,6 +32,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 TiltNRoll::TiltNRoll(QWidget *parent)
         : QStackedWidget(parent), m_channel(0), m_embedded(true)
 {
+
     // start screen (tab 0)
     StartScreen *s0 = new StartScreen();
     addWidget(s0);
@@ -96,6 +97,9 @@ TiltNRoll::TiltNRoll(QWidget *parent)
    //setStyle(new QPlastiqueStyle());
     qApp->setOverrideCursor(Qt::BlankCursor);
     setWindowState(Qt::WindowFullScreen);
+
+
+
     onStart();
 }
 
