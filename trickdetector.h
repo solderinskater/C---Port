@@ -22,6 +22,8 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 
 #include <QtCore>
 #include <newmat/newmatap.h>
+#include <DTW/dtw.h>
+
 
 class RingBuffer {
 public:
@@ -38,7 +40,7 @@ public:
 
     bool isFilled() const { return tail>=buf.size(); }
 
-    void add(QList<double> sample)
+    void add(QList<int> sample)
     {
         buf[tail%buf.size()] = sample;
         tail++;
@@ -57,7 +59,7 @@ public:
         int c=1;
         for(int i=0; i<buf.size(); i++)
             for(int j=0; j<buf[0].size(); j++) {
-                int bs = buf.size();
+//                int bs = buf.size();
                 int ls = buf[(i+tail)%buf.size()].size();
                 if(ls!=buf[0].size())
                     m(c++,1) = 0;
@@ -67,9 +69,21 @@ public:
         return m;
     }
 
+    QList<int> getChannel(int ch) {
+        QList<int> v;
+        int bs = buf.size();
+        int bs2 = buf[0].size();
+
+        for(int i=0; i<buf.size(); i++)
+            v << buf[(i+tail)%buf.size()][ch];
+//        for(int i=0; i<buf.size(); i++)
+//            v << buf[i].at(ch+1);
+        return v;
+    }
+
 private:
     int tail;
-    QVector<QList<double> > buf;
+    QVector<QList<int> > buf;
     bool m_isFilled;
 };
 
@@ -93,6 +107,7 @@ protected:
     void classify();
 
 private:
+    DTW dtw;
     Matrix W;
     RingBuffer buffer;
     bool m_isInit;

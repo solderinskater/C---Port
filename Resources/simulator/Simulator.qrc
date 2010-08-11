@@ -2,5 +2,9 @@
     <qresource prefix="/simulator">
         <file>lenny_ollie_vs_180_new.lda</file>
         <file>ollie_a.csv</file>
+        <file>tmpl_ollie.csv</file>
+        <file>tmpl_180.csv</file>
+        <file>shoveit_b.csv</file>
+        <file>ollie_b.csv</file>
     </qresource>
 </RCC>
