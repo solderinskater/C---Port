@@ -8,6 +8,7 @@
 class TrickData
 {
 public:
+    TrickData();
     static TrickData* instance();
 
     static int getPoints(QString trickid);
