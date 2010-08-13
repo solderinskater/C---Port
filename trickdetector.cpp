@@ -29,7 +29,7 @@ TrickDetector* TrickDetector::instance()
 }
 
 TrickDetector::TrickDetector(QObject *parent) :
-        QObject(parent), W(100,1), m_isInit(false), buffer(10)
+        QObject(parent), W(100,1), buffer(10),  m_isInit(false)
 {
     bias = 0.0;
 }
@@ -52,7 +52,6 @@ void TrickDetector::init(QList<double> weightVector)
 void TrickDetector::addSample(QString smp)
 {
     static RingBuffer buf(40);
-    static double cnt = 0;
     if(!m_isInit)
     {
         qDebug("[TrickDetector] Set a weight vector first!");
@@ -111,9 +110,9 @@ void TrickDetector::classify()
     DTWResult res2 = dtw.classify(tmpl2, window);
     DTWResult res3 = dtw.classify(tmplNeutral.toList(), window);
 
-    double score = res.distance;
-    double ratio = (double)res.distance / res2.distance;
-    double ratioInv = (double)res2.distance / res.distance;
+    //double score = res.distance;
+    //double ratio = (double)res.distance / res2.distance;
+    //double ratioInv = (double)res2.distance / res.distance;
 
     if(refrac > 140) {
         if(res3.distance< qMin(res.distance,res2.distance))
@@ -121,16 +120,18 @@ void TrickDetector::classify()
         else if(res.distance<res2.distance && res.distance <30000) {
             qDebug("N: %d / ScoreCorr: %.4f / ScoreFalse: %.4f / Smp: %d  [ShoveIt 180]",1, res.distance,res2.distance,curSmp);
             refrac = 0;
+            emit trickEvent("ShoveIt 180");
         }
         else if(res2.distance<res.distance && res2.distance <30000){
             qDebug("N: %d / ScoreCorr: %.4f / ScoreFalse: %.4f / Smp: %d  [Ollie]",1, res.distance,res2.distance,curSmp);
             refrac = 0;
+            emit trickEvent("Ollie");
         }
 
 //        qDebug() << tmpl;
 //        qDebug() << tmpl2;
 //        qDebug() << window;
-        emit trickEvent("Ollie");
+
     }
 
     refrac++;

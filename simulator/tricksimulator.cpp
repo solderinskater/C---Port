@@ -75,7 +75,6 @@ void TrickSimulator::open()
         QTextStream stream3(&f3);
         QTextStream stream4(&f4);
         QString line = stream.readLine();
-        int cl = 1;
         while(!line.isNull())
         {
             dataStr << line;

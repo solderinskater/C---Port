@@ -71,8 +71,6 @@ public:
 
     QList<int> getChannel(int ch) {
         QList<int> v;
-        int bs = buf.size();
-        int bs2 = buf[0].size();
 
         for(int i=0; i<buf.size(); i++)
             v << buf[(i+tail)%buf.size()][ch];
