@@ -32,6 +32,8 @@ using namespace NEWMAT;              // access NEWMAT namespace
 #include <IOCapture.h>
 #include <trickdetector.h>
 
+Q_DECLARE_METATYPE(QList<int>)
+
 class TrickSimulator : public IOCapture
 {
     Q_OBJECT
@@ -61,6 +63,8 @@ private:
     QList<QList<int> > data;
     QStringList dataStr;
     QList<double> ldaW;
+    QVariantList tmpl_ollie;
+    QVariantList tmpl_180;
     QTimer timer;
     bool m_isOpen;
     int m_curSample;

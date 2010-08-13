@@ -24,6 +24,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 TrickSimulator* TrickSimulator::instance()
 {
     static TrickSimulator* inst = 0;
+
     if(!inst)
         inst = new TrickSimulator;
     return inst;
@@ -57,19 +58,29 @@ QWidget* TrickSimulator::widget()
 void TrickSimulator::open()
 {
     qDebug("loading trick data and classifier");
-    QFile f(":/simulator/ollie_a.csv");
+//    QFile f(":/simulator/ollie_b.csv");
+    QFile f(":/simulator/shoveit_b.csv");
     QFile f2(":/simulator/lenny_ollie_vs_180_new.lda");
+    QFile f3(":/simulator/tmpl_ollie.csv");
+    QFile f4(":/simulator/tmpl_180.csv");
     QList<double> lda_w;
     if(f.open(QIODevice::ReadOnly|QIODevice::Text) &&
-       f2.open(QIODevice::ReadOnly|QIODevice::Text))
+       f2.open(QIODevice::ReadOnly|QIODevice::Text) &&
+       f3.open(QIODevice::ReadOnly|QIODevice::Text) &&
+       f4.open(QIODevice::ReadOnly|QIODevice::Text)
+            )
     {
         QTextStream stream(&f);
         QTextStream stream2(&f2);
+        QTextStream stream3(&f3);
+        QTextStream stream4(&f4);
         QString line = stream.readLine();
+        int cl = 1;
         while(!line.isNull())
         {
             dataStr << line;
             line = stream.readLine();
+//            qDebug() << "[Line "<<cl++<<"]   "<<line;
         }
 
         line= stream2.readLine();
@@ -78,9 +89,30 @@ void TrickSimulator::open()
             lda_w << line.toDouble();
             line = stream2.readLine();
         }
+
+        // Templates for DTW
+        line= stream3.readLine();
+        while(!line.isNull())
+        {
+            tmpl_ollie << (int)line.toDouble();
+            line = stream3.readLine();
+        }
+        line= stream4.readLine();
+        while(!line.isNull())
+        {
+            tmpl_180 << (int)line.toDouble();
+            line = stream4.readLine();
+        }
+
     }
     f.close();
     f2.close();
+    f3.close();
+    f4.close();
+
+    QSettings s("SolderinSkaters", "TiltNRoll");
+    s.setValue("Tricks/Ollie",tmpl_ollie);
+    s.setValue("Tricks/180",tmpl_180);
 
     /* Initialize trick detector */
     detector = TrickDetector::instance();
