@@ -91,6 +91,6 @@ void TrickDetector::classify()
 
     if(score>0) {
         qDebug("N: %d / Score: %.4f / Smp: %d",v.Nrows(), score,curSmp);
-        emit trickEvent("Ollie",0);
+        emit trickEvent("Ollie");
     }
 }

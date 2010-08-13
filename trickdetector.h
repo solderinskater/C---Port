@@ -73,6 +73,7 @@ private:
     bool m_isFilled;
 };
 
+/// Singleton class.
 class TrickDetector : public QObject
 {
     Q_OBJECT
@@ -83,7 +84,7 @@ public:
     void init(QList<double> weightVector);
 
 signals:
-    void trickEvent(QString, int);
+    void trickEvent(QString);
 
 public slots:
     void addSample(QString);

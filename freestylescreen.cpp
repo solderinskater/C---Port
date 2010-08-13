@@ -86,7 +86,8 @@ FreestyleScreen::FreestyleScreen(QWidget *parent) :
    //layout->addWidget(musicwidget);
 
     connect(&updateTimer, SIGNAL(timeout()), this, SLOT(updateTimeLabel()));
-    connect(TrickDetector::instance(), SIGNAL(trickEvent(QString, int)), this, SLOT(trickEvent(QString, int)));
+    connect(TrickDetector::instance(), SIGNAL(trickEvent(QString)),
+            this, SLOT(trickEvent(QString)));
     updateTimeLabel();
 }
 
@@ -135,10 +136,8 @@ void FreestyleScreen::updateTrickList() {
     }
 }
 
-void FreestyleScreen::trickEvent(QString trickid, int time)
+void FreestyleScreen::trickEvent(QString trickid)
 {
-    Q_UNUSED(time)
-
     if(isPaused())
         return;
 
