@@ -55,7 +55,7 @@ signals:
     void levelChanged(int);
 
 public slots:
-    void trickEvent(QString trickId, int time);
+    void trickEvent(QString trickId);
     void start();
     void pause();
     void finish();

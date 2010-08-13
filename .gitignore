@@ -12,3 +12,5 @@ rcc
 hours_private.txt
 moc_*.cpp
 qrc_*.cpp
+Resources/backgrounds/*_prev.png
+Resources/flo

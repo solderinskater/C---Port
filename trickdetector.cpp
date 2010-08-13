@@ -130,7 +130,7 @@ void TrickDetector::classify()
 //        qDebug() << tmpl;
 //        qDebug() << tmpl2;
 //        qDebug() << window;
-        emit trickEvent("Ollie",0);
+        emit trickEvent("Ollie");
     }
 
     refrac++;
