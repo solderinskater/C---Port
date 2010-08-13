@@ -29,7 +29,13 @@ TrainWidget::TrainWidget(QWidget *parent) :
     buttonBack = new ShinyButton("Back","small", "width:178;");
     buttonDel = new ShinyButton("Del","small", "width:178;");
 
-    connect(buttonBack,SIGNAL(clicked()), this, SIGNAL(backPressed()));
+
+    // for capture dlg;
+    startBtn = new QPushButton("Start");
+    capDlg = new QWidget(parent);
+    capGrid = new QGridLayout;
+    capGrid->addWidget(startBtn,0,0);
+    capDlg->setLayout(capGrid);
 
     QSettings s("SolderinSkaters", "TiltNRoll");
     s.beginGroup("Tricks");
@@ -45,5 +51,28 @@ TrainWidget::TrainWidget(QWidget *parent) :
     gridLayout->addWidget(buttonDel,5,1);
 
     setLayout(gridLayout);
+
+    connect(buttonBack,SIGNAL(clicked()), this, SIGNAL(backPressed()));
+    connect(buttonAdd,SIGNAL(clicked()), this, SLOT(showCaptureDlg()));
+
     show();
+}
+
+void TrainWidget::showCaptureDlg()
+{
+    qDebug("SDFSDFSD");
+    hide();
+    capDlg->showMaximized();
+}
+
+void TrainWidget::startClicked()
+{
+    if(startBtn->text()=="Start")
+        startBtn->setText("Stop");
+    else {
+        startBtn->setText("Start");
+        capDlg->hide();
+    }
+
+
 }

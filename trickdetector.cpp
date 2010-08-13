@@ -121,16 +121,17 @@ void TrickDetector::classify()
         else if(res.distance<res2.distance && res.distance <30000) {
             qDebug("N: %d / ScoreCorr: %.4f / ScoreFalse: %.4f / Smp: %d  [ShoveIt 180]",1, res.distance,res2.distance,curSmp);
             refrac = 0;
+            emit trickEvent("Shoveit");
         }
         else if(res2.distance<res.distance && res2.distance <30000){
             qDebug("N: %d / ScoreCorr: %.4f / ScoreFalse: %.4f / Smp: %d  [Ollie]",1, res.distance,res2.distance,curSmp);
             refrac = 0;
+            emit trickEvent("Ollie");
         }
 
 //        qDebug() << tmpl;
 //        qDebug() << tmpl2;
 //        qDebug() << window;
-        emit trickEvent("Ollie");
     }
 
     refrac++;

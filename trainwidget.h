@@ -34,6 +34,8 @@ signals:
     void backPressed();
 
 public slots:
+    void showCaptureDlg();
+    void startClicked();
 
 private:
     QListWidget* listWidget;
@@ -41,6 +43,10 @@ private:
     ShinyButton* buttonAdd;
     ShinyButton* buttonDel;
     ShinyButton* buttonBack;
+
+    QWidget* capDlg;
+    QGridLayout* capGrid;
+    QPushButton* startBtn;
 };
 
 #endif // TRAINWIDGET_H
