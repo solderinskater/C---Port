@@ -58,8 +58,8 @@ QWidget* TrickSimulator::widget()
 void TrickSimulator::open()
 {
     qDebug("loading trick data and classifier");
-//    QFile f(":/simulator/ollie_b.csv");
-    QFile f(":/simulator/shoveit_b.csv");
+    QFile f(":/simulator/ollie_b.csv");
+//    QFile f(":/simulator/shoveit_b.csv");
     QFile f2(":/simulator/lenny_ollie_vs_180_new.lda");
     QFile f3(":/simulator/tmpl_ollie.csv");
     QFile f4(":/simulator/tmpl_180.csv");

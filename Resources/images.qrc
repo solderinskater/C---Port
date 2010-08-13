@@ -27,5 +27,6 @@
         <file>backgrounds/settings_new.png</file>
         <file>backgrounds/singleplayer_new.png</file>
         <file>backgrounds/start_new.png</file>
+        <file>images/brushedmetal.png</file>
     </qresource>
 </RCC>

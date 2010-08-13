@@ -28,6 +28,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "highscorescreen.h"
 #include "highscore.h"
 #include <simulator/tricksimulator.h>
+#include "trainwidget.h"
 
 TiltNRoll::TiltNRoll(QWidget *parent)
         : QStackedWidget(parent), m_channel(0), m_embedded(true)
@@ -48,7 +49,8 @@ TiltNRoll::TiltNRoll(QWidget *parent)
     addWidget(s1);
 
     // settings screen (tab 2)
-    SettingsScreen *s2 = new SettingsScreen();
+    //SettingsScreen *s2 = new SettingsScreen();
+    TrainWidget *s2 = new TrainWidget;
     connect(s2, SIGNAL(backPressed()), this, SLOT(onStart()));
     addWidget(s2);
 

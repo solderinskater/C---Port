@@ -51,7 +51,8 @@ SOURCES += main.cpp\
     newmat/bandmat.cpp \
     trickdetector.cpp \
     trickdata.cpp \
-    DTW/dtw.cpp
+	DTW/dtw.cpp\
+    trainwidget.cpp
 
 HEADERS  += \
     startscreen.h \
@@ -83,8 +84,9 @@ HEADERS  += \
     trickdetector.h \
     IOCapture.h \
     documentation.h \
-    trickdata.h \
-    DTW/dtw.h
+    DTW/dtw.h \
+	trickdata.h\
+    trainwidget.h
 
 CONFIG += mobility
 MOBILITY = systeminfo
