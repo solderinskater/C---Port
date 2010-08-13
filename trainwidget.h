@@ -40,6 +40,7 @@ private:
     QGridLayout* gridLayout;
     ShinyButton* buttonAdd;
     ShinyButton* buttonDel;
+    ShinyButton* buttonBack;
 };
 
 #endif // TRAINWIDGET_H

@@ -26,18 +26,23 @@ TrainWidget::TrainWidget(QWidget *parent) :
 
     listWidget = new QListWidget;
     buttonAdd = new ShinyButton("Add","small", "width:178;");
+    buttonBack = new ShinyButton("Back","small", "width:178;");
     buttonDel = new ShinyButton("Del","small", "width:178;");
 
-    listWidget->addItem("GFDFGDF");
-    listWidget->addItem("GFDFGDF");
-    listWidget->addItem("GFDFGDF");
-    listWidget->addItem("GFDFGDF");
-    listWidget->addItem("GFDFGDF");
-    listWidget->addItem("GFDFGDF");
+    connect(buttonBack,SIGNAL(clicked()), this, SIGNAL(backPressed()));
 
-    gridLayout->addWidget(listWidget,0,0,4,1);
-    gridLayout->addWidget(buttonAdd,0,1);
-    gridLayout->addWidget(buttonDel,3,1);
+    QSettings s("SolderinSkaters", "TiltNRoll");
+    s.beginGroup("Tricks");
+    QStringList tricks = s.childKeys();
+
+    foreach(QString s, tricks)
+        listWidget->addItem(s);
+
+    gridLayout->addWidget(new QLabel("Known Tricks"), 0,0,1,2);
+    gridLayout->addWidget(listWidget,1,0,5,1);
+    gridLayout->addWidget(buttonAdd,4,1);
+    gridLayout->addWidget(buttonBack,1,1);
+    gridLayout->addWidget(buttonDel,5,1);
 
     setLayout(gridLayout);
     show();

@@ -45,7 +45,7 @@ QGroupBox::title {
 QGroupBox[isMetallic=true] {
     color: black;
     background-color: white;
-    background-image: url(:/brushedmetal.png);
+    background-image: url(:/images/brushedmetal.png);
 }
 
 QGroupBox QLabel {
@@ -55,3 +55,9 @@ QGroupBox QLabel {
 QGroupBox[isMetallic=true] QLabel {
     color: black;
 }
+
+ QTextEdit, QListView {
+     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb(116, 116, 118), stop:1 rgb(59, 57, 60));
+
+     background-attachment: scroll;
+ }
