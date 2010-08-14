@@ -52,7 +52,8 @@ SOURCES += main.cpp\
     trickdetector.cpp \
     trickdata.cpp \
 	DTW/dtw.cpp\
-    trainwidget.cpp
+    trainwidget.cpp \
+    trainpage.cpp
 
 HEADERS  += \
     startscreen.h \
@@ -86,7 +87,9 @@ HEADERS  += \
     documentation.h \
     DTW/dtw.h \
 	trickdata.h\
-    trainwidget.h
+    trainwidget.h \
+    trainpage.h \
+    ringbuffer.h
 
 CONFIG += mobility
 MOBILITY = systeminfo

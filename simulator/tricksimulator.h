@@ -42,6 +42,7 @@ public:
     ~TrickSimulator();
     QWidget* widget();
     QString errorString(){return QString(""); }
+    void setEnableClassification(bool yes=true) { doClassify = yes; }
 
 signals:
     void backPressed();
@@ -70,6 +71,7 @@ private:
     int m_curSample;
     QWidget* m_widget;
     TrickDetector* detector;
+    bool doClassify;
 };
 
 #endif // TRICKSIMULATOR_H

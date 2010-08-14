@@ -30,7 +30,8 @@ TrickSimulator* TrickSimulator::instance()
     return inst;
 }
 
-TrickSimulator::TrickSimulator(QWidget *parent) : m_curSample(0)
+TrickSimulator::TrickSimulator(QWidget *parent) :
+        m_curSample(0), doClassify(true)
 {
     m_widget = new QWidget(parent);
     QFormLayout* la = new QFormLayout(m_widget);
@@ -109,15 +110,17 @@ void TrickSimulator::open()
     f3.close();
     f4.close();
 
-    QSettings s("SolderinSkaters", "TiltNRoll");
-    s.setValue("Tricks/Ollie",tmpl_ollie);
-    s.setValue("Tricks/180",tmpl_180);
+//    QSettings s("SolderinSkaters", "TiltNRoll");
+//    s.setValue("Tricks/Ollie",tmpl_ollie);
+//    s.setValue("Tricks/180",tmpl_180);
 
     /* Initialize trick detector */
-    detector = TrickDetector::instance();
-    detector->init(lda_w);
-    connect(this, SIGNAL(dataCaptured(QString)),
-            detector, SLOT(addSample(QString)));
+    if(doClassify) {
+        detector = TrickDetector::instance();
+        detector->init();
+        connect(this, SIGNAL(dataCaptured(QString)),
+                detector, SLOT(addSample(QString)));
+    }
 
     /* start streaming */
     start();
@@ -125,6 +128,7 @@ void TrickSimulator::open()
 void TrickSimulator::close()
 {
     timer.stop();
+    m_curSample = 0;
 }
 
 void TrickSimulator::start()

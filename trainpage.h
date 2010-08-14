@@ -17,63 +17,29 @@ You should have received a copy of the GNU General Public License
 along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TRAINWIDGET_H
-#define TRAINWIDGET_H
+#ifndef TRAINPAGE_H
+#define TRAINPAGE_H
 
-#include <QWidget>
 #include <QtGui>
-#include "buttons.h"
+#include "trainwidget.h"
 
-class RecordWidget : public QWidget
+class TrainPage : public QWidget
 {
     Q_OBJECT
 public:
-    explicit RecordWidget(QWidget *parent = 0);
-
-signals:
-    void trickTrained();
-
-public slots:
-    void startClicked();
-
-protected slots:
-    void checkInput(const QString&);
-    void addData(QString);
-
-protected:
-    bool trainTrick();
-    void showEvent ( QShowEvent * event );
-    void extractTrick();
-
-private:
-    QGridLayout* capGrid;
-    ShinyButton* startBtn;
-    QLineEdit* nameEdit;
-    QList<QList<int> > recordedData;
-    QLabel* statusLabel;
-};
-
-class TrainWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit TrainWidget(QWidget *parent = 0);
+    explicit TrainPage(QWidget *parent = 0);
 
 signals:
     void backPressed();
-    void startCapture();
 
 public slots:
-    void updateTrickList();
-    void deleteTrick();
+    void addPressed();
+    void trainingDone();
 
 private:
-    QListWidget* listWidget;
-    QGridLayout* gridLayout;
-    ShinyButton* buttonAdd;
-    ShinyButton* buttonDel;
-    ShinyButton* buttonBack;
-
+    TrainWidget* train;
+    RecordWidget* record;
+    QStackedLayout* layout;
 };
 
-#endif // TRAINWIDGET_H
+#endif // TRAINPAGE_H

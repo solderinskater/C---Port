@@ -17,45 +17,34 @@ You should have received a copy of the GNU General Public License
 along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TRICKDETECTOR_H
-#define TRICKDETECTOR_H
+#include "trainpage.h"
 
-#include <QtCore>
-#include <newmat/newmatap.h>
-#include <DTW/dtw.h>
-#include "ringbuffer.h"
-
-
-
-/// Singleton class.
-class TrickDetector : public QObject
+TrainPage::TrainPage(QWidget *parent) :
+    QWidget(parent)
 {
-    Q_OBJECT
+    layout = new QStackedLayout(this);
 
-public:
-    static TrickDetector* instance();
+    train = new TrainWidget;
+    record = new RecordWidget;
 
-    void init();
+    connect(record,SIGNAL(trickTrained()), this, SLOT(trainingDone()));
+    connect(record,SIGNAL(trickTrained()), train, SLOT(updateTrickList()));
+    connect(train,SIGNAL(backPressed()), this, SIGNAL(backPressed()));
+    connect(train,SIGNAL(startCapture()), this, SLOT(addPressed()));
 
-signals:
-    void trickEvent(QString);
+    layout->addWidget(train);
+    layout->addWidget(record);
 
-public slots:
-    void addSample(QString);
+    layout->setCurrentWidget(train);
+}
 
-protected:
-    TrickDetector(QObject *parent = 0);
-    void classify();
+void TrainPage::addPressed()
+{
+    qDebug("fgfdgdfg");
+    layout->setCurrentWidget(record);
+}
 
-private:
-    DTW dtw;
-    Matrix W;
-    RingBuffer buffer;
-    bool m_isInit;
-    double bias;
-    int curSmp;
-    QMap<QString, QList<int> > knownTricks;
-    int trickLength;
-};
-
-#endif // TRICKDETECTOR_H
+void TrainPage::trainingDone()
+{
+    layout->setCurrentWidget(train);
+}

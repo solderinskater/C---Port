@@ -6,5 +6,6 @@
         <file>tmpl_180.csv</file>
         <file>shoveit_b.csv</file>
         <file>ollie_b.csv</file>
+        <file>shoveit_segment.csv</file>
     </qresource>
 </RCC>
