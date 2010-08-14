@@ -24,22 +24,6 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include <QMap>
 #include <QStringList>
 
-//class Trick
-//{
-//public:
-//    Trick(QString name, int points)
-//        : m_name(name), m_points(points)
-//    {
-//    }
-
-//    QString name() const { return m_name; }
-//    int points() const { return m_points; }
-
-//private:
-//    QString m_name;
-//    int m_points;
-//};
-
 class FreestyleScreen : public QFrame
 {
     Q_OBJECT

@@ -20,15 +20,10 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "freestylescreen.h"
 #include <QSound>
 #include <trickdetector.h>
+#include <trickdata.h>
 
 FreestyleScreen::FreestyleScreen(QWidget *parent) :
-    QFrame(parent)
-{
-    tricklist["Ollie"] = 50;
-    tricklist["Nollie"] = 75;
-    tricklist["180"] = 100;
-    tricklist["McTwist"] = 1000;
-
+    QFrame(parent) {
     levellist << 200 << 800 << 1000 << 2000 <<100000;
     tricklabelcount = 4;
     points = 100;
@@ -47,7 +42,6 @@ FreestyleScreen::FreestyleScreen(QWidget *parent) :
     QVBoxLayout* layout = new QVBoxLayout();
     setLayout(layout);
 
-    tricksDone << "Ollie" << "Nollie" << "180" << "McTwist!!!";
     QHBoxLayout* upperbar = new QHBoxLayout();
     timewidget = new QLabel("");
     timewidget->setObjectName("timelabel");
@@ -122,6 +116,12 @@ void FreestyleScreen::updateLevel()
     foreach(val,levellist) if(points>val) level += 1;
     if(old_level != level) {
         emit levelChanged(level);
+        QString path = TrickData::getSoundForLevel(level);
+        qDebug() << "playing sound " << path;
+        if (path != "") {
+            QSound s(path);
+            s.play();
+        }
     }
     levelwidget->setText("lvl " + QString::number(level));
 }
@@ -136,15 +136,27 @@ void FreestyleScreen::updateTrickList() {
     }
 }
 
+void playSound(QString trickid) {
+    QString path = TrickData::getSoundForTrick(trickid);
+    qDebug() << "playing sound " << path;
+    if (path != "") {
+        QSound s(path);
+        s.play();
+    }
+}
+
 void FreestyleScreen::trickEvent(QString trickid)
 {
     if(isPaused())
         return;
 
-    points += tricklist[trickid];
+    qDebug() << "got trick " << trickid;
+    points += TrickData::getPoints(trickid);
     updateLevel();
     pointswidget->setText(QString::number(points));
+    tricksDone << trickid;
     updateTrickList();
+    playSound(trickid);
 }
 
 int FreestyleScreen::getPoints() const {

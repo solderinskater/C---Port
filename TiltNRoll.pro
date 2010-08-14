@@ -105,7 +105,6 @@ symbian {
 RESOURCES += \
     Resources/tnr.qrc \
     Resources/images.qrc \
-    Resources/sounds.qrc \
     Resources/simulator/Simulator.qrc \
     Resources/fonts.qrc
 
