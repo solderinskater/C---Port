@@ -31,7 +31,7 @@ public:
 
 signals:
         void playPressed();
-        void settingsPressed();
+        void trainingPressed();
         void quitPressed();
         void simulPressed();
 };

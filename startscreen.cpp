@@ -31,19 +31,19 @@ StartScreen::StartScreen(QWidget *parent) :
         setLayout(layout);
 
         ShinyButton *buttonPlay     = new ShinyButton("play","big");
-        ShinyButton *buttonSettings = new ShinyButton("settings", "big");
+        ShinyButton *buttonTraining = new ShinyButton("settings", "big");
         ShinyButton *buttonQuit     = new ShinyButton("quit","big");
         ShinyButton *buttonSimul     = new ShinyButton("simulator","big");
 
         connect(buttonPlay,     SIGNAL(clicked()), this, SIGNAL(playPressed()));
-        connect(buttonSettings, SIGNAL(clicked()), this, SIGNAL(settingsPressed()));
+        connect(buttonTraining, SIGNAL(clicked()), this, SIGNAL(trainingPressed()));
         connect(buttonQuit,     SIGNAL(clicked()), this, SIGNAL(quitPressed()));
         connect(buttonSimul,     SIGNAL(clicked()), this, SIGNAL(simulPressed()));
 
         layout->setSpacing(10);
         layout->addSpacing(105);
         layout->addWidget(buttonPlay);
-        layout->addWidget(buttonSettings);
+        layout->addWidget(buttonTraining);
         layout->addWidget(buttonSimul);
         layout->addStretch();
 }

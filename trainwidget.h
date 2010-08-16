@@ -23,36 +23,12 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include <QWidget>
 #include <QtGui>
 #include "buttons.h"
+#include "trickmanager.h"
 
-class RecordWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit RecordWidget(QWidget *parent = 0);
-
-signals:
-    void trickTrained();
-
-public slots:
-    void startClicked();
-
-protected slots:
-    void checkInput(const QString&);
-    void addData(QString);
-
-protected:
-    bool trainTrick();
-    void showEvent ( QShowEvent * event );
-    void extractTrick();
-
-private:
-    QGridLayout* capGrid;
-    ShinyButton* startBtn;
-    QLineEdit* nameEdit;
-    QList<QList<int> > recordedData;
-    QLabel* statusLabel;
-};
-
+/** Provides the UI to select one trick from a list of all known tricks. Buttons
+ for editing or deleting the selected trick are shown. Also a button for adding
+ a new trick and a button to get back to the start screen are shown.
+*/
 class TrainWidget : public QWidget
 {
     Q_OBJECT
@@ -60,19 +36,30 @@ public:
     explicit TrainWidget(QWidget *parent = 0);
 
 signals:
+    /// back button pressed
     void backPressed();
-    void startCapture();
+    /// add button pressed
+    void addPressed();
+    /// edit button pressed, name of selected trick will be passed
+    void editPressed(QString);
 
 public slots:
+    /// reload the trick list from settings
     void updateTrickList();
+    /// deletes all tricks currently selected in the list
     void deleteTrick();
+
+private slots:
+    /// helper to extract the currently selected trick
+    void emitEditPressed();
 
 private:
     QListWidget* listWidget;
-    QGridLayout* gridLayout;
-    ShinyButton* buttonAdd;
-    ShinyButton* buttonDel;
+    QVBoxLayout *layout, *vbox2_1;
+    QHBoxLayout *hbox1, *hbox2;
+    ShinyButton *buttonAdd, *buttonDel, *buttonEdit;
     ShinyButton* buttonBack;
+    TrickManager *trickManager;
 
 };
 

@@ -27,10 +27,12 @@ TrainPage::TrainPage(QWidget *parent) :
     train = new TrainWidget;
     record = new RecordWidget;
 
-    connect(record,SIGNAL(trickTrained()), this, SLOT(trainingDone()));
+    connect(record,SIGNAL(trickTrained()), this, SLOT(showTraining()));
     connect(record,SIGNAL(trickTrained()), train, SLOT(updateTrickList()));
     connect(train,SIGNAL(backPressed()), this, SIGNAL(backPressed()));
-    connect(train,SIGNAL(startCapture()), this, SLOT(addPressed()));
+    connect(train,SIGNAL(addPressed()), this, SLOT(showRecording()));
+    connect(train,SIGNAL(editPressed(QString)), this, SLOT(showRecording(QString)));
+
 
     layout->addWidget(train);
     layout->addWidget(record);
@@ -38,13 +40,17 @@ TrainPage::TrainPage(QWidget *parent) :
     layout->setCurrentWidget(train);
 }
 
-void TrainPage::addPressed()
-{
-    qDebug("fgfdgdfg");
+void TrainPage::showRecording() {
+    record->clearTrickData();
     layout->setCurrentWidget(record);
 }
 
-void TrainPage::trainingDone()
+void TrainPage::showRecording(QString trick_id) {
+    record->loadTrickData(trick_id);
+    layout->setCurrentWidget(record);
+}
+
+void TrainPage::showTraining()
 {
     layout->setCurrentWidget(train);
 }

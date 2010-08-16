@@ -6,11 +6,11 @@ bool Highscore::Hero::operator<(const Hero &other) const {
 
 Highscore::Highscore(): settings("SolderingSkaters","TiltNRoll") {
     if (!settings.contains("highscore/names")) {
-        qDebug("[HS] highscore/names setting not found");
+        qDebug("[HS] highscore settings not found, creating some");
         reset();
         save();
     } else {
-        qDebug("[HS] highscore/names setting found");
+        qDebug("[HS] highscore settings found, loading them");
         load();
     }
 }

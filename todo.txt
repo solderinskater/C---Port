@@ -1,19 +1,21 @@
-* highscore screen
-* connection to bluetooth
-* resize graphics
+MAJOR:
 
-minor:
-* remove rectangle around button when focussed
-* button too large in single/multiplayer screen
+* connection to bluetooth:
+  - aus liste den vorderen und hinteren sensor auswaehlen
+  - status ob verbindung hergestellt wurde anzeigen
 
-[Qt Message] QImage: out of memory, returning null image
+MINOR:
 
-./startscreen.cpp:27: /images/startscreen.jpg
-./settingsscreen.cpp:28: /images/background_settings.png
-./highscorescreen.cpp:6: /images/highscorescreen.png
-./enternamescreen.cpp:7: /images/highscorescreen.png
+* make new menu for settings to reach Settings, Training
+* Trainingsscreens schoener machen
+  - bei Eingabe des tricknamens: schon vorhandene namen verbieten (case insensitive)
+  - mehr stats zu den tricks angeben (punkte, trained / untrained)
+  - explizit: Start skating / Stop skating, Okay / Try again / Cancel bei Training
+  - kleine visualisierung des tricks machen (einzelne channels anzeigen)
 
-./singleplayerscreen.cpp:27: /images/background_playmodes.png
-./playscreen.cpp:27: /images/background_playerscreen.png
-./freestylescreen.cpp:31: /images/PLAYMODES.jpg
-./pausescreen.cpp:7: /images/pauseScreenBackground.png
+* es gibt manchmal eine "index out of range" exception beim beenden des Trainings
+
+
+DONE:
+
+* play sounds sequentially and not in parallel

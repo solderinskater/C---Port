@@ -38,7 +38,7 @@ public:
 protected slots:
         void onStart();
         void onPlay();
-        void onSettings();
+        void onTraining();
         void onQuit();
 
         void onSingleplayer();

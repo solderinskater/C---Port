@@ -3,7 +3,7 @@ QPushButton {
 	margin:0px;
   height: 72px;
 	font-family:Adore64;
-	font-size:22px;
+	font-size:20px;
   background-repeat:no-repeat;
   background-position: center;
   background-color: transparent;
@@ -56,8 +56,30 @@ QGroupBox[isMetallic=true] QLabel {
     color: black;
 }
 
- QTextEdit, QListView {
+ QTextEdit {
      background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb(116, 116, 118), stop:1 rgb(59, 57, 60));
 
      background-attachment: scroll;
- }
+}
+
+QListView {
+     border: 2px solid silver;
+     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb(116, 116, 118), stop:1 rgb(59, 57, 60));
+     background-attachment: scroll;
+     font-family:Adore64;
+     font-size:18px;
+     margin: 0px;
+     color: silver;
+     padding: 4px;
+}
+
+QListView::item {
+    padding-top:15px;
+    padding-bottom:15px;
+    border-color: white;
+}
+
+QListView::item:selected {
+    color: #86bc10;
+    show-decoration-selected: 0;
+}

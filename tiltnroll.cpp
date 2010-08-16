@@ -29,16 +29,23 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "highscore.h"
 #include <simulator/tricksimulator.h>
 #include "trainpage.h"
+#include "trickmanager.h"
+#include "soundplayer.h"
 
 TiltNRoll::TiltNRoll(QWidget *parent)
         : QStackedWidget(parent), m_channel(0), m_embedded(true)
 {
 
+    // call TrickManager::instance for initialization
+    TrickManager::instance();
+    // call SoundPlayer::instance for initialization
+    SoundPlayer::instance();
+
     // start screen (tab 0)
     StartScreen *s0 = new StartScreen();
     addWidget(s0);
     connect(s0, SIGNAL(playPressed()), this, SLOT(onPlay()));
-    connect(s0, SIGNAL(settingsPressed()), this, SLOT(onSettings()));
+    connect(s0, SIGNAL(trainingPressed()), this, SLOT(onTraining()));
     connect(s0, SIGNAL(quitPressed()), this, SLOT(onQuit()));
     connect(s0, SIGNAL(simulPressed()), this, SLOT(onSimul()));
 
@@ -48,7 +55,7 @@ TiltNRoll::TiltNRoll(QWidget *parent)
     connect(s1, SIGNAL(singlePlayerPressed()), this, SLOT(onSingleplayer()));
     addWidget(s1);
 
-    // settings screen (tab 2)
+    // training screen (tab 2)
     //SettingsScreen *s2 = new SettingsScreen();
     TrainPage *s2 = new TrainPage;
     connect(s2, SIGNAL(backPressed()), this, SLOT(onStart()));
@@ -172,7 +179,7 @@ void TiltNRoll::onPlay()
         setCurrentIndex(1);
 }
 
-void TiltNRoll::onSettings()
+void TiltNRoll::onTraining()
 {
         setCurrentIndex(2);
 }

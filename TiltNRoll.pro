@@ -50,10 +50,12 @@ SOURCES += main.cpp\
     newmat/cholesky.cpp \
     newmat/bandmat.cpp \
     trickdetector.cpp \
-    trickdata.cpp \
+    trickmanager.cpp \
 	DTW/dtw.cpp\
     trainwidget.cpp \
-    trainpage.cpp
+    trainpage.cpp \
+    soundplayer.cpp \
+    recordwidget.cpp
 
 HEADERS  += \
     startscreen.h \
@@ -86,10 +88,12 @@ HEADERS  += \
     IOCapture.h \
     documentation.h \
     DTW/dtw.h \
-	trickdata.h\
+    trickmanager.h\
     trainwidget.h \
     trainpage.h \
-    ringbuffer.h
+    ringbuffer.h \
+    soundplayer.h \
+    recordwidget.h
 
 CONFIG += mobility
 MOBILITY = systeminfo
@@ -106,7 +110,8 @@ RESOURCES += \
     Resources/tnr.qrc \
     Resources/images.qrc \
     Resources/simulator/Simulator.qrc \
-    Resources/fonts.qrc
+    Resources/fonts.qrc \
+    Resources/sounds.qrc
 
 OTHER_FILES += \
     .gitignore \
