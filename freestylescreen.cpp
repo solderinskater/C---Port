@@ -88,7 +88,7 @@ FreestyleScreen::FreestyleScreen(QWidget *parent) :
 void FreestyleScreen::mousePressEvent(QMouseEvent *event)
 {
     Q_UNUSED(event)
-    QSound s1("dnb.wav");
+    QSound s1("f_good_01.wav");
 //    QSound s2("dnb2.wav");
     s1.play();
 //     s2.play();
