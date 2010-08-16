@@ -41,12 +41,12 @@ TrainPage::TrainPage(QWidget *parent) :
 }
 
 void TrainPage::showRecording() {
-    record->clearTrickData();
+    record->newTrickMode();
     layout->setCurrentWidget(record);
 }
 
 void TrainPage::showRecording(QString trick_id) {
-    record->loadTrickData(trick_id);
+    record->editTrickMode(trick_id);
     layout->setCurrentWidget(record);
 }
 

@@ -8,14 +8,16 @@ MINOR:
 
 * make new menu for settings to reach Settings, Training
 * Trainingsscreens schoener machen
-  - bei Eingabe des tricknamens: schon vorhandene namen verbieten (case insensitive)
-  - mehr stats zu den tricks angeben (punkte, trained / untrained)
   - explizit: Start skating / Stop skating, Okay / Try again / Cancel bei Training
   - kleine visualisierung des tricks machen (einzelne channels anzeigen)
 
 * es gibt manchmal eine "index out of range" exception beim beenden des Trainings
+* Bug: nach dem disconnect im training kann man aus dem simulator menu nicht mehr raus.
 
 
 DONE:
 
 * play sounds sequentially and not in parallel
+* Trainingsscreens schoener machen
+  - bei Eingabe des tricknamens: schon vorhandene namen verbieten (case insensitive)
+  - mehr stats zu den tricks angeben (punkte, trained / untrained)

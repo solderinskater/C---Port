@@ -1,12 +1,16 @@
 QPushButton {
-	color: #86bc10;
-	margin:0px;
+  color: #86bc10;
+  margin:0px;
   height: 72px;
-	font-family:Adore64;
-	font-size:20px;
+  font-family:Adore64;
+  font-size:20px;
   background-repeat:no-repeat;
   background-position: center;
   background-color: transparent;
+}
+
+QPushButton:disabled {
+  color: gray;
 }
 
 QLabel {

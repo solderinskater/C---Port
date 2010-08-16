@@ -12,14 +12,14 @@ class RecordWidget : public QWidget
 public:
     explicit RecordWidget(QWidget *parent = 0);
 
-    void clearTrickData() {}
-    void loadTrickData(QString trickid) {}
+    void newTrickMode();
+    void editTrickMode(QString trick_name);
 
 signals:
     void trickTrained();
 
 public slots:
-    void startClicked();
+    void recordClicked();
 
 protected slots:
     void checkInput(const QString&);
@@ -32,10 +32,16 @@ protected:
 
 private:
     QGridLayout* capGrid;
-    ShinyButton* startBtn;
+    ShinyButton* recordBtn;
+    ShinyButton* saveBtn;
     QLineEdit* nameEdit;
+    QLabel *nameErrorLabel;
     QList<QList<int> > recordedData;
     QLabel* statusLabel;
+    TrickManager *trickManager;
+
+    bool new_trick_mode;
+    QString old_trick_name;
 };
 
 #endif // RECORDWIDGET_H

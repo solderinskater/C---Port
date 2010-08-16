@@ -60,7 +60,7 @@ TrainWidget::TrainWidget(QWidget *parent) :
 
 void TrainWidget::emitEditPressed() {
     if (listWidget->selectedItems().size() != 1) return;
-    QString trick = listWidget->selectedItems().first()->data(0).toString();
+    QString trick = listWidget->selectedItems().first()->data(1).toString();
     qDebug() << "the selected trick is " << trick;
     emit editPressed(trick);
 }
@@ -69,14 +69,19 @@ void TrainWidget::updateTrickList()
 {
     listWidget->clear();
     foreach(QString s, trickManager->getTrickNames()) {
-        QListWidgetItem *item = new QListWidgetItem(s, listWidget);
-        item->setData(0,s);
+        QString status("%1P%2 R%3");
+        status = status.arg(s,-10,QChar(' '))
+                 .arg(QString::number(trickManager->getPoints(s)),-3,QChar(' '))
+                 .arg(QString::number(trickManager->getPattern(s).size()));
+        status = "'" + status + "'";
+        QListWidgetItem *item = new QListWidgetItem(status, listWidget);
+        item->setData(1,s);
     }
 }
 
 void TrainWidget::deleteTrick() {
     foreach (QListWidgetItem* item,  listWidget->selectedItems()) {
-        trickManager->removeTrick(item->data(0).toString());
+        trickManager->removeTrick(item->data(1).toString());
     }
     updateTrickList();
 }
