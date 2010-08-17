@@ -18,6 +18,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 */
 
 #include "trainpage.h"
+#include "trickmanager.h"
 
 TrainPage::TrainPage(QWidget *parent) :
     QWidget(parent)
@@ -27,8 +28,8 @@ TrainPage::TrainPage(QWidget *parent) :
     train = new TrainWidget;
     record = new RecordWidget;
 
-    connect(record,SIGNAL(trickTrained()), this, SLOT(showTraining()));
-    connect(record,SIGNAL(trickTrained()), train, SLOT(updateTrickList()));
+    connect(record,SIGNAL(saveClicked()), this, SLOT(saveTrick()));
+    connect(record,SIGNAL(cancelClicked()), this, SLOT(showTraining()));
     connect(train,SIGNAL(backPressed()), this, SIGNAL(backPressed()));
     connect(train,SIGNAL(addPressed()), this, SLOT(showRecording()));
     connect(train,SIGNAL(editPressed(QString)), this, SLOT(showRecording(QString)));
@@ -50,7 +51,18 @@ void TrainPage::showRecording(QString trick_id) {
     layout->setCurrentWidget(record);
 }
 
-void TrainPage::showTraining()
-{
+void TrainPage::showTraining() {
     layout->setCurrentWidget(train);
+}
+
+void TrainPage::saveTrick() {
+    TrickManager *tm = TrickManager::instance();
+    if (record->isNewTrick()) {
+        tm->addTrick(record->getEnteredTrick());
+    } else {
+        tm->removeTrick(record->getOldTrickName());
+        tm->addTrick(record->getEnteredTrick());
+    }
+    train->updateTrickList();
+    showTraining();
 }

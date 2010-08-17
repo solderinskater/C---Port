@@ -35,7 +35,9 @@ TrainWidget::TrainWidget(QWidget *parent) :
 
     hbox1 = new QHBoxLayout();
     hbox1->addWidget(buttonBack);
+    hbox1->addStretch();
     hbox1->addWidget(new SkateLabel("Trick Data", "font-size:30px"));
+    hbox1->addStretch();
     layout->addLayout(hbox1);
     layout->addSpacing(10);
 
@@ -60,28 +62,35 @@ TrainWidget::TrainWidget(QWidget *parent) :
 
 void TrainWidget::emitEditPressed() {
     if (listWidget->selectedItems().size() != 1) return;
-    QString trick = listWidget->selectedItems().first()->data(1).toString();
+    QString trick = listWidget->selectedItems().first()->data(32).toString();
     qDebug() << "the selected trick is " << trick;
     emit editPressed(trick);
+}
+
+
+QString TrainWidget::prettyPrintTrick(TrickManager::Trick trick) {
+    QString s("%1P%2 %3");
+    s = s.arg(trick.name,-15,QChar(' '))
+         .arg(QString::number(trick.points),-4,QChar(' '));
+    if (trick.pattern.isEmpty()) s = s.arg("XX");
+    else s = s.arg("OK");
+    return s;
 }
 
 void TrainWidget::updateTrickList()
 {
     listWidget->clear();
     foreach(QString s, trickManager->getTrickNames()) {
-        QString status("%1P%2 R%3");
-        status = status.arg(s,-10,QChar(' '))
-                 .arg(QString::number(trickManager->getPoints(s)),-3,QChar(' '))
-                 .arg(QString::number(trickManager->getPattern(s).size()));
-        status = "'" + status + "'";
+        QString status = prettyPrintTrick(trickManager->getTrick(s));
         QListWidgetItem *item = new QListWidgetItem(status, listWidget);
-        item->setData(1,s);
+        item->setTextAlignment(Qt::AlignLeft);
+        item->setData(32,s);
     }
 }
 
 void TrainWidget::deleteTrick() {
     foreach (QListWidgetItem* item,  listWidget->selectedItems()) {
-        trickManager->removeTrick(item->data(1).toString());
+        trickManager->removeTrick(item->data(32).toString());
     }
     updateTrickList();
 }

@@ -15,14 +15,25 @@ public:
     void newTrickMode();
     void editTrickMode(QString trick_name);
 
+    /// Can be called after the save() signal to get the trick data which was entered.
+    TrickManager::Trick getEnteredTrick();
+    /// Returns true if a new trick was created and false if an existing trick was modified.
+    bool isNewTrick();
+    /// Returns the name of the trick that was edited. "" if trick was newly created.
+    QString getOldTrickName();
+
 signals:
-    void trickTrained();
+    /// save button was pressed
+    void saveClicked();
+    /// cancel button was pressed
+    void cancelClicked();
 
 public slots:
     void recordClicked();
 
 protected slots:
-    void checkInput(const QString&);
+    /// checks all input data, shows error messages and enables/disables the save button.
+    void checkInputs();
     void addData(QString);
 
 protected:
@@ -31,17 +42,21 @@ protected:
     void extractTrick();
 
 private:
-    QGridLayout* capGrid;
-    ShinyButton* recordBtn;
-    ShinyButton* saveBtn;
-    QLineEdit* nameEdit;
-    QLabel *nameErrorLabel;
+    QGridLayout *capGrid;
+    QVBoxLayout *vbox;
+    QHBoxLayout *hbox;
+    ShinyButton *saveBtn, *cancelBtn;
+    QPushButton *trainBtn;
+    QLineEdit *nameEdit, *pointsEdit;
+    SkateLabel *titleLabel, *patternStatusLabel;
+    SkateLabel *nameErrorLabel, *pointsErrorLabel;
+
     QList<QList<int> > recordedData;
-    QLabel* statusLabel;
     TrickManager *trickManager;
 
     bool new_trick_mode;
     QString old_trick_name;
+    QList<int> pattern;
 };
 
 #endif // RECORDWIDGET_H

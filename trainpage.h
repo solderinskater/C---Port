@@ -37,6 +37,7 @@ public slots:
     void showRecording();
     void showRecording(QString);
     void showTraining();
+    void saveTrick();
 
 private:
     TrainWidget* train;

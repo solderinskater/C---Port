@@ -4,63 +4,132 @@
 RecordWidget::RecordWidget(QWidget *parent) :
         QWidget(parent), trickManager(TrickManager::instance())
 {
-    capGrid = new QGridLayout;
-    recordBtn = new ShinyButton("record","small");
-    saveBtn = new ShinyButton("save","small");
-    nameEdit = new QLineEdit;
-    statusLabel = new QLabel("[Ready]");
-    nameErrorLabel = new SkateLabel(" ","color: red; font-size:14px; text-align: right;");
-    capGrid->addWidget(new QLabel("Enter Trick Name"),0,0,Qt::AlignLeft);
-    capGrid->addWidget(statusLabel,0,1,Qt::AlignRight);
-    capGrid->addWidget(nameEdit,1,0,1,2);
-    capGrid->addWidget(nameErrorLabel,2,0,1,2);
-    capGrid->addWidget(recordBtn,2,1);
-    capGrid->addWidget(saveBtn,3,1);
+    // main VBox layout holding title, inputs and buttons
+    titleLabel = new SkateLabel("enter trick data","font-size:28px;padding-top:10px",true);
+    vbox = new QVBoxLayout();
+    vbox->addWidget(titleLabel);
+    vbox->addStretch();
 
-    nameEdit->setStyleSheet("color: #86bc10; font-size:40px; font-family:Adore64; background: black;"
-                        "border: 2px solid #49762c; border-radius: 10px; padding: 6px 10px;"
-                        "selection-background-color: black;margin-left:42px;");
-    nameEdit->setMaximumWidth(800);
-    nameEdit->setMaxLength(20);
-    nameEdit->grabKeyboard();
+    // inputs in grid layout
+    nameErrorLabel = new SkateLabel("","color: red; font-size:14px; text-align: right;");
+    pointsErrorLabel = new SkateLabel("","color: red; font-size:14px; text-align: right;");
+    patternStatusLabel = new SkateLabel("no data");
+    nameEdit = new QLineEdit;
+    QString edit_style =
+            "color: #86bc10; font-size:24px; font-family:Adore64; background: black;"
+            "border: 2px solid #49762c; border-radius: 8px; padding: 6px 10px;"
+            "selection-background-color: black;";
+    nameEdit->setStyleSheet(edit_style);
+    nameEdit->setMaxLength(14);
     nameEdit->setFocus();
     nameEdit->setEnabled(true);
+    nameEdit->setMaximumWidth(365);
+    pointsEdit = new QLineEdit;
+    pointsEdit->setMaximumWidth(130);
+    pointsEdit->setStyleSheet(edit_style);
+    pointsEdit->setMaxLength(4);
+    pointsEdit->setValidator(new QIntValidator(0, 9999, this));
 
-    setLayout(capGrid);
+    capGrid = new QGridLayout;
+    capGrid->setHorizontalSpacing(20);
+    capGrid->setVerticalSpacing(30);
+    capGrid->setMargin(10);
 
-    connect(recordBtn,SIGNAL(clicked()), this, SLOT(recordClicked()));
-    connect(nameEdit,SIGNAL(textChanged(const QString&)), this, SLOT(checkInput(const QString&)));
+    capGrid->addWidget(new SkateLabel(" name:"), 0, 0);
+    capGrid->addWidget(nameEdit,0,1);
+    capGrid->addWidget(nameErrorLabel,0,2);
+    capGrid->addWidget(new SkateLabel(" ptns:"), 1, 0);
+    capGrid->addWidget(pointsEdit,1,1);
+    capGrid->addWidget(pointsErrorLabel,1,2);
+    capGrid->addWidget(new SkateLabel(" patt:"), 2, 0);
+    capGrid->addWidget(patternStatusLabel,2,1,1,2);
+    capGrid->setColumnStretch(2,1);
+    vbox->addLayout(capGrid);
+    vbox->addStretch();
+
+    // buttons in HBox
+    saveBtn = new ShinyButton("save","small","width:178;");
+    trainBtn = new ShinyButton("train","small","width:178;");
+    cancelBtn = new ShinyButton("cancel","small","width:178;");
+
+    hbox = new QHBoxLayout();
+    hbox->addWidget(cancelBtn);
+    hbox->addWidget(trainBtn);
+    hbox->addWidget(saveBtn);
+    vbox->addLayout(hbox);
+
+    setLayout(vbox);
+
+    connect(trainBtn,SIGNAL(clicked()), this, SLOT(recordClicked()));
+    connect(nameEdit,SIGNAL(textChanged(const QString&)),
+            this, SLOT(checkInputs()));
+    connect(pointsEdit,SIGNAL(textChanged(const QString&)),
+            this, SLOT(checkInputs()));
+    connect(saveBtn, SIGNAL(clicked()), this, SIGNAL(saveClicked()));
+    connect(cancelBtn, SIGNAL(clicked()), this, SIGNAL(cancelClicked()));
 }
 
 void RecordWidget::newTrickMode() {
     new_trick_mode = true;
+    titleLabel->setText("enter new trick");
+    old_trick_name = "";
+    nameEdit->setText("Tricky");
+    pointsEdit->setText("200");
+    pattern.clear();
+}
+
+TrickManager::Trick RecordWidget::getEnteredTrick() {
+    return TrickManager::Trick(nameEdit->text(), pointsEdit->text().toInt(),
+                               pattern);
+}
+
+bool RecordWidget::isNewTrick() {
+    return new_trick_mode;
+}
+
+QString RecordWidget::getOldTrickName() {
+    return old_trick_name;
 }
 
 void RecordWidget::editTrickMode(QString trick_name) {
+    titleLabel->setText(QString("edit the ") + trick_name);
     new_trick_mode = false;
     old_trick_name = trick_name;
+    nameEdit->setText(trick_name);
+    pointsEdit->setText(QString::number(trickManager->getPoints(trick_name)));
+    pattern = trickManager->getPattern(trick_name);
 }
 
-
-void RecordWidget::showEvent(QShowEvent *event)
-{
-    nameEdit->grabKeyboard();
-    nameEdit->setFocus();
-    checkInput(nameEdit->text());
+void RecordWidget::showEvent(QShowEvent *event) {
+    checkInputs();
 }
 
-void RecordWidget::checkInput(const QString &t)
-{
-    if (t.isEmpty()) {
-        saveBtn->setDisabled(true);
-        nameErrorLabel->setText("empty name");
-    } else if (new_trick_mode && trickManager->hasTrick(t)) {
-        saveBtn->setDisabled(true);
-        nameErrorLabel->setText("name exists");
+void RecordWidget::checkInputs() {
+    bool valid = true;
+    if (nameEdit->text().isEmpty()) {
+        valid = false;
+        nameErrorLabel->setText("empty\nname");
+    } else if (trickManager->hasTrick(nameEdit->text()) &&
+               !(nameEdit->text() == old_trick_name)) {
+        valid = false;
+        nameErrorLabel->setText("name\nexists");
     } else {
-        saveBtn->setDisabled(false);
-        nameErrorLabel->setText(" ");
+        nameErrorLabel->setText("");
     }
+    if (pointsEdit->text().size() < 1) {
+        valid = false;
+        pointsErrorLabel->setText("enter\npoints");
+    } else {
+        pointsErrorLabel->setText("");
+    }
+    if (pattern.size() == 0) {
+        if (trainBtn->text() != "train") trainBtn->setText("train");
+        patternStatusLabel->setText("no data, please train");
+    } else {
+        if (trainBtn->text() != "retrain") trainBtn->setText("retrain");
+        patternStatusLabel->setText("OK");
+    }
+    saveBtn->setDisabled(!valid);
 }
 
 void RecordWidget::addData(QString smp)
@@ -88,24 +157,23 @@ void RecordWidget::recordClicked()
     TrickSimulator* sim = TrickSimulator::instance();
     sim->setEnableClassification(false);
 
-    if(recordBtn->text()=="Start") {
-        recordBtn->setText("Stop");
+    if(trainBtn->text()!="Stop") {
+        trainBtn->setText("Stop");
         sim->disconnect(); // disconnect it from the actual game since we abuse it here as "data recorder" for the trick trainer
         sim->stop();
         sim->open();
         connect(sim,SIGNAL(dataCaptured(QString)), this, SLOT(addData(QString)));
         sim->start();
     } else {
-        recordBtn->setText("Start");
         sim->stop();
         sim->disconnect();
         if(trainTrick()) {
-            emit trickTrained();
+            //emit trickTrained();
         } else {
-            recordBtn->show();
-            statusLabel->setText("[Retry Trick]");
+            patternStatusLabel->setText("[Retry Trick]");
             recordedData.clear();
         }
+        checkInputs();
     }
 }
 

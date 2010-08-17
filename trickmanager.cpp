@@ -55,6 +55,11 @@ TrickManager::Trick &TrickManager::addTrick(QString name, int points, QList<int>
     return tricks[name];
 }
 
+TrickManager::Trick &TrickManager::addTrick(TrickManager::Trick trick) {
+    tricks[trick.name] = Trick(trick);
+    return tricks[trick.name];
+}
+
 void TrickManager::removeTrick(QString name) {
     tricks.remove(name);
 }

@@ -53,6 +53,10 @@ private slots:
     /// helper to extract the currently selected trick
     void emitEditPressed();
 
+protected:
+    /// Returns the information of a trick which is nice to display in the list.
+    QString prettyPrintTrick(TrickManager::Trick trick);
+
 private:
     QListWidget* listWidget;
     QVBoxLayout *layout, *vbox2_1;

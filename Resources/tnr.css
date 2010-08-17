@@ -71,19 +71,18 @@ QListView {
      background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgb(116, 116, 118), stop:1 rgb(59, 57, 60));
      background-attachment: scroll;
      font-family:Adore64;
-     font-size:18px;
-     margin: 0px;
+     font-size:17px;
+     margin: 5px;
      color: silver;
-     padding: 4px;
 }
 
 QListView::item {
-    padding-top:15px;
-    padding-bottom:15px;
-    border-color: white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: black 1px solid;
 }
 
 QListView::item:selected {
-    color: #86bc10;
-    show-decoration-selected: 0;
+  color: #86bc10;
+  /*show-decoration-selected: 0;*/
 }

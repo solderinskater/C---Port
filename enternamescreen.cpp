@@ -21,7 +21,7 @@ EnterNameScreen::EnterNameScreen(QWidget *parent) :
                         "selection-background-color: black;margin-left:42px;");
     edit->setMaximumWidth(200);
     edit->setMaxLength(3);
-    edit->grabKeyboard();
+    edit->setFocus();
 
     entryLayout->addWidget(edit);
     buttonOk = new ShinyButton("ok", "small", "width:178;");

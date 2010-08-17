@@ -35,6 +35,9 @@ public:
     /// Adds a  trick to the list of known tricks. Does not write to settings.
     /** Returns a reference to the trick just added. */
     Trick &addTrick(QString name, int points=0, QList<int> pattern=QList<int>());
+    /// Adds a copy of the passed trick to the list of known tricks.
+    /** Does not write to settings. Returns a reference to the trick just added. */
+    Trick &addTrick(Trick trick);
     /// Removes a trick from the list of known tricks. Does not write to settings.
     void removeTrick(QString name);
     /// Overwrites all trick data in the settings with the current list of tricks.
