@@ -40,27 +40,21 @@ void TrickDetector::init()
     curSmp = 0;
 
     QSettings s("SolderinSkaters", "TiltNRoll");
-    s.beginGroup("Tricks");
-    QStringList trickNames = s.childKeys();
+    s.beginGroup("tricks");
+    QStringList trickNames = s.childGroups();
 
     foreach(QString name, trickNames) {
+        qDebug() << name;
+        s.beginGroup(name);
+        qDebug() << s.childKeys();
         knownTricks[name] = QList<int>();
-        QVariantList vl = s.value(name).toList();
+        QVariantList vl = s.value("pattern").toList();
         foreach(QVariant v, vl)
             knownTricks[name] << v.toInt();
         trickLength = vl.size();
+        s.endGroup();
     }
 
-    QVariantList vtmpl = s.value("Tricks/180").toList();
-    QList<int> tmpl;
-    QVariantList vtmpl2 = s.value("Tricks/Ollie").toList();
-    QList<int> tmpl2;
-    foreach(QVariant v, vtmpl) {
-        tmpl << v.toInt();
-    }
-    foreach(QVariant v, vtmpl2) {
-        tmpl2 << v.toInt();
-    }
     buffer.resize(trickLength);
 }
 
@@ -68,7 +62,7 @@ void TrickDetector::addSample(QString smp)
 {
     if(!m_isInit)
     {
-        qDebug("[TrickDetector] Set a weight vector first!");
+        qDebug("[TrickDetector] Call init() first!");
         return;
     }
 
@@ -111,8 +105,7 @@ void TrickDetector::classify()
     if(subwindow.last()<450) {
         return;
     }
-//    qDebug()<<subwindow.last();
-//    qDebug() << refrac;
+
     /* this is the no-trick template */
     QVector<int> tmplNeutral(trickLength);
     tmplNeutral.fill(380);
@@ -132,40 +125,13 @@ void TrickDetector::classify()
         }
     }
 
-//    DTWResult res = dtw.classify(tmpl, window);
-//    DTWResult res2 = dtw.classify(tmpl2, window);
-//    DTWResult res3 = dtw.classify(tmplNeutral.toList(), window);
-
-    //double score = res.distance;
-    //double ratio = (double)res.distance / res2.distance;
-    //double ratioInv = (double)res2.distance / res.distance;
-//    if(!bestMatch.isEmpty())
-//        qDebug() << "Trick: " << bestMatch << scores;
 
     if(refrac > 200) {
-      // qDebug() << "Trick: " << bestMatch << scores;
         if(!bestMatch.isEmpty() && bestScore < 100000) {
             emit trickEvent(bestMatch);
             qDebug() << "Trick: " << bestMatch << scores << curSmp-trickLength;
             refrac = 0;
         }
-//        if(res3.distance< qMin(res.distance,res2.distance))
-//            ;//qDebug("N: %d / ScoreCorr: %.4f / ScoreFalse: %.4f / ScoreNeut: %.4f / Smp: %d  [Nothing]",1, res.distance,res2.distance,res3.distance,curSmp);
-//        else if(res.distance<res2.distance && res.distance <30000) {
-//            qDebug("N: %d / ScoreCorr: %.4f / ScoreFalse: %.4f / Smp: %d  [ShoveIt 180]",1, res.distance,res2.distance,curSmp);
-//            refrac = 0;
-//            emit trickEvent("ShoveIt 180");
-//        }
-//        else if(res2.distance<res.distance && res2.distance <30000){
-//            qDebug("N: %d / ScoreCorr: %.4f / ScoreFalse: %.4f / Smp: %d  [Ollie]",1, res.distance,res2.distance,curSmp);
-//            refrac = 0;
-//            emit trickEvent("Ollie");
-//        }
-
-//        qDebug() << tmpl;
-//        qDebug() << tmpl2;
-//        qDebug() << window;
-
     }
 
    // qDebug() << "TIME: " << t.elapsed();

@@ -65,7 +65,7 @@ RecordWidget::RecordWidget(QWidget *parent) :
             this, SLOT(checkInputs()));
     connect(pointsEdit,SIGNAL(textChanged(const QString&)),
             this, SLOT(checkInputs()));
-    connect(saveBtn, SIGNAL(clicked()), this, SIGNAL(saveClicked()));
+    connect(saveBtn, SIGNAL(clicked()), this, SLOT(saveRecordedTrick()));
     connect(cancelBtn, SIGNAL(clicked()), this, SIGNAL(cancelClicked()));
 }
 
@@ -125,6 +125,7 @@ void RecordWidget::checkInputs() {
     if (pattern.size() == 0) {
         if (trainBtn->text() != "train") trainBtn->setText("train");
         patternStatusLabel->setText("no data, please train");
+        valid = false;
     } else {
         if (trainBtn->text() != "retrain") trainBtn->setText("retrain");
         patternStatusLabel->setText("OK");
@@ -190,14 +191,20 @@ bool RecordWidget::trainTrick()
     QList<QList<int> > trick = recordedData.mid(i-25,trickLength);
 
     /* dirty boy*/
-    QList<int> trickCh8;
+
+    pattern.clear();
     QList<int> chans;
     chans <<7<<8;
     foreach(int ch, chans) {
         for(i=0;i<trickLength;i++)
-            trickCh8<<trick[i][ch];
+            pattern<<trick[i][ch];
     }
 
-    trickManager->addTrick(nameEdit->text(), 200, trickCh8);
     return true;
+}
+
+void RecordWidget::saveRecordedTrick()
+{
+  //  trickManager->addTrick(nameEdit->text(), pointsEdit->text().toInt(), pattern);
+    emit saveClicked();
 }

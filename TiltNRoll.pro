@@ -113,6 +113,9 @@ RESOURCES += \
     Resources/fonts.qrc \
     Resources/sounds.qrc
 
+sounds.sources = Resources/sounds/*.wav
+DEPLOYMENT += sounds
+
 OTHER_FILES += \
     .gitignore \
     hours.txt \

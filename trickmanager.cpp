@@ -8,7 +8,7 @@ TrickManager* TrickManager::instance() {
     return inst;
 }
 
-TrickManager::TrickManager(): settings("SolderingSkaters","TiltNRoll") {
+TrickManager::TrickManager(): settings("SolderinSkaters","TiltNRoll") {
     settings.beginGroup("tricks");
     int trick_count = settings.childGroups().size();
     settings.endGroup();
@@ -46,12 +46,13 @@ QList<int> TrickManager::getPattern(QString name) {
 void TrickManager::reset() {
     qDebug() << "[TM] resetting tricks";
     tricks.clear();
-    addTrick("Ollie",50);
-    addTrick("180",100);
+//    addTrick("Ollie",50);
+//    addTrick("180",100);
 }
 
 TrickManager::Trick &TrickManager::addTrick(QString name, int points, QList<int> pattern) {
     tricks[name] = Trick(name, points, pattern);
+    save();
     return tricks[name];
 }
 
@@ -62,6 +63,7 @@ TrickManager::Trick &TrickManager::addTrick(TrickManager::Trick trick) {
 
 void TrickManager::removeTrick(QString name) {
     tricks.remove(name);
+    save();
 }
 
 void TrickManager::save() {

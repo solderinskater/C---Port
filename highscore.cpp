@@ -4,7 +4,7 @@ bool Highscore::Hero::operator<(const Hero &other) const {
     return getPoints() > other.getPoints();
 }
 
-Highscore::Highscore(): settings("SolderingSkaters","TiltNRoll") {
+Highscore::Highscore(): settings("SolderinSkaters","TiltNRoll") {
     if (!settings.contains("highscore/names")) {
         qDebug("[HS] highscore settings not found, creating some");
         reset();
