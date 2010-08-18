@@ -52,7 +52,6 @@ void TrickManager::reset() {
 
 TrickManager::Trick &TrickManager::addTrick(QString name, int points, QList<int> pattern) {
     tricks[name] = Trick(name, points, pattern);
-    save();
     return tricks[name];
 }
 
@@ -63,7 +62,6 @@ TrickManager::Trick &TrickManager::addTrick(TrickManager::Trick trick) {
 
 void TrickManager::removeTrick(QString name) {
     tricks.remove(name);
-    save();
 }
 
 void TrickManager::save() {
@@ -86,10 +84,12 @@ void TrickManager::load() {
     QStringList trick_entries = settings.childGroups();
     foreach (QString entry, trick_entries) {
         settings.beginGroup(entry);
-        Trick t = addTrick(settings.value("name").toString(),
-                           settings.value("points").toInt());
+        QList<int> tpattern;
         foreach(QVariant v, settings.value("pattern").toList())
-            t.pattern.append(v.toInt());
+            tpattern << v.toInt();
+        Trick t = addTrick(settings.value("name").toString(),
+                           settings.value("points").toInt(),
+                           tpattern);
         qDebug() << "[TM] loaded trick " << t.toString();
         settings.endGroup();
     }
