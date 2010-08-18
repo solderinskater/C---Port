@@ -38,7 +38,7 @@ RecordWidget::RecordWidget(QWidget *parent) :
     capGrid->addWidget(new SkateLabel(" name:"), 0, 0);
     capGrid->addWidget(nameEdit,0,1);
     capGrid->addWidget(nameErrorLabel,0,2);
-    capGrid->addWidget(new SkateLabel(" ptns:"), 1, 0);
+    capGrid->addWidget(new SkateLabel(" pnts:"), 1, 0);
     capGrid->addWidget(pointsEdit,1,1);
     capGrid->addWidget(pointsErrorLabel,1,2);
     capGrid->addWidget(new SkateLabel(" patt:"), 2, 0);
