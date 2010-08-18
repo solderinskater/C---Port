@@ -24,9 +24,9 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 
 FreestyleScreen::FreestyleScreen(QWidget *parent) :
     QFrame(parent) {
-    levellist << 200 << 800 << 1000 << 2000 <<100000;
+    levellist << 200 << 800 << 1000 << 2000 << 1000000;
     tricklabelcount = 4;
-    points = 100;
+    points = 0;
     level = 1;
     qDebug("Build game screen freestyle");
     setStyleSheet(QString("FreestyleScreen {background-image: url(:/backgrounds/freestyle.jpg);}")+
