@@ -35,7 +35,6 @@ protected slots:
     /// checks all input data, shows error messages and enables/disables the save button.
     void checkInputs();
     void addData(QString);
-    void saveRecordedTrick();
 
 protected:
     bool trainTrick();

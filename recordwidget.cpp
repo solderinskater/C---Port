@@ -65,7 +65,7 @@ RecordWidget::RecordWidget(QWidget *parent) :
             this, SLOT(checkInputs()));
     connect(pointsEdit,SIGNAL(textChanged(const QString&)),
             this, SLOT(checkInputs()));
-    connect(saveBtn, SIGNAL(clicked()), this, SLOT(saveRecordedTrick()));
+    connect(saveBtn, SIGNAL(clicked()), this, SIGNAL(saveClicked()));
     connect(cancelBtn, SIGNAL(clicked()), this, SIGNAL(cancelClicked()));
 }
 
@@ -203,8 +203,3 @@ bool RecordWidget::trainTrick()
     return true;
 }
 
-void RecordWidget::saveRecordedTrick()
-{
-  //  trickManager->addTrick(nameEdit->text(), pointsEdit->text().toInt(), pattern);
-    emit saveClicked();
-}
