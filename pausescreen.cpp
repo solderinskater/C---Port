@@ -1,4 +1,5 @@
 #include "pausescreen.h"
+#include "simulator/tricksimulator.h"
 
 PauseScreen::PauseScreen(QWidget *parent) :
     QFrame(parent)

@@ -37,7 +37,7 @@ TrickSimulator::TrickSimulator(QWidget *parent) :
     QFormLayout* la = new QFormLayout(m_widget);
 
     QPushButton* btn = new QPushButton("Load");
-    connect(btn, SIGNAL(clicked()), this, SLOT(open()));
+    connect(btn, SIGNAL(clicked()), this, SLOT(loadClicked()));
     la->addWidget(btn);
     QPushButton* btn2 = new QPushButton("Back");
     connect(btn2, SIGNAL(clicked()), this, SIGNAL(backPressed()));
@@ -54,6 +54,19 @@ TrickSimulator::~TrickSimulator()
 QWidget* TrickSimulator::widget()
 {
     return m_widget;
+}
+
+void TrickSimulator::loadClicked()
+{
+    setEnableClassification(true);
+
+    /** for safety **/
+    stop();
+    close();
+    /****/
+
+    open();
+    start();
 }
 
 void TrickSimulator::open()
@@ -122,8 +135,6 @@ void TrickSimulator::open()
                 detector, SLOT(addSample(QString)));
     }
 
-    /* start streaming */
-    start();
 }
 void TrickSimulator::close()
 {

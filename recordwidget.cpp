@@ -158,16 +158,19 @@ void RecordWidget::recordClicked()
     TrickSimulator* sim = TrickSimulator::instance();
     sim->setEnableClassification(false);
 
-    if(trainBtn->text()!="Stop") {
+    if(trainBtn->text()!="Stop")
+    {   recordedData.clear();
         trainBtn->setText("Stop");
-        sim->disconnect(); // disconnect it from the actual game since we abuse it here as "data recorder" for the trick trainer
+        sim->disconnect(this); // disconnect it from the actual game since we abuse it here as "data recorder" for the trick trainer
         sim->stop();
+        sim->close();
         sim->open();
         connect(sim,SIGNAL(dataCaptured(QString)), this, SLOT(addData(QString)));
         sim->start();
     } else {
         sim->stop();
-        sim->disconnect();
+        sim->close();
+        sim->disconnect(this);
         if(trainTrick()) {
             //emit trickTrained();
         } else {
@@ -185,10 +188,16 @@ bool RecordWidget::trainTrick()
 
     int i=25;
     while(i<recordedData.size() && recordedData[i][1]<peakThr) { i++; }
-    if(i==recordedData.size()-1 || i < trickLength*2)
+    if(recordedData.size()<trickLength*2 || i==recordedData.size()-1 || i>(recordedData.size()-60))
         return false;
 
     QList<QList<int> > trick = recordedData.mid(i-25,trickLength);
+//    QList<QList<int> > trick;// = recordedData.mid(i-25,2);
+//    int rs = recordedData.size();
+//    for(int j=0;j<trickLength; j++)
+//        trick << recordedData[i-25+j];
+
+//    int ss = trick.size();
 
     /* dirty boy*/
 
