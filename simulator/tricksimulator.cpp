@@ -56,19 +56,6 @@ QWidget* TrickSimulator::widget()
     return m_widget;
 }
 
-void TrickSimulator::loadClicked()
-{
-    setEnableClassification(true);
-
-    /** for safety **/
-    stop();
-    close();
-    /****/
-
-    open();
-    start();
-}
-
 void TrickSimulator::open()
 {
     qDebug("loading trick data and classifier");
@@ -134,8 +121,16 @@ void TrickSimulator::open()
         connect(this, SIGNAL(dataCaptured(QString)),
                 detector, SLOT(addSample(QString)));
     }
-
 }
+
+void TrickSimulator::loadClicked() {
+    stop();
+    close();
+    setEnableClassification(true);
+    open();
+    start();
+}
+
 void TrickSimulator::close()
 {
     timer.stop();
