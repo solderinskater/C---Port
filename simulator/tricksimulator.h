@@ -56,6 +56,8 @@ public slots:
 
 protected slots:
     void doCapture();
+    void loadClicked();
+
 
 protected:
     TrickSimulator(QWidget *parent = 0);

@@ -164,8 +164,9 @@ void RecordWidget::recordClicked()
 
     if(trainBtn->text()!="Stop") {
         trainBtn->setText("Stop");
-        sim->disconnect(); // disconnect it from the actual game since we abuse it here as "data recorder" for the trick trainer
+        sim->disconnect(this); // disconnect it from the actual game since we abuse it here as "data recorder" for the trick trainer
         sim->stop();
+        sim->close();
         sim->open();
         recordedData.clear();
         patternStatusLabel->setText("recording...");
@@ -173,9 +174,11 @@ void RecordWidget::recordClicked()
         sim->start();
     } else {
         sim->stop();
+        sim->close();
         sim->disconnect(this);
         try {
             trainTrick();
+            patternErrorLabel->setText("");
         } catch(QString error) {
             patternErrorLabel->setText(error);
             recordedData.clear();
@@ -186,16 +189,18 @@ void RecordWidget::recordClicked()
 
 void RecordWidget::trainTrick() {
     static int trickLength = 60; // 60 samples window
+    static int offset = -25; // start window 25 frames before peak
     static int peakThr = 430;   // peak detection threshold
 
     int i=25;
-    while(i<recordedData.size() && recordedData[i][1]<peakThr) { i++; }
-    if (i==recordedData.size()-1)
+    int last_window_start=recordedData.size()-offset-trickLength;
+    while(i<last_window_start && recordedData[i][1]<peakThr) { i++; }
+    if (i==last_window_start-1)
         throw QString("no\npeak");
     if (i < trickLength*2)
         throw QString("too\nshort");
 
-    QList<QList<int> > trick = recordedData.mid(i-25,trickLength);
+    QList<QList<int> > trick = recordedData.mid(i+offset,trickLength);
 
     /* dirty boy*/
 
