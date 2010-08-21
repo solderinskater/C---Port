@@ -37,7 +37,7 @@ protected slots:
     void addData(QString);
 
 protected:
-    bool trainTrick();
+    void trainTrick();
     void showEvent ( QShowEvent * event );
     void extractTrick();
 
@@ -49,7 +49,7 @@ private:
     QPushButton *trainBtn;
     QLineEdit *nameEdit, *pointsEdit;
     SkateLabel *titleLabel, *patternStatusLabel;
-    SkateLabel *nameErrorLabel, *pointsErrorLabel;
+    SkateLabel *nameErrorLabel, *pointsErrorLabel, *patternErrorLabel;
 
     QList<QList<int> > recordedData;
     TrickManager *trickManager;
