@@ -12,9 +12,19 @@ for second half of 2010 [3].
 
 Solution: Install a Standalone SDK and Qt on top of it as described on
 http://developer.symbian.org/wiki/index.php/Using_Qt_with_Standalone_SDKs
+(this includes installing perl, the ADT with Carbide.C++, a symbian sdk, and qt)
 
 Additionally, rebuild the Qt for gcce as described on
-http://discussion.forum.nokia.com/forum/showthread.php?163579-qtmain.lib-not-found&p=734233#post734233
+http://discussion.forum.nokia.com/forum/showthread.php?163579-qtmain.lib-not-found&p=734233#post734233:
+c:\Qt\4.6.2\src\s60main>qmake -makefile
+>make release-gcce
+This builds the library qtmain.lib
+cd ..\s60install
+c:\Qt\4.6.2\src\s60install>qmake -makefile
+>make release-gcce
+will install the library
+Look in C:\S60\devices\S60_5th_Edition_SDK_v1.0\epoc32\release\armv5\urel
+to find if qtmain.lib is loaded
 
 Furthermore, rebuild the QtMobility package for gcce by running
 configure
@@ -22,21 +32,15 @@ make debug-winscw
 make debug-gcce
 in the QtMobility directory.
 
+Next, download the QBluetooth project from [4].
+To build, we first need the Bluetooth API from  S60 3rd SDK Feature Pack 2 PlugInAPIs.
+To get it, download the PlugIn APIs from [5] and extract the Bluetooth API to the
+Symbian 5th SDK and Symbian3 SDK.
 
+Now building for Symbian Target should work :)
 
 [1] http://tools.ext.nokia.com/trk/
 [2] http://qt.nokia.com/downloads/qt-creator-binary-for-windows
 [3] http://qt.nokia.com/developer/qt-roadmap
-
-[] http://www.nokiausa.com/get-support-and-software/software/nokia-suites-for-your-pc#
-[] http://labs.trolltech.com/blogs/2009/12/03/tutorial-videos-qt-development-for-symbian/
-[] http://www.activestate.com/activeperl/downloads
-[] http://www.forum.nokia.com/info/sw.nokia.com/id/ec866fab-4b76-49f6-b5a5-af0631419e9c/S60_All_in_One_SDKs.html
-[] http://www.forum.nokia.com/info/sw.nokia.com/id/91d89929-fb8c-4d66-bea0-227e42df9053/Open_C_SDK_Plug-In.html
-
-
-
-
-
-install sdk 5th edition
-kopieren ins symbian sdk des creators
+[4] https://projects.forum.nokia.com/qbluetooth
+[5] http://wiki.forum.nokia.com/index.php/SDK_API_Plug-in
