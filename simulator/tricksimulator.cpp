@@ -30,10 +30,10 @@ TrickSimulator* TrickSimulator::instance()
     return inst;
 }
 
-TrickSimulator::TrickSimulator(QWidget *parent) :
+TrickSimulator::TrickSimulator(QObject *parent) :
         m_curSample(0), doClassify(true)
 {
-    m_widget = new QWidget(parent);
+    m_widget = new QWidget;
     QFormLayout* la = new QFormLayout(m_widget);
 
     QPushButton* btn = new QPushButton("Load");
@@ -43,6 +43,7 @@ TrickSimulator::TrickSimulator(QWidget *parent) :
     connect(btn2, SIGNAL(clicked()), this, SIGNAL(backPressed()));
     la->addWidget(btn2);
     connect(&timer, SIGNAL(timeout()), this, SLOT(doCapture()));
+    setObjectName("Simulator");
 }
 
 TrickSimulator::~TrickSimulator()

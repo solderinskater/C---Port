@@ -17,32 +17,23 @@ You should have received a copy of the GNU General Public License
 along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IOCAPTURE_H
-#define IOCAPTURE_H
+#ifndef QBLUETOOTH_DUMMY_H
+#define QBLUETOOTH_DUMMY_H
 
-#include <QtGui>
-
-class IOCapture : public QObject
+class QBtDevice
 {
-
-    Q_OBJECT
-
-public:
-
-    virtual QString errorString() =0;
-    virtual QWidget* widget() = 0;
-
-public slots:
-    virtual void start() =0;
-    virtual void stop() =0;
-    virtual void open() =0;
-    virtual void close() =0;
-
-
-signals:
-    void dataCaptured(QString);
-
 
 };
 
-#endif // IOCAPTURE_H
+class QBtDeviceDiscoverer
+{
+
+};
+
+class QBtSerialPortClient
+{
+
+};
+
+
+#endif // QBLUETOOTH_DUMMY_H

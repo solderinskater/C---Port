@@ -31,6 +31,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "trainpage.h"
 #include "trickmanager.h"
 #include "soundplayer.h"
+#include "btcapture.h"
 
 TiltNRoll::TiltNRoll(QWidget *parent)
         : QStackedWidget(parent), m_channel(0), m_embedded(true)
@@ -95,7 +96,8 @@ TiltNRoll::TiltNRoll(QWidget *parent)
     addWidget(s7);
 
     // TrickSimulator (tab 8)
-    TrickSimulator* sim = TrickSimulator::instance();
+    //TrickSimulator* sim = TrickSimulator::instance();
+    BTCapture* sim = BTCapture::instance();
     connect(sim, SIGNAL(backPressed()), this, SLOT(onStart()));
     addWidget(sim->widget());
 

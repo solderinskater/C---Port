@@ -20,19 +20,76 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #ifndef BTCAPTURE_H
 #define BTCAPTURE_H
 
-#include <QObject>
+#include <QtGui>
+
+#ifndef Q_OS_WIN32
 #include <QBluetooth.h>
+#else
+#include <QBluetooth_dummy.h>
+#endif
 
+#include "IOCapture.h"
+#include "buttons.h"
 
-class BTCapture : public QObject
+class BTCapture : public IOCapture
 {
     Q_OBJECT
 public:
-    explicit BTCapture(QObject *parent = 0);
+    static BTCapture* instance();
+    virtual QString errorString(){ return QString("");}
+    QWidget* widget();
 
 signals:
+    void dataCaptured(QString);
+    void backPressed();
 
 public slots:
+    virtual void start();
+    virtual void stop();
+    virtual void open();
+    virtual void close();
+
+protected slots:
+#ifndef Q_OS_WIN32
+    //device discoverer slots
+    void startDeviceDiscovery();
+    void populateDeviceList(QBtDevice newDevice);
+    void deviceDiscoveryCompleteReport();
+#else
+    void startDeviceDiscovery(){}
+    void populateDeviceList(QBtDevice newDevice){}
+    void deviceDiscoveryCompleteReport(){}
+#endif
+    /* widget related slots */
+    void deviceSelected();
+    void connectedToServerReport();
+    void disconnectedFromServerReport();
+
+protected:
+    explicit BTCapture(QObject *parent = 0);
+#ifndef Q_OS_WIN32
+    void initBluetooth();
+#else
+    void initBluetooth(){}
+#endif
+    void setupWidget();
+
+private:
+    //For bluetooth operation
+    QBtDeviceDiscoverer* devDisc;
+    QBtSerialPortClient* client;
+    QString rfcommServerServiceName;
+    QList<QBtDevice> foundDevices;
+    QProgressDialog* dialog;
+
+    /* widget related */
+    QWidget*     mWidget;
+    QListWidget* list;
+    ShinyButton* okButton;
+    ShinyButton* cancelButton;
+    ShinyButton* refreshButton;
+    QGridLayout*  mLayout;
+    QString selectedDeviceName;
 
 };
 

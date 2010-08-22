@@ -60,7 +60,7 @@ protected slots:
 
 
 protected:
-    TrickSimulator(QWidget *parent = 0);
+    TrickSimulator(QObject *parent = 0);
 
 private:
     QList<QList<int> > data;

@@ -50,11 +50,12 @@ SOURCES += main.cpp\
     newmat/bandmat.cpp \
     trickdetector.cpp \
     trickmanager.cpp \
-	DTW/dtw.cpp\
+    DTW/dtw.cpp\
     trainwidget.cpp \
     trainpage.cpp \
     soundplayer.cpp \
-    recordwidget.cpp
+    recordwidget.cpp \
+    btcapture.cpp
 
 HEADERS  += \
     startscreen.h \
@@ -92,44 +93,34 @@ HEADERS  += \
     trainpage.h \
     ringbuffer.h \
     soundplayer.h \
-    recordwidget.h
+    recordwidget.h \
+    btcapture.h
 
 #CONFIG += mobility
 #MOBILITY = systeminfo
-#INCLUDEPATH += \NokiaQtSDK\Symbian\SDK\epoc32\include\QBlueTooth
 
 symbian {
- #   deploy.path = $(EPOCROOT)
     TARGET.UID3 = 0xe0c33b86
-    # TARGET.CAPABILITY += 
     TARGET.EPOCSTACKSIZE = 0x14000 # 80 kB
     #TARGET.EPOCHEAPSIZE = 0x020000 0x800000 # Min 128 kB, Max 8 Mb
     TARGET.EPOCHEAPSIZE = 0x020000 0x2000000 # Min 128 kB, Max 32 Mb
     INCLUDEPATH += /epoc32/include/QBluetooth
- #                   /epoc32/include/QBluetooth
 
     LIBS += -lQBluetooth
 
- #   TARGET.CAPABILITY = LocalServices \
- #       NetworkServices \
- #       ReadUserData \
- #       UserEnvironment \
- #       WriteUserData
    TARGET.CAPABILITY = LocalServices \
         NetworkServices \
         ReadUserData \
         UserEnvironment \
         WriteUserData
 
-    SOURCES += btcapture.cpp
-    HEADERS += btcapture.h
-
-#    addFiles.sources = $(EPOCROOT)Epoc32/BUILD/NokiaDev/C---Port/TILTNROLL_0XE0C33B87/GCCE/udeb/TiltNRoll.exe
     addFiles.sources = $(EPOCROOT)Epoc32/release/$(PLATFORM)/$(CFG)/QBluetooth.dll
     addFiles.path = /sys/bin
     DEPLOYMENT += addFiles
 }
-
+win32 {
+    HEADERS += QBluetooth_dummy.h
+}
 RESOURCES += \
     Resources/tnr.qrc \
     Resources/images.qrc \
@@ -137,8 +128,6 @@ RESOURCES += \
     Resources/fonts.qrc \
     Resources/sounds.qrc
 
-#sounds.sources = Resources/sounds/*.wav
-#DEPLOYMENT += sounds
 
 OTHER_FILES += \
     .gitignore \
@@ -147,3 +136,5 @@ OTHER_FILES += \
     dev-installation.txt \
     hours_private.txt \
     Resources/tnr.css
+
+FORMS +=
