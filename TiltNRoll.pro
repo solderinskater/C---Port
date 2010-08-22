@@ -4,10 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-
 TARGET = TiltNRoll
 TEMPLATE = app
+QT       += core gui
 
 
 SOURCES += main.cpp\
@@ -95,15 +94,40 @@ HEADERS  += \
     soundplayer.h \
     recordwidget.h
 
-CONFIG += mobility
-MOBILITY = systeminfo
+#CONFIG += mobility
+#MOBILITY = systeminfo
+#INCLUDEPATH += \NokiaQtSDK\Symbian\SDK\epoc32\include\QBlueTooth
 
 symbian {
+ #   deploy.path = $(EPOCROOT)
     TARGET.UID3 = 0xe0c33b86
     # TARGET.CAPABILITY += 
     TARGET.EPOCSTACKSIZE = 0x14000 # 80 kB
     #TARGET.EPOCHEAPSIZE = 0x020000 0x800000 # Min 128 kB, Max 8 Mb
     TARGET.EPOCHEAPSIZE = 0x020000 0x2000000 # Min 128 kB, Max 32 Mb
+    INCLUDEPATH += /epoc32/include/QBluetooth
+ #                   /epoc32/include/QBluetooth
+
+    LIBS += -lQBluetooth
+
+ #   TARGET.CAPABILITY = LocalServices \
+ #       NetworkServices \
+ #       ReadUserData \
+ #       UserEnvironment \
+ #       WriteUserData
+   TARGET.CAPABILITY = LocalServices \
+        NetworkServices \
+        ReadUserData \
+        UserEnvironment \
+        WriteUserData
+
+    SOURCES += btcapture.cpp
+    HEADERS += btcapture.h
+
+#    addFiles.sources = $(EPOCROOT)Epoc32/BUILD/NokiaDev/C---Port/TILTNROLL_0XE0C33B87/GCCE/udeb/TiltNRoll.exe
+    addFiles.sources = $(EPOCROOT)Epoc32/release/$(PLATFORM)/$(CFG)/QBluetooth.dll
+    addFiles.path = /sys/bin
+    DEPLOYMENT += addFiles
 }
 
 RESOURCES += \

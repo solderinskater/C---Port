@@ -1,12 +1,12 @@
 #include <QtGui/QApplication>
 #include "tiltnroll.h"
-#ifdef Q_OS_SYMBIAN
-#include <QSystemInfo> //(1)
-#include <qsysteminfo.h>
-#else
-#include <QSystemInfo> //(1)
-#endif
-using namespace QtMobility; //(2)
+//#ifdef Q_OS_SYMBIAN
+//#include <QSystemInfo> //(1)
+//#include <qsysteminfo.h>
+//#else
+//#include <QSystemInfo> //(1)
+//#endif
+//using namespace QtMobility; //(2)
 
 int main(int argc, char *argv[])
 {

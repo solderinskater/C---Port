@@ -18,6 +18,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 */
 
 #include "playscreen.h"
+#include "btcapture.h"
 
 PlayScreen::PlayScreen(QWidget *parent)
         : QFrame(parent)
@@ -49,6 +50,7 @@ PlayScreen::PlayScreen(QWidget *parent)
         connect(buttonBack,     SIGNAL(clicked()), this, SIGNAL(backPressed()));
         connect(buttonSingle,   SIGNAL(clicked()), this, SIGNAL(singlePlayerPressed()));
         connect(buttonMulti,    SIGNAL(clicked()), this, SIGNAL(multiPlayerPressed()));
+
 
 }
 

@@ -179,7 +179,7 @@ void RecordWidget::recordClicked()
         try {
             trainTrick();
             patternErrorLabel->setText("");
-        } catch(QString error) {
+        } catch(QString& error) {
             patternErrorLabel->setText(error);
             recordedData.clear();
         }
