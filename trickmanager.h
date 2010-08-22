@@ -27,7 +27,6 @@ public:
         }
     };
 
-    TrickManager();
     static TrickManager* instance();
 
     /// Resets the trick data to an Ollie and 180. Does not write to settings.
@@ -54,6 +53,8 @@ public:
     int getPoints(QString name);
     /// Returns the pattern data of the specified trick.
     QList<int> getPattern(QString name);
+protected:
+    TrickManager();
 
 private:
     QSettings settings;

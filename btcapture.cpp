@@ -19,12 +19,195 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 
 #include "btcapture.h"
 
-BTCapture::BTCapture(QObject *parent) :
-    QObject(parent)
+BTCapture* BTCapture::instance()
 {
-    QBtDeviceDiscoverer* deviceDiscoverer = new QBtDeviceDiscoverer(this);
-    connect(deviceDiscoverer , SIGNAL(newDeviceFound (QBtDevice)),
-            this, SLOT(handlerFunction(QBtDevice)));
-    deviceDiscoverer ->startDiscovery();
+    static BTCapture* inst = 0;
+
+    if(!inst)
+        inst = new BTCapture;
+    return inst;
+}
+
+BTCapture::BTCapture(QObject *parent)
+{
+    setObjectName("Bluetooh");
+    setupWidget();
+}
+
+void BTCapture::setupWidget()
+{
+    mWidget = new QWidget;
+    mLayout = new QGridLayout();
+
+    okButton = new ShinyButton("Ok","small");
+    cancelButton = new ShinyButton("Back","small");
+    refreshButton = new ShinyButton("Refresh","small");
+
+    connect(cancelButton, SIGNAL(clicked()), this, SIGNAL(backPressed()));
+    connect(refreshButton,SIGNAL(clicked()), this, SLOT(startDeviceDiscovery()));
+
+    list = new QListWidget;
+    list->addItem("None");
+    mLayout->addWidget(list, 0, 0, 5, 2);
+
+    mLayout->addWidget(cancelButton,0,3);
+    mLayout->addWidget(refreshButton,3,3);
+
+    mLayout->addWidget(okButton,4,3);
+
+    widget()->setLayout(mLayout);
+
+    open();
+}
+
+
+
+
+/**** IOCapture implementation ****/
+
+QWidget* BTCapture::widget()
+{
+    return mWidget;
+}
+
+void BTCapture::open()
+{
+    initBluetooth();
+}
+
+void BTCapture::start()
+{
 
 }
+
+void BTCapture::stop()
+{
+
+}
+
+void BTCapture::close()
+{
+
+}
+
+#ifndef Q_OS_WIN32
+
+void BTCapture::initBluetooth()
+{
+    // power on bluetooth
+    QBtLocalDevice::AskUserTurnOnBtPower();
+
+    // start rfcomm server
+    rfcommServerServiceName = QString("Messenger Protocol ");
+    rfcommServerServiceName += QBtLocalDevice::GetLocalDeviceName();
+
+    client = new QBtSerialPortClient(this);
+    //rfcommClient->startServer(rfcommServerServiceName);
+
+    connect(client, SIGNAL(connectedToServer()),
+            this, SLOT(connectedToServerReport()));
+
+    connect(client, SIGNAL(disconnectedFromServer()),
+            this, SLOT(disconnectedFromServerReport()));
+
+    connect(client, SIGNAL(dataReceived(const QString)),
+            this, SIGNAL(dataCaptured(const QString)));
+
+    connect(client, SIGNAL(error(QBtSerialPortClient::ErrorCode)),
+            this, SLOT(errorReport(QBtSerialPortClient::ErrorCode)));
+
+    //create an instance of BT device discoverer
+    devDisc = new QBtDeviceDiscoverer(this);
+
+    //service discoverer
+ //   serviceDisc = new QBtServiceDiscoverer(this);
+
+}
+
+
+/***************************************************************
+ *			Device discovery related functions
+ ***************************************************************/
+
+void BTCapture::startDeviceDiscovery()
+{
+  //  SetupMenu(true);
+    if(devDisc)
+    {
+        list->clear();
+        foundDevices.clear();
+        connect(devDisc, SIGNAL(newDeviceFound(QBtDevice)),
+                this, SLOT(populateDeviceList(QBtDevice)));
+        connect(devDisc, SIGNAL(discoveryStopped()),
+                this, SLOT(deviceDiscoveryCompleteReport()));
+        devDisc->startDiscovery();
+
+        dialog = new QProgressDialog("Searching devices...", "Stop", 0, 0, widget());
+        dialog->setWindowModality(Qt::NonModal);
+        connect(dialog, SIGNAL(canceled()), this, SLOT(deviceDiscoveryCompleteReport()));
+        dialog->setBar(NULL);
+
+        dialog->show();
+    }
+}
+
+void BTCapture::populateDeviceList(QBtDevice newDevice)
+{
+    list->addItem(newDevice.GetName());
+    foundDevices.append(newDevice);
+}
+
+void BTCapture::deviceDiscoveryCompleteReport()
+{
+    disconnect(devDisc, SIGNAL(newDeviceFound(QBtDevice)),
+            this, SLOT(populateDeviceList(QBtDevice)));
+    disconnect(devDisc, SIGNAL(discoveryStopped()),
+            this, SLOT(deviceDiscoveryCompleteReport()));
+
+    if(dialog)
+    {
+        dialog->hide();
+        delete dialog;
+    }
+}
+
+#endif
+
+
+/*************************** symbian end *******************/
+
+void BTCapture::deviceSelected()
+{
+    selectedDeviceName = list->currentItem()->text();
+}
+
+
+
+void BTCapture::connectedToServerReport()
+{
+    qDebug() << "Connected!";
+//    ui.textEdit->append("---Connected---");
+}
+
+void BTCapture::disconnectedFromServerReport()
+{
+    qDebug() << "Disconnected!";
+//    ui.textEdit->append("---Disconnected---");
+//	lineEdit->setEditFocus(false);
+}
+
+//void BTCapture::dataReceivedReport(const QString data)
+//{
+//    QString str("-> ");
+//    str += data;
+
+////    ui.textEdit->append(str);
+//}
+
+//void BTCapture::errorReport(QBtSerialPortClient::ErrorCode code)
+//{
+//    QString str("--Error occurred: ");
+//        str += code;
+//    qDebug() << str;
+////    ui.textEdit->append(str);
+//}
