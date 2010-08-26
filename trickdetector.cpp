@@ -87,6 +87,7 @@ void TrickDetector::addSample(QString smp)
 void TrickDetector::classify()
 {
     static unsigned int refrac = 140;
+    qDebug() << "WOOT";
     refrac++;
     QTime t;
     t.start();
@@ -105,6 +106,7 @@ void TrickDetector::classify()
     if(subwindow.last()<450) {
         return;
     }
+    qDebug() << "CLAAAAAAAAAAAAAAAS";
 
     /* this is the no-trick template */
     QVector<int> tmplNeutral(trickLength);

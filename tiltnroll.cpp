@@ -32,11 +32,11 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "trickmanager.h"
 #include "soundplayer.h"
 #include "btcapture.h"
+#include "trickdetector.h"
 
 TiltNRoll::TiltNRoll(QWidget *parent)
         : QStackedWidget(parent), m_channel(0), m_embedded(true)
 {
-
     // call TrickManager::instance for initialization
     TrickManager::instance();
     // call SoundPlayer::instance for initialization
@@ -178,6 +178,10 @@ void TiltNRoll::onStart()
 
 void TiltNRoll::onPlay()
 {
+    BTCapture* d = BTCapture::instance();
+    if(!d->isConnected()) {
+        QMessageBox::warning(this, "Not Connected","Please connect to the Skateboard first!");
+    } else
         setCurrentIndex(1);
 }
 

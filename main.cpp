@@ -7,6 +7,13 @@
 //#include <QSystemInfo> //(1)
 //#endif
 //using namespace QtMobility; //(2)
+#ifdef Q_OS_SYMBIAN
+#include <eikspane.h>
+#include <aknappui.h>
+#include <avkon.rsg>
+#include <EIKENV.H>
+#include <coemain.h>
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -24,7 +31,14 @@ int main(int argc, char *argv[])
 
     TiltNRoll w;
 
-#if defined(Q_WS_S60)
+#ifdef Q_OS_SYMBIAN
+    // lock orientation
+    CAknAppUi* appUi = dynamic_cast<CAknAppUi*>(CEikonEnv::Static()->AppUi());
+    if(appUi){
+        QT_TRAP_THROWING(appUi ->SetOrientationL(CAknAppUi::EAppUiOrientationLandscape));
+    }
+    CEikStatusPane* statusPane = STATIC_CAST( CAknAppUi*, CEikonEnv::Static()->EikAppUi())->StatusPane();
+    statusPane->MakeVisible(EFalse);
     w.showFullScreen();
 #else
     w.showFullScreen();

@@ -31,6 +31,7 @@ public:
 
     virtual QString errorString() =0;
     virtual QWidget* widget() = 0;
+    virtual bool isConnected() = 0;
 
 public slots:
     virtual void start() =0;
