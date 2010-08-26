@@ -55,7 +55,9 @@ SOURCES += main.cpp\
     trainpage.cpp \
     soundplayer.cpp \
     recordwidget.cpp \
-    btcapture.cpp
+    btcapture.cpp \
+    dialog.cpp \
+    settingspage.cpp
 
 HEADERS  += \
     startscreen.h \
@@ -94,7 +96,9 @@ HEADERS  += \
     ringbuffer.h \
     soundplayer.h \
     recordwidget.h \
-    btcapture.h
+    btcapture.h \
+    dialog.h \
+    settingspage.h
 
 #CONFIG += mobility
 #MOBILITY = systeminfo

@@ -27,6 +27,8 @@
         <file>backgrounds/settings_new.png</file>
         <file>backgrounds/singleplayer_new.png</file>
         <file>backgrounds/start_new.png</file>
-        <file>images/brushedmetal.png</file>
+	<file>images/trace.png</file>
+	<file>images/bluetooth.png</file>
+	<file>images/bluetooth-active.png</file>
     </qresource>
 </RCC>

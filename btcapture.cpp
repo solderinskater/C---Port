@@ -79,6 +79,7 @@ void BTCapture::open()
 
 void BTCapture::okClicked()
 {
+    stop();
     QBtDevice* dev = new QBtDevice(foundDevices[list->currentRow()]);
     foundServices.clear();
     connect(serviceDisc, SIGNAL(newServiceFound(const QBtDevice&, QBtService)),
@@ -88,7 +89,7 @@ void BTCapture::okClicked()
 
     serviceDisc->startDiscovery(dev,QBtConstants::RFCOMM);
 
-    dialog = new QProgressDialog("Searching services...", "Stop", 0, 0, widget());
+    dialog = new QProgressDialog("Searching devices...", "Stop", 0,0, widget());
     dialog->setWindowModality(Qt::NonModal);
     connect(dialog, SIGNAL(canceled()), this, SLOT(serviceDiscoveryCompleteReport()));
     //dialog->setBar(NULL);
@@ -184,7 +185,9 @@ void BTCapture::preprocess(const QString s)
     if(n>1) {
         QStringList splitted = t.split("\n");
         for(int i=0; i<splitted.size()-1;i++) {
-            qDebug() << splitted[i];
+            QString sp = splitted[i];
+            sp.chop(2); // remove \n and last , from line
+            qDebug() << sp;
             emit dataCaptured(splitted[i]);
         }
         t = splitted.last();
@@ -208,12 +211,12 @@ void BTCapture::startDeviceDiscovery()
                 this, SLOT(deviceDiscoveryCompleteReport()));
         devDisc->startDiscovery();
 
-        dialog = new QProgressDialog("Searching devices...", "Stop", 0, 0, 0);
+        dialog = new QProgressDialog("Searching devices...", "Stop", 0,0, widget());
         dialog->setWindowModality(Qt::NonModal);
         connect(dialog, SIGNAL(canceled()), this, SLOT(deviceDiscoveryCompleteReport()));
         //dialog->setBar(NULL);
 
-        dialog->show();
+        dialog->showMaximized();
     }
 }
 
