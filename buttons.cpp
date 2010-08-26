@@ -29,6 +29,7 @@ SkateLabel::SkateLabel(QString caption, QString add_style, bool centered)
     QPalette p(qApp->palette());
     p.setColor(QPalette::Text,QColor(0,0,0,0));
     setPalette(p);
+    setFocusPolicy(Qt::NoFocus);
 }
 
 
@@ -40,6 +41,7 @@ AnimatedButton::AnimatedButton(QString caption, QString iname, QList<int> timeIn
     QPalette p(qApp->palette());
     p.setColor(QPalette::Text,QColor(0,0,0,0));
     setPalette(p);
+    setFocusPolicy(Qt::NoFocus);
 }
 
 void AnimatedButton::updateImage(int frame) {
@@ -69,6 +71,7 @@ ShinyButton::ShinyButton(QString caption, QString image_name, QString addStyle) 
     QPalette p(qApp->palette());
     p.setColor(QPalette::Text,QColor(0,0,0,0));
     setPalette(p);
+    setFocusPolicy(Qt::NoFocus);
 }
 
 

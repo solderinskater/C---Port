@@ -34,6 +34,7 @@ TrainWidget::TrainWidget(QWidget *parent) :
     updateTrickList();
 
     hbox1 = new QHBoxLayout();
+    hbox1->setDirection(QBoxLayout::RightToLeft);
     hbox1->addWidget(buttonBack);
     hbox1->addStretch();
     hbox1->addWidget(new SkateLabel("Trick Data", "font-size:30px"));
