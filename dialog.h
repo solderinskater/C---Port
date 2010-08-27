@@ -17,33 +17,34 @@ You should have received a copy of the GNU General Public License
 along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IOCAPTURE_H
-#define IOCAPTURE_H
+#ifndef DIALOG_H
+#define DIALOG_H
 
+#include <QDialog>
 #include <QtGui>
 
-class IOCapture : public QObject
+class Dialog : public QDialog
 {
-
     Q_OBJECT
-
 public:
+    explicit Dialog(QString title, QWidget *parent = 0);
+    ~Dialog();
 
-    virtual QString errorString() =0;
-    virtual QWidget* widget() = 0;
-    virtual bool isConnected() = 0;
+    void showOkButton(bool s);
+    void showCancelButton(bool s);
 
-public slots:
-    virtual void start() =0;
-    virtual void stop() =0;
-    virtual void open() =0;
-    virtual void close() =0;
-
+    void setOkButtonText(const QString& text);
+    void setCancelButtonText(const QString& text);
 
 signals:
-    void dataCaptured(QString);
 
 
+private:
+    QGridLayout* l;
+    QPushButton* okBtn;
+    QPushButton* cancelBtn;
+    QLabel* label;
+    QProgressBar* bar;
 };
 
-#endif // IOCAPTURE_H
+#endif // DIALOG_H

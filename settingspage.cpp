@@ -17,33 +17,19 @@ You should have received a copy of the GNU General Public License
 along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IOCAPTURE_H
-#define IOCAPTURE_H
+#include "settingspage.h"
+#include "btcapture.h"
 
-#include <QtGui>
-
-class IOCapture : public QObject
+SettingsPage::SettingsPage()
 {
+    trainWidget = new TrainPage();
+    captureWidget = BTCapture::instance()->widget();
 
-    Q_OBJECT
+    addTab(captureWidget,QIcon(":/images/bluetooth-active.png"),"Bluetooth");
+    addTab(trainWidget,QIcon(":/images/trace.png"),"Tricks");
 
-public:
+    connect(BTCapture::instance(), SIGNAL(backPressed()), this, SIGNAL(backPressed()));
+    connect(trainWidget, SIGNAL(backPressed()), this, SIGNAL(backPressed()));
 
-    virtual QString errorString() =0;
-    virtual QWidget* widget() = 0;
-    virtual bool isConnected() = 0;
+}
 
-public slots:
-    virtual void start() =0;
-    virtual void stop() =0;
-    virtual void open() =0;
-    virtual void close() =0;
-
-
-signals:
-    void dataCaptured(QString);
-
-
-};
-
-#endif // IOCAPTURE_H

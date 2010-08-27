@@ -31,6 +31,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "IOCapture.h"
 #include "buttons.h"
 
+
 class BTCapture : public IOCapture
 {
     Q_OBJECT
@@ -38,6 +39,7 @@ public:
     static BTCapture* instance();
     virtual QString errorString(){ return QString("");}
     QWidget* widget();
+    bool isConnected();
 
 signals:
     void dataCaptured(QString);
@@ -55,6 +57,10 @@ protected slots:
     void startDeviceDiscovery();
     void populateDeviceList(QBtDevice newDevice);
     void deviceDiscoveryCompleteReport();
+    void serviceDiscoveryCompleteReport();
+    void addService(const QBtDevice& targetDevice, QBtService service);
+    void okClicked();
+    void preprocess(const QString);
 #else
     void startDeviceDiscovery(){}
     void populateDeviceList(QBtDevice newDevice){}
@@ -77,9 +83,11 @@ protected:
 private:
     //For bluetooth operation
     QBtDeviceDiscoverer* devDisc;
+    QBtServiceDiscoverer* serviceDisc;
     QBtSerialPortClient* client;
     QString rfcommServerServiceName;
     QList<QBtDevice> foundDevices;
+    QList<QBtService> foundServices;
     QProgressDialog* dialog;
 
     /* widget related */
@@ -90,6 +98,8 @@ private:
     ShinyButton* refreshButton;
     QGridLayout*  mLayout;
     QString selectedDeviceName;
+
+    bool conn;
 
 };
 

@@ -43,6 +43,7 @@ public:
     QWidget* widget();
     QString errorString(){return QString(""); }
     void setEnableClassification(bool yes=true) { doClassify = yes; }
+    bool isConnected() { return true; }
 
 signals:
     void backPressed();

@@ -18,6 +18,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 */
 
 #include "btcapture.h"
+#include "trickdetector.h"
 
 BTCapture* BTCapture::instance()
 {
@@ -28,7 +29,7 @@ BTCapture* BTCapture::instance()
     return inst;
 }
 
-BTCapture::BTCapture(QObject *parent)
+BTCapture::BTCapture(QObject *parent) : conn(false)
 {
     setObjectName("Bluetooh");
     setupWidget();
@@ -43,6 +44,7 @@ void BTCapture::setupWidget()
     cancelButton = new ShinyButton("Back","small");
     refreshButton = new ShinyButton("Refresh","small");
 
+    connect(okButton, SIGNAL(clicked()), this, SLOT(okClicked()));
     connect(cancelButton, SIGNAL(clicked()), this, SIGNAL(backPressed()));
     connect(refreshButton,SIGNAL(clicked()), this, SLOT(startDeviceDiscovery()));
 
@@ -75,19 +77,67 @@ void BTCapture::open()
     initBluetooth();
 }
 
+void BTCapture::okClicked()
+{
+    stop();
+    QBtDevice* dev = new QBtDevice(foundDevices[list->currentRow()]);
+    foundServices.clear();
+    connect(serviceDisc, SIGNAL(newServiceFound(const QBtDevice&, QBtService)),
+            this, SLOT(addService(const QBtDevice&, QBtService)));
+    connect(serviceDisc, SIGNAL(discoveryStopped()),
+            this, SLOT(serviceDiscoveryCompleteReport()));
+
+    serviceDisc->startDiscovery(dev,QBtConstants::RFCOMM);
+
+    dialog = new QProgressDialog("Searching devices...", "Stop", 0,0, widget());
+    dialog->setWindowModality(Qt::NonModal);
+    connect(dialog, SIGNAL(canceled()), this, SLOT(serviceDiscoveryCompleteReport()));
+    //dialog->setBar(NULL);
+
+    dialog->show();
+
+}
+
+bool BTCapture::isConnected()
+{
+    return conn;
+
+}
+
 void BTCapture::start()
 {
-
+    QBtDevice dev = foundDevices[list->currentRow()];
+    qDebug() << "Start!";
+    client->connect(dev,foundServices.last());
+    TrickDetector* detector = TrickDetector::instance();
+    detector->init();
+    connect(this, SIGNAL(dataCaptured(QString)),
+            detector, SLOT(addSample(QString)));
+    conn = true;
 }
 
 void BTCapture::stop()
 {
-
+    client->disconnect();
+    TrickDetector* detector = TrickDetector::instance();
+    disconnect(detector);
+    conn=false;
 }
 
 void BTCapture::close()
 {
+    stop();
+}
 
+void BTCapture::addService(const QBtDevice& targetDevice, QBtService service)
+{
+    Q_UNUSED(targetDevice);
+    foundServices << service;
+    qDebug() << service.GetName();
+    if(service.GetProtocols().last()==QBtConstants::RFCOMM)
+        qDebug() << QString("RFCOMM");
+    else
+        qDebug() << QString("OTHER");
 }
 
 #ifndef Q_OS_WIN32
@@ -110,8 +160,11 @@ void BTCapture::initBluetooth()
     connect(client, SIGNAL(disconnectedFromServer()),
             this, SLOT(disconnectedFromServerReport()));
 
+//    connect(client, SIGNAL(dataReceived(const QString)),
+//            this, SIGNAL(dataCaptured(const QString)));
+
     connect(client, SIGNAL(dataReceived(const QString)),
-            this, SIGNAL(dataCaptured(const QString)));
+            this, SLOT(preprocess(const QString)));
 
     connect(client, SIGNAL(error(QBtSerialPortClient::ErrorCode)),
             this, SLOT(errorReport(QBtSerialPortClient::ErrorCode)));
@@ -120,10 +173,26 @@ void BTCapture::initBluetooth()
     devDisc = new QBtDeviceDiscoverer(this);
 
     //service discoverer
- //   serviceDisc = new QBtServiceDiscoverer(this);
+    serviceDisc = new QBtServiceDiscoverer(this);
 
 }
 
+void BTCapture::preprocess(const QString s)
+{
+    static QString t = QString("");
+    t += s;
+    int n = t.count("\n");
+    if(n>1) {
+        QStringList splitted = t.split("\n");
+        for(int i=0; i<splitted.size()-1;i++) {
+            QString sp = splitted[i];
+            sp.chop(2); // remove \n and last , from line
+            qDebug() << sp;
+            emit dataCaptured(splitted[i]);
+        }
+        t = splitted.last();
+    }
+}
 
 /***************************************************************
  *			Device discovery related functions
@@ -142,12 +211,12 @@ void BTCapture::startDeviceDiscovery()
                 this, SLOT(deviceDiscoveryCompleteReport()));
         devDisc->startDiscovery();
 
-        dialog = new QProgressDialog("Searching devices...", "Stop", 0, 0, widget());
+        dialog = new QProgressDialog("Searching devices...", "Stop", 0,0, widget());
         dialog->setWindowModality(Qt::NonModal);
         connect(dialog, SIGNAL(canceled()), this, SLOT(deviceDiscoveryCompleteReport()));
-        dialog->setBar(NULL);
+        //dialog->setBar(NULL);
 
-        dialog->show();
+        dialog->showMaximized();
     }
 }
 
@@ -169,6 +238,19 @@ void BTCapture::deviceDiscoveryCompleteReport()
         dialog->hide();
         delete dialog;
     }
+}
+
+void BTCapture::serviceDiscoveryCompleteReport()
+{
+    serviceDisc->disconnect(this);
+
+    if(dialog)
+    {
+        dialog->hide();
+        delete dialog;
+    }
+
+    start();
 }
 
 #endif

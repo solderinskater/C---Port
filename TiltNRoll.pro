@@ -55,7 +55,9 @@ SOURCES += main.cpp\
     trainpage.cpp \
     soundplayer.cpp \
     recordwidget.cpp \
-    btcapture.cpp
+    btcapture.cpp \
+    dialog.cpp \
+    settingspage.cpp
 
 HEADERS  += \
     startscreen.h \
@@ -94,7 +96,9 @@ HEADERS  += \
     ringbuffer.h \
     soundplayer.h \
     recordwidget.h \
-    btcapture.h
+    btcapture.h \
+    dialog.h \
+    settingspage.h
 
 #CONFIG += mobility
 #MOBILITY = systeminfo
@@ -106,7 +110,12 @@ symbian {
     TARGET.EPOCHEAPSIZE = 0x020000 0x2000000 # Min 128 kB, Max 32 Mb
     INCLUDEPATH += /epoc32/include/QBluetooth
 
-    LIBS += -lQBluetooth
+    LIBS += -lQBluetooth \
+      -leikcoctl \
+        -lavkon \
+        -leikcore \
+        -leiksrv \
+        -lcone
 
    TARGET.CAPABILITY = LocalServices \
         NetworkServices \

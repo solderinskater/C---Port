@@ -44,6 +44,7 @@ StartScreen::StartScreen(QWidget *parent) :
         layout->addSpacing(105);
         layout->addWidget(buttonPlay);
         layout->addWidget(buttonTraining);
-        layout->addWidget(buttonSimul);
+//        layout->addWidget(buttonSimul);
+        layout->addWidget(buttonQuit);
         layout->addStretch();
 }

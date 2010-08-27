@@ -17,33 +17,24 @@ You should have received a copy of the GNU General Public License
 along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IOCAPTURE_H
-#define IOCAPTURE_H
+#ifndef SETTINGSPAGE_H
+#define SETTINGSPAGE_H
 
 #include <QtGui>
+#include "trainpage.h"
 
-class IOCapture : public QObject
+class SettingsPage : public QTabWidget
 {
-
     Q_OBJECT
-
 public:
-
-    virtual QString errorString() =0;
-    virtual QWidget* widget() = 0;
-    virtual bool isConnected() = 0;
-
-public slots:
-    virtual void start() =0;
-    virtual void stop() =0;
-    virtual void open() =0;
-    virtual void close() =0;
-
+    SettingsPage();
 
 signals:
-    void dataCaptured(QString);
+    void backPressed();
 
-
+private:
+    TrainPage*  trainWidget;
+    QWidget*    captureWidget;
 };
 
-#endif // IOCAPTURE_H
+#endif // SETTINGSPAGE_H

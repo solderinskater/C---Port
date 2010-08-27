@@ -32,11 +32,12 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "trickmanager.h"
 #include "soundplayer.h"
 #include "btcapture.h"
+#include "trickdetector.h"
+#include "settingspage.h"
 
 TiltNRoll::TiltNRoll(QWidget *parent)
         : QStackedWidget(parent), m_channel(0), m_embedded(true)
 {
-
     // call TrickManager::instance for initialization
     TrickManager::instance();
     // call SoundPlayer::instance for initialization
@@ -58,7 +59,8 @@ TiltNRoll::TiltNRoll(QWidget *parent)
 
     // training screen (tab 2)
     //SettingsScreen *s2 = new SettingsScreen();
-    TrainPage *s2 = new TrainPage;
+    //TrainPage *s2 = new TrainPage;
+    SettingsPage *s2 = new SettingsPage;
     connect(s2, SIGNAL(backPressed()), this, SLOT(onStart()));
     addWidget(s2);
 
@@ -97,16 +99,16 @@ TiltNRoll::TiltNRoll(QWidget *parent)
 
     // TrickSimulator (tab 8)
     //TrickSimulator* sim = TrickSimulator::instance();
-    BTCapture* sim = BTCapture::instance();
-    connect(sim, SIGNAL(backPressed()), this, SLOT(onStart()));
-    addWidget(sim->widget());
+//    BTCapture* sim = BTCapture::instance();
+//    connect(sim, SIGNAL(backPressed()), this, SLOT(onStart()));
+//    addWidget(sim->widget());
 
     QSize s(640,360);
     resize(s);
     setMinimumSize(s);
     setMaximumSize(s);
    //setStyle(new QPlastiqueStyle());
-    qApp->setOverrideCursor(Qt::BlankCursor);
+    //qApp->setOverrideCursor(Qt::BlankCursor);
     setWindowState(Qt::WindowFullScreen);
 
 
@@ -178,6 +180,10 @@ void TiltNRoll::onStart()
 
 void TiltNRoll::onPlay()
 {
+    BTCapture* d = BTCapture::instance();
+    if(!d->isConnected()) {
+        QMessageBox::warning(this, "Not Connected","Please connect to the Skateboard first!");
+    } else
         setCurrentIndex(1);
 }
 
