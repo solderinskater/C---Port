@@ -87,7 +87,8 @@ void BTCapture::okClicked()
     connect(serviceDisc, SIGNAL(discoveryStopped()),
             this, SLOT(serviceDiscoveryCompleteReport()));
 
-    serviceDisc->startDiscovery(dev,QBtConstants::RFCOMM);
+    //serviceDisc->startDiscovery(*dev,QBtConstants::RFCOMM);
+    serviceDisc->startDiscovery(*dev);
 
     dialog = new QProgressDialog("Searching devices...", "Stop", 0,0, widget());
     dialog->setWindowModality(Qt::NonModal);
@@ -133,11 +134,11 @@ void BTCapture::addService(const QBtDevice& targetDevice, QBtService service)
 {
     Q_UNUSED(targetDevice);
     foundServices << service;
-    qDebug() << service.GetName();
-    if(service.GetProtocols().last()==QBtConstants::RFCOMM)
-        qDebug() << QString("RFCOMM");
-    else
-        qDebug() << QString("OTHER");
+    qDebug() << service.getName();
+    //if(service.getProtocols().last()==QBtConstants::RFCOMM)
+    //    qDebug() << QString("RFCOMM");
+    //else
+    //    qDebug() << QString("OTHER");
 }
 
 #ifndef Q_OS_WIN32
@@ -145,11 +146,11 @@ void BTCapture::addService(const QBtDevice& targetDevice, QBtService service)
 void BTCapture::initBluetooth()
 {
     // power on bluetooth
-    QBtLocalDevice::AskUserTurnOnBtPower();
+    QBtLocalDevice::askUserTurnOnBtPower();
 
     // start rfcomm server
     rfcommServerServiceName = QString("Messenger Protocol ");
-    rfcommServerServiceName += QBtLocalDevice::GetLocalDeviceName();
+    rfcommServerServiceName += QBtLocalDevice::getLocalDeviceName();
 
     client = new QBtSerialPortClient(this);
     //rfcommClient->startServer(rfcommServerServiceName);
@@ -222,7 +223,7 @@ void BTCapture::startDeviceDiscovery()
 
 void BTCapture::populateDeviceList(QBtDevice newDevice)
 {
-    list->addItem(newDevice.GetName());
+    list->addItem(newDevice.getName());
     foundDevices.append(newDevice);
 }
 
