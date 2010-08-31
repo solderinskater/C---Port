@@ -110,7 +110,7 @@ symbian {
     TARGET.EPOCHEAPSIZE = 0x020000 0x2000000 # Min 128 kB, Max 32 Mb
     INCLUDEPATH += /epoc32/include/QBluetooth
 
-    LIBS += -lQBluetooth_0x2003328D \
+    LIBS += -lQBluetooth \
       -leikcoctl \
         -lavkon \
         -leikcore \
