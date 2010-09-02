@@ -21,7 +21,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #define TRICKDETECTOR_H
 
 #include <QtCore>
-#include <newmat/newmatap.h>
+//#include <newmat/newmatap.h>
 #include <DTW/dtw.h>
 #include "ringbuffer.h"
 
@@ -49,7 +49,6 @@ protected:
 
 private:
     DTW dtw;
-    Matrix W;
     RingBuffer buffer;
     bool m_isInit;
     double bias;

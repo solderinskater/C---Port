@@ -20,7 +20,10 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     // load Adore64 font
+#ifndef Q_OS_SYMBIAN
+    // adding application fonts does not work under symbian...
     QFontDatabase::addApplicationFont(":/fonts/Adore64.ttf");
+#endif
 
     // read stylesheet
     QFile f(":/tnr.css");

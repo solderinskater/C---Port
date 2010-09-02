@@ -63,7 +63,6 @@ void TrainPage::saveTrick() {
         tm->removeTrick(record->getOldTrickName());
         tm->addTrick(record->getEnteredTrick());
     }
-    tm->save();
     train->updateTrickList();
     showTraining();
 }
