@@ -100,11 +100,11 @@ void TrickDetector::classify()
     QList<int> window2 = buffer.getChannel(1);
 
     /* performance tweak. only classify if we see a peak in channel 2 */
-    QList<int> subwindow = window2.mid(0,25);
-    qSort(subwindow.begin(),subwindow.end());
-    if(subwindow.last()<450) {
+    QList<int> subwindow = window2.mid(0,15);
+//    qSort(subwindow.begin(),subwindow.end());
+    if(subwindow.last()<450)
         return;
-    }
+
 
     /* this is the no-trick template */
     QVector<int> tmplNeutral(trickLength);
@@ -134,6 +134,6 @@ void TrickDetector::classify()
         }
     }
 
-   // qDebug() << "TIME: " << t.elapsed();
+//    qDebug() << "TIME: " << t.elapsed();
 }
 

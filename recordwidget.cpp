@@ -188,11 +188,11 @@ void RecordWidget::recordClicked()
 }
 
 void RecordWidget::trainTrick() {
-    static int trickLength = 60; // 60 samples window
-    static int offset = -25; // start window 25 frames before peak
+    static int trickLength = 40; // 60 samples window
+    static int offset = -15; // start window 25 frames before peak
     static int peakThr = 430;   // peak detection threshold
 
-    int i=25;
+    int i=-offset;
     int last_window_start=recordedData.size()-offset-trickLength;
     while(i<last_window_start && recordedData[i][1]<peakThr) { i++; }
     if (i==last_window_start-1)

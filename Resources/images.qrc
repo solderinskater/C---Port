@@ -30,5 +30,7 @@
 	<file>images/trace.png</file>
 	<file>images/bluetooth.png</file>
 	<file>images/bluetooth-active.png</file>
+	<file>images/input-gaming.png</file>
+	<file>images/connect.png</file> 
     </qresource>
 </RCC>

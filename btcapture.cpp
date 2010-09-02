@@ -59,6 +59,11 @@ void BTCapture::setupWidget()
 
     widget()->setLayout(mLayout);
 
+    splash = new QSplashScreen(QPixmap(), Qt::WindowStaysOnTopHint);
+//    QProgressBar* b = new QProgressBar;
+//    b->setRange(0,0);
+//    splash->layout()->addWidget(b);
+
     open();
 }
 
@@ -89,12 +94,10 @@ void BTCapture::okClicked()
 
     serviceDisc->startDiscovery(dev,QBtConstants::RFCOMM);
 
-    dialog = new QProgressDialog("Searching devices...", "Stop", 0,0, widget());
-    dialog->setWindowModality(Qt::NonModal);
-    connect(dialog, SIGNAL(canceled()), this, SLOT(serviceDiscoveryCompleteReport()));
-    //dialog->setBar(NULL);
 
-    dialog->show();
+    splash->show();
+    splash->setPixmap(QPixmap(":/images/connect.png"));
+    splash->showMessage("Establishing connection...");
 
 }
 
@@ -187,7 +190,7 @@ void BTCapture::preprocess(const QString s)
         for(int i=0; i<splitted.size()-1;i++) {
             QString sp = splitted[i];
             sp.chop(2); // remove \n and last , from line
-            qDebug() << sp;
+     //       qDebug() << sp;
             emit dataCaptured(splitted[i]);
         }
         t = splitted.last();
@@ -211,12 +214,10 @@ void BTCapture::startDeviceDiscovery()
                 this, SLOT(deviceDiscoveryCompleteReport()));
         devDisc->startDiscovery();
 
-        dialog = new QProgressDialog("Searching devices...", "Stop", 0,0, widget());
-        dialog->setWindowModality(Qt::NonModal);
-        connect(dialog, SIGNAL(canceled()), this, SLOT(deviceDiscoveryCompleteReport()));
-        //dialog->setBar(NULL);
-
-        dialog->showMaximized();
+        splash->show();
+        splash->activateWindow();
+        splash->setPixmap(QPixmap(":/images/input-gaming.png"));
+        splash->showMessage("Searching for devices...",Qt::AlignLeft,Qt::green);
     }
 }
 
@@ -233,22 +234,17 @@ void BTCapture::deviceDiscoveryCompleteReport()
     disconnect(devDisc, SIGNAL(discoveryStopped()),
             this, SLOT(deviceDiscoveryCompleteReport()));
 
-    if(dialog)
-    {
-        dialog->hide();
-        delete dialog;
-    }
+    splash->hide();
+    splash->clearMessage();
+
 }
 
 void BTCapture::serviceDiscoveryCompleteReport()
 {
     serviceDisc->disconnect(this);
 
-    if(dialog)
-    {
-        dialog->hide();
-        delete dialog;
-    }
+    splash->hide();
+    splash->clearMessage();
 
     start();
 }

@@ -88,7 +88,7 @@ private:
     QString rfcommServerServiceName;
     QList<QBtDevice> foundDevices;
     QList<QBtService> foundServices;
-    QProgressDialog* dialog;
+    QSplashScreen* splash;
 
     /* widget related */
     QWidget*     mWidget;
