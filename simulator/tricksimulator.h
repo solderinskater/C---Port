@@ -20,13 +20,13 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #ifndef TRICKSIMULATOR_H
 #define TRICKSIMULATOR_H
 
-#define WANT_STREAM                  // include.h will get stream fns
-#define WANT_MATH                    // include.h will get math fns
-#include "newmat/newmatap.h"                // need matrix applications
-#include "newmat/newmatio.h"                // need matrix output routines
-#ifdef use_namespace
-using namespace NEWMAT;              // access NEWMAT namespace
-#endif
+//#define WANT_STREAM                  // include.h will get stream fns
+//#define WANT_MATH                    // include.h will get math fns
+//#include "newmat/newmatap.h"                // need matrix applications
+//#include "newmat/newmatio.h"                // need matrix output routines
+//#ifdef use_namespace
+//using namespace NEWMAT;              // access NEWMAT namespace
+//#endif
 #include <QWidget>
 #include <QtGui>
 #include <IOCapture.h>
