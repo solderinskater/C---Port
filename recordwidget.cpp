@@ -1,5 +1,6 @@
 #include "recordwidget.h"
 #include "simulator/tricksimulator.h"
+#include "btcapture.h"
 
 RecordWidget::RecordWidget(QWidget *parent) :
         QWidget(parent), trickManager(TrickManager::instance())
@@ -159,15 +160,19 @@ void RecordWidget::addData(QString smp)
 
 void RecordWidget::recordClicked()
 {
-    TrickSimulator* sim = TrickSimulator::instance();
+    //TrickSimulator* sim = TrickSimulator::instance();
+    BTCapture* sim = BTCapture::instance();
+
+
     sim->setEnableClassification(false);
 
     if(trainBtn->text()!="Stop") {
         trainBtn->setText("Stop");
-        sim->disconnect(this); // disconnect it from the actual game since we abuse it here as "data recorder" for the trick trainer
+//        sim->disconnect(this); // disconnect it from the actual game since we abuse it here as "data recorder" for the trick trainer
         sim->stop();
-        sim->close();
-        sim->open();
+        sim->start();
+//        sim->close();
+//        sim->open();
         recordedData.clear();
         patternStatusLabel->setText("recording...");
         connect(sim,SIGNAL(dataCaptured(QString)), this, SLOT(addData(QString)));

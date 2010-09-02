@@ -67,6 +67,7 @@ HEADERS  += \
 #CONFIG += mobility
 #MOBILITY = systeminfo
 
+
 symbian {
     TARGET.UID3 = 0xe0c33b86
     TARGET.EPOCSTACKSIZE = 0x14000 # 80 kB

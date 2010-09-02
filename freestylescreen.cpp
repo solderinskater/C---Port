@@ -21,6 +21,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include "soundplayer.h"
 #include <trickdetector.h>
 #include <trickmanager.h>
+#include "btcapture.h"
 
 FreestyleScreen::FreestyleScreen(QWidget *parent) :
     QFrame(parent) {
@@ -153,6 +154,8 @@ int FreestyleScreen::getLevel() const {
 void FreestyleScreen::showEvent(QShowEvent *e)
 {
     Q_UNUSED(e)
+    BTCapture::instance()->setEnableClassification(true);
+    BTCapture::instance()->start();
     start();
 }
 
@@ -161,6 +164,7 @@ void FreestyleScreen::hideEvent(QHideEvent *e)
 {
     Q_UNUSED(e)
     updateTimer.stop();
+    BTCapture::instance()->stop();
 }
 
 void FreestyleScreen::start()

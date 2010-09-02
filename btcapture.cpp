@@ -19,6 +19,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 
 #include "btcapture.h"
 #include "trickdetector.h"
+#define OLD_BT
 
 BTCapture* BTCapture::instance()
 {
@@ -33,6 +34,7 @@ BTCapture::BTCapture(QObject *parent) : conn(false)
 {
     setObjectName("Bluetooh");
     setupWidget();
+    doClassify = true;
 }
 
 void BTCapture::setupWidget()
@@ -93,7 +95,11 @@ void BTCapture::okClicked()
             this, SLOT(serviceDiscoveryCompleteReport()));
 
     //serviceDisc->startDiscovery(*dev,QBtConstants::RFCOMM);
+#ifdef OLD_BT
+    serviceDisc->startDiscovery(dev);
+#else
     serviceDisc->startDiscovery(*dev);
+#endif
 
 
     splash->show();
@@ -108,16 +114,23 @@ bool BTCapture::isConnected()
 
 }
 
+void BTCapture::setEnableClassification(bool on)
+{
+    doClassify = on;
+}
+
 void BTCapture::start()
 {
     QBtDevice dev = foundDevices[list->currentRow()];
     qDebug() << "Start!";
     client->connect(dev,foundServices.last());
-    TrickDetector* detector = TrickDetector::instance();
-    detector->init();
-    connect(this, SIGNAL(dataCaptured(QString)),
-            detector, SLOT(addSample(QString)));
-    conn = true;
+    if(doClassify) {
+        TrickDetector* detector = TrickDetector::instance();
+        detector->init();
+        connect(this, SIGNAL(dataCaptured(QString)),
+                detector, SLOT(addSample(QString)));
+    }
+    //conn = true;
 }
 
 void BTCapture::stop()
@@ -125,7 +138,7 @@ void BTCapture::stop()
     client->disconnect();
     TrickDetector* detector = TrickDetector::instance();
     disconnect(detector);
-    conn=false;
+    //conn=false;
 }
 
 void BTCapture::close()
@@ -137,7 +150,11 @@ void BTCapture::addService(const QBtDevice& targetDevice, QBtService service)
 {
     Q_UNUSED(targetDevice);
     foundServices << service;
+#ifdef OLD_BT
+    qDebug() << service.GetName();
+#else
     qDebug() << service.getName();
+#endif
     //if(service.getProtocols().last()==QBtConstants::RFCOMM)
     //    qDebug() << QString("RFCOMM");
     //else
@@ -148,12 +165,16 @@ void BTCapture::addService(const QBtDevice& targetDevice, QBtService service)
 
 void BTCapture::initBluetooth()
 {
-    // power on bluetooth
-    QBtLocalDevice::askUserTurnOnBtPower();
-
     // start rfcomm server
     rfcommServerServiceName = QString("Messenger Protocol ");
+    // power on bluetooth
+#ifdef OLD_BT
+    QBtLocalDevice::AskUserTurnOnBtPower();
+    rfcommServerServiceName += QBtLocalDevice::GetLocalDeviceName();
+#else
+    QBtLocalDevice::askUserTurnOnBtPower();
     rfcommServerServiceName += QBtLocalDevice::getLocalDeviceName();
+#endif
 
     client = new QBtSerialPortClient(this);
     //rfcommClient->startServer(rfcommServerServiceName);
@@ -224,7 +245,11 @@ void BTCapture::startDeviceDiscovery()
 
 void BTCapture::populateDeviceList(QBtDevice newDevice)
 {
+#ifdef OLD_BT
+    list->addItem(newDevice.GetName());
+#else
     list->addItem(newDevice.getName());
+#endif
     foundDevices.append(newDevice);
 }
 
@@ -246,8 +271,8 @@ void BTCapture::serviceDiscoveryCompleteReport()
 
     splash->hide();
     splash->clearMessage();
-
-    start();
+    conn = true;
+  //  start();
 }
 
 #endif

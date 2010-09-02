@@ -183,8 +183,9 @@ void TiltNRoll::onPlay()
     BTCapture* d = BTCapture::instance();
     if(!d->isConnected()) {
         QMessageBox::warning(this, "Not Connected","Please connect to the Skateboard first!");
-    } else
+    } else {
         setCurrentIndex(1);
+    }
 }
 
 void TiltNRoll::onTraining()

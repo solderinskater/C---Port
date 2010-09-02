@@ -40,6 +40,7 @@ public:
     virtual QString errorString(){ return QString("");}
     QWidget* widget();
     bool isConnected();
+    void setEnableClassification(bool);
 
 signals:
     void dataCaptured(QString);
@@ -100,7 +101,7 @@ private:
     QString selectedDeviceName;
 
     bool conn;
-
+    bool doClassify;
 };
 
 #endif // BTCAPTURE_H

@@ -36,26 +36,28 @@ TrickDetector::TrickDetector(QObject *parent) :
 
 void TrickDetector::init()
 {
-    m_isInit = true;
-    curSmp = 0;
+    if(!m_isInit) {
+        m_isInit = true;
+        curSmp = 0;
 
-    QSettings s("SolderinSkaters", "TiltNRoll");
-    s.beginGroup("tricks");
-    QStringList trickNames = s.childGroups();
+        QSettings s("SolderinSkaters", "TiltNRoll");
+        s.beginGroup("tricks");
+        QStringList trickNames = s.childGroups();
 
-    foreach(QString name, trickNames) {
-        qDebug() << name;
-        s.beginGroup(name);
-        qDebug() << s.childKeys();
-        knownTricks[name] = QList<int>();
-        QVariantList vl = s.value("pattern").toList();
-        foreach(QVariant v, vl)
-            knownTricks[name] << v.toInt();
-        trickLength = vl.size();
-        s.endGroup();
+        foreach(QString name, trickNames) {
+            qDebug() << name;
+            s.beginGroup(name);
+            qDebug() << s.childKeys();
+            knownTricks[name] = QList<int>();
+            QVariantList vl = s.value("pattern").toList();
+            foreach(QVariant v, vl)
+                knownTricks[name] << v.toInt();
+            trickLength = vl.size();
+            s.endGroup();
+        }
+
+        buffer.resize(trickLength);
     }
-
-    buffer.resize(trickLength);
 }
 
 void TrickDetector::addSample(QString smp)
