@@ -30,6 +30,9 @@ SettingsPage::SettingsPage()
 
     connect(BTCapture::instance(), SIGNAL(backPressed()), this, SIGNAL(backPressed()));
     connect(trainWidget, SIGNAL(backPressed()), this, SIGNAL(backPressed()));
-
+    connect(this, SIGNAL(backPressed()), this, SLOT(saveChanges()));
 }
 
+void SettingsPage::saveChanges() {
+    TrickManager::instance()->save();
+}

@@ -24,30 +24,6 @@ SOURCES += main.cpp\
     highscore.cpp \
     highscorescreen.cpp \
     simulator/tricksimulator.cpp \
-    newmat/svd.cpp \
-    newmat/submat.cpp \
-    newmat/sort.cpp \
-    newmat/solution.cpp \
-    newmat/newmatrm.cpp \
-    newmat/newmatnl.cpp \
-    newmat/newmatex.cpp \
-    newmat/newmat9.cpp \
-    newmat/newmat8.cpp \
-    newmat/newmat7.cpp \
-    newmat/newmat6.cpp \
-    newmat/newmat5.cpp \
-    newmat/newmat4.cpp \
-    newmat/newmat3.cpp \
-    newmat/newmat2.cpp \
-    newmat/newmat1.cpp \
-    newmat/newfft.cpp \
-    newmat/myexcept.cpp \
-    newmat/jacobi.cpp \
-    newmat/hholder.cpp \
-    newmat/fft.cpp \
-    newmat/evalue.cpp \
-    newmat/cholesky.cpp \
-    newmat/bandmat.cpp \
     trickdetector.cpp \
     trickmanager.cpp \
     DTW/dtw.cpp\
@@ -74,18 +50,6 @@ HEADERS  += \
     highscore.h \
     highscorescreen.h \
     simulator/tricksimulator.h \
-    newmat/solution.h \
-    newmat/precisio.h \
-    newmat/newmatrm.h \
-    newmat/newmatrc.h \
-    newmat/newmatnl.h \
-    newmat/newmatio.h \
-    newmat/newmatap.h \
-    newmat/newmat.h \
-    newmat/myexcept.h \
-    newmat/include.h \
-    newmat/controlw.h \
-    newmat/boolean.h \
     trickdetector.h \
     IOCapture.h \
     documentation.h \
@@ -125,7 +89,9 @@ symbian {
 
     addFiles.sources = $(EPOCROOT)Epoc32/release/$(PLATFORM)/$(CFG)/QBluetooth.dll
     addFiles.path = /sys/bin
+    soundFiles.sources = Resources/sounds/*.wav
     DEPLOYMENT += addFiles
+    DEPLOYMENT += soundFiles
 }
 win32 {
     HEADERS += QBluetooth_dummy.h

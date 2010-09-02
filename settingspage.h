@@ -32,6 +32,10 @@ public:
 signals:
     void backPressed();
 
+public slots:
+    /// writes the changes made to the list of known tricks to the device
+    void saveChanges();
+
 private:
     TrainPage*  trainWidget;
     QWidget*    captureWidget;

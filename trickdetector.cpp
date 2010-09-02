@@ -29,7 +29,7 @@ TrickDetector* TrickDetector::instance()
 }
 
 TrickDetector::TrickDetector(QObject *parent) :
-        QObject(parent), W(100,1), buffer(10),  m_isInit(false)
+        QObject(parent), buffer(10),  m_isInit(false)
 {
     bias = 0.0;
 }
@@ -74,7 +74,7 @@ void TrickDetector::addSample(QString smp)
     }
     else {
         for(int i=0;i<10;i++)
-            d << s[i].toDouble();
+            d << (int)s[i].toDouble();
     }
     curSmp++;
     buffer.add(d);
@@ -110,7 +110,7 @@ void TrickDetector::classify()
     QVector<int> tmplNeutral(trickLength);
     tmplNeutral.fill(380);
     DTWResult res = dtw.classify(tmplNeutral.toList(), window);
-    int bestScore = res.distance;
+    int bestScore = (int)res.distance;
     QString bestMatch("");
     QList<int> scores;
     scores << bestScore;
@@ -118,10 +118,10 @@ void TrickDetector::classify()
     /* classify all trained tricks */
     foreach(QString name, knownTricks.keys()) {
         res = dtw.classify(knownTricks[name], window);
-        scores << res.distance;
+        scores << (int)res.distance;
         if(res.distance<bestScore) {
             bestMatch = name;
-            bestScore = res.distance;
+            bestScore = (int)res.distance;
         }
     }
 

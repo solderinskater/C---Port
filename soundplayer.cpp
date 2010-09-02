@@ -26,8 +26,13 @@ void SoundPlayer::update() {
     else timer.start(2000);
 }
 
-SoundPlayer::SoundPlayer(QObject *parent):
-        QObject(parent), base_path("C:/Users/3r/coding/SolderingSkaters/C---Port/Resources/sounds/") {
+SoundPlayer::SoundPlayer(QObject *parent): QObject(parent) {
+#ifdef Q_OS_WIN32
+    base_path = "C:/Users/3r/coding/SolderingSkaters/C---Port/Resources/sounds/";
+#else
+    base_path = "";
+#endif
+
     readLenghtsFromFile(":/sounds/lengths.txt");
     timer.setSingleShot(true);
     connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
