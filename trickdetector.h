@@ -35,8 +35,6 @@ class TrickDetector : public QObject
 public:
     static TrickDetector* instance();
 
-    void init();
-
 signals:
     void trickEvent(QString);
 
@@ -46,6 +44,7 @@ public slots:
 protected:
     TrickDetector(QObject *parent = 0);
     void classify();
+    void init();
 
 private:
     DTW dtw;

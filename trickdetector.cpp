@@ -32,6 +32,7 @@ TrickDetector::TrickDetector(QObject *parent) :
         QObject(parent), buffer(10),  m_isInit(false)
 {
     bias = 0.0;
+    init();
 }
 
 void TrickDetector::init()
@@ -81,6 +82,7 @@ void TrickDetector::addSample(QString smp)
     curSmp++;
     buffer.add(d);
 
+    qDebug() << smp;
 
     if(buffer.isFilled())
         classify();
@@ -104,8 +106,10 @@ void TrickDetector::classify()
     /* performance tweak. only classify if we see a peak in channel 2 */
     QList<int> subwindow = window2.mid(0,15);
 //    qSort(subwindow.begin(),subwindow.end());
+    qDebug("CLassify PRE");
     if(subwindow.last()<450)
         return;
+    qDebug("CLassify POST");
 
 
     /* this is the no-trick template */

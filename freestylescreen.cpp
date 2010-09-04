@@ -155,7 +155,6 @@ void FreestyleScreen::showEvent(QShowEvent *e)
 {
     Q_UNUSED(e)
     BTCapture::instance()->setEnableClassification(true);
-    BTCapture::instance()->start();
     start();
 }
 
@@ -164,7 +163,7 @@ void FreestyleScreen::hideEvent(QHideEvent *e)
 {
     Q_UNUSED(e)
     updateTimer.stop();
-    BTCapture::instance()->stop();
+    BTCapture::instance()->setEnableClassification(false);
 }
 
 void FreestyleScreen::start()

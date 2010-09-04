@@ -118,7 +118,6 @@ void TrickSimulator::open()
     /* Initialize trick detector */
     if(doClassify) {
         detector = TrickDetector::instance();
-        detector->init();
         connect(this, SIGNAL(dataCaptured(QString)),
                 detector, SLOT(addSample(QString)));
     }

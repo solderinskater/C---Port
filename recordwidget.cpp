@@ -169,8 +169,8 @@ void RecordWidget::recordClicked()
     if(trainBtn->text()!="Stop") {
         trainBtn->setText("Stop");
 //        sim->disconnect(this); // disconnect it from the actual game since we abuse it here as "data recorder" for the trick trainer
-        sim->stop();
-        sim->start();
+//        sim->stop();
+//        sim->start();
 //        sim->close();
 //        sim->open();
         recordedData.clear();
@@ -178,8 +178,8 @@ void RecordWidget::recordClicked()
         connect(sim,SIGNAL(dataCaptured(QString)), this, SLOT(addData(QString)));
         sim->start();
     } else {
-        sim->stop();
-        sim->close();
+//        sim->stop();
+//        sim->close();
         sim->disconnect(this);
         try {
             trainTrick();

@@ -116,7 +116,19 @@ bool BTCapture::isConnected()
 
 void BTCapture::setEnableClassification(bool on)
 {
-    doClassify = on;
+    if(on)
+    {
+        TrickDetector* detector = TrickDetector::instance();
+        if(!doClassify) {
+            connect(this, SIGNAL(dataCaptured(QString)),
+                    detector, SLOT(addSample(QString)));
+        }
+        doClassify = true;
+    } else {
+        TrickDetector* detector = TrickDetector::instance();
+        if(doClassify)
+            disconnect(detector);
+    }
 }
 
 void BTCapture::start()
@@ -124,26 +136,22 @@ void BTCapture::start()
     QBtDevice dev = foundDevices[list->currentRow()];
     qDebug() << "Start!";
     client->connect(dev,foundServices.last());
-    if(doClassify) {
-        TrickDetector* detector = TrickDetector::instance();
-        detector->init();
-        connect(this, SIGNAL(dataCaptured(QString)),
-                detector, SLOT(addSample(QString)));
-    }
-    //conn = true;
+    conn = true;
 }
 
 void BTCapture::stop()
 {
     client->disconnect();
-    TrickDetector* detector = TrickDetector::instance();
-    disconnect(detector);
-    //conn=false;
+
+    conn=false;
 }
 
 void BTCapture::close()
 {
     stop();
+    TrickDetector* detector = TrickDetector::instance();
+    if(doClassify)
+        disconnect(detector);
 }
 
 void BTCapture::addService(const QBtDevice& targetDevice, QBtService service)
@@ -271,8 +279,7 @@ void BTCapture::serviceDiscoveryCompleteReport()
 
     splash->hide();
     splash->clearMessage();
-    conn = true;
-  //  start();
+    start();
 }
 
 #endif
