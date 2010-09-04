@@ -269,7 +269,7 @@ void BTCapture::populateDeviceList(QBtDevice newDevice)
 #else
     list->addItem(newDevice.getName());
 #endif
-    list->item(list->count()-1).last()->setIcon(QIcon(":/images/led_off.png"));
+    list->item(list->count()-1)->setIcon(QIcon(":/images/led_off.png"));
 
     foundDevices.append(newDevice);
 }

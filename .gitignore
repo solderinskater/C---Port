@@ -14,3 +14,4 @@ moc_*.cpp
 qrc_*.cpp
 Resources/backgrounds/*_prev.png
 Resources/flo
+QBluetooth*
