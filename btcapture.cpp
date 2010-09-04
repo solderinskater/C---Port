@@ -136,7 +136,8 @@ void BTCapture::start()
 {
     //QBtDevice dev = selectedDevice; foundDevices[list->currentRow()];
     qDebug() << "Start!";
-    client->connect(selectedDevice,foundServices.last());
+    client->connect(foundDevices[list->currentRow()],foundServices.last());
+    qDebug() << "Start OK!";
     conn = true;
 }
 
@@ -170,13 +171,13 @@ void BTCapture::addService(const QBtDevice& targetDevice, QBtService service)
     foundServices << service;
 #ifdef OLD_BT
     qDebug() << service.GetName();
+    if(service.GetProtocols().last()==QBtConstants::RFCOMM)
+        qDebug() << QString("RFCOMM");
+    else
+        qDebug() << QString("OTHER");
 #else
     qDebug() << service.getName();
 #endif
-    //if(service.getProtocols().last()==QBtConstants::RFCOMM)
-    //    qDebug() << QString("RFCOMM");
-    //else
-    //    qDebug() << QString("OTHER");
 }
 
 #ifndef Q_OS_WIN32
@@ -292,9 +293,10 @@ void BTCapture::serviceDiscoveryCompleteReport()
 
     splash->hide();
     splash->clearMessage();
+
     start();
 
-    QIcon icon(":/images/led_green.png");
+    QIcon icon(":/images/led_yellow.png");
     list->currentItem()->setIcon(icon);
 }
 
