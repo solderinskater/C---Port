@@ -43,6 +43,8 @@ public slots:
     void start();
     void pause();
     void finish();
+    /// reset points, timer and tricks
+    void reset();
 
 protected slots:
     void updateTimeLabel();
@@ -64,7 +66,7 @@ private:
     QStringList         tricksDone;
     QTimer              updateTimer;
 
-    int                 points, level;
+    int                 points, level, m_secs;
 
 };
 

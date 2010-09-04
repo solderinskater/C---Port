@@ -77,6 +77,7 @@ TiltNRoll::TiltNRoll(QWidget *parent)
     // freestyle screen (tab 4)
     freestyle_screen = new FreestyleScreen();
     connect(freestyle_screen, SIGNAL(showPauseScreen()), this, SLOT(onPause()));
+    connect(s3, SIGNAL(freestylePressed()), freestyle_screen, SLOT(reset()));
     addWidget(freestyle_screen);
 
     // pause screen (tab 5)
@@ -183,6 +184,7 @@ void TiltNRoll::onPlay()
     BTCapture* d = BTCapture::instance();
     if(!d->isConnected()) {
         QMessageBox::warning(this, "Not Connected","Please connect to the Skateboard first!");
+        setCurrentIndex(1);
     } else {
         setCurrentIndex(1);
     }
@@ -209,10 +211,10 @@ void TiltNRoll::onMultiplayer()
 {
     setCurrentIndex(4);
 }
-void TiltNRoll::onFreestyle()
-{
+void TiltNRoll::onFreestyle() {
     setCurrentIndex(4);
 }
+
 void TiltNRoll::onPause()
 {
     setCurrentIndex(5);

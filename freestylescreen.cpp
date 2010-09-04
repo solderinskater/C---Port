@@ -22,13 +22,12 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 #include <trickdetector.h>
 #include <trickmanager.h>
 #include "btcapture.h"
+#include "QDebug"
 
 FreestyleScreen::FreestyleScreen(QWidget *parent) :
     QFrame(parent) {
     levellist << 200 << 800 << 1000 << 2000 << 1000000;
     tricklabelcount = 4;
-    points = 0;
-    level = 1;
     qDebug("Build game screen freestyle");
     setStyleSheet(QString("FreestyleScreen {background-image: url(:/backgrounds/freestyle.jpg);}")+
                   "QLabel {color: #86bc10; font-size:24px; font-family:Adore64; text-align:center; background-color: transparent;}"+
@@ -49,7 +48,6 @@ FreestyleScreen::FreestyleScreen(QWidget *parent) :
     timewidget->setAlignment(Qt::AlignLeft);
     levelwidget = new QLabel(" ");
 
-    updateLevel();
     levelwidget->setAlignment(Qt::AlignRight);
     levelwidget->setObjectName("levellabel");
 
@@ -83,7 +81,19 @@ FreestyleScreen::FreestyleScreen(QWidget *parent) :
     connect(&updateTimer, SIGNAL(timeout()), this, SLOT(updateTimeLabel()));
     connect(TrickDetector::instance(), SIGNAL(trickEvent(QString)),
             this, SLOT(trickEvent(QString)));
+    reset();
+}
+
+
+void FreestyleScreen::reset() {
+    points = 0;
+    level = 1;
+    m_secs = 0;
+    pointswidget->setText("0");
+    tricksDone.clear();
     updateTimeLabel();
+    updateLevel();
+    updateTrickList();
 }
 
 void FreestyleScreen::mousePressEvent(QMouseEvent *event) {
@@ -95,9 +105,8 @@ void FreestyleScreen::mousePressEvent(QMouseEvent *event) {
 
 void FreestyleScreen::updateTimeLabel()
 {
-    static int s=0;
-    timewidget->setText(QString().sprintf("%.2d:%.2d",s/60, s%60));
-    s++;
+    timewidget->setText(QString().sprintf("%.2d:%.2d",m_secs/60, m_secs%60));
+    m_secs++;
     update();
 }
 
