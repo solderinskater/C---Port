@@ -213,8 +213,8 @@ void RecordWidget::trainTrick() {
     if(i==ch2.size() || ((i-offset)+trickLength)>=ch2.size())
         throw QString("no\npeak");
 
-    qDebug("Peak CH:");
-    qDebug() << ch2.mid(i-offset,trickLength);
+//    qDebug("Peak CH:");
+//    qDebug() << ch2.mid(i-offset,trickLength);
 
 
     /* save trick */
@@ -227,6 +227,6 @@ void RecordWidget::trainTrick() {
             pattern<<trick[i][ch];
     }
 
-    qDebug() << pattern;
+//    qDebug() << pattern;
 }
 
