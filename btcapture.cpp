@@ -87,8 +87,9 @@ void BTCapture::open()
 void BTCapture::okClicked()
 {
     stop();
-    QBtDevice* dev = new QBtDevice(foundDevices[list->currentRow()]);
-    foundServices.clear();
+    //QBtDevice* dev = new QBtDevice(foundDevices[list->currentRow()]);
+//    foundServices.clear();
+    selectedDevice = foundDevices[list->currentRow()];
     connect(serviceDisc, SIGNAL(newServiceFound(const QBtDevice&, QBtService)),
             this, SLOT(addService(const QBtDevice&, QBtService)));
     connect(serviceDisc, SIGNAL(discoveryStopped()),
@@ -96,9 +97,9 @@ void BTCapture::okClicked()
 
     //serviceDisc->startDiscovery(*dev,QBtConstants::RFCOMM);
 #ifdef OLD_BT
-    serviceDisc->startDiscovery(dev);
+    serviceDisc->startDiscovery(&selectedDevice);
 #else
-    serviceDisc->startDiscovery(*dev);
+    serviceDisc->startDiscovery(selectedDevice);
 #endif
 
 
@@ -133,16 +134,25 @@ void BTCapture::setEnableClassification(bool on)
 
 void BTCapture::start()
 {
-    QBtDevice dev = foundDevices[list->currentRow()];
+    //QBtDevice dev = selectedDevice; foundDevices[list->currentRow()];
     qDebug() << "Start!";
-    client->connect(dev,foundServices.last());
+    client->connect(selectedDevice,foundServices.last());
     conn = true;
 }
 
 void BTCapture::stop()
 {
-    client->disconnect();
 
+#ifdef OLD_BT
+    if(client->IsConnected()) {
+        qDebug("DISCONNECTING");
+#else
+    if(client->isConnected()) {
+        qDebug("DISCONNECTING");
+#endif
+        client->disconnect();
+    }
+    list->currentItem()->setIcon(QIcon(":/images/led_off.png"));
     conn=false;
 }
 
@@ -259,6 +269,8 @@ void BTCapture::populateDeviceList(QBtDevice newDevice)
 #else
     list->addItem(newDevice.getName());
 #endif
+    list->item(list->count()-1).last()->setIcon(QIcon(":/images/led_off.png"));
+
     foundDevices.append(newDevice);
 }
 
@@ -281,6 +293,9 @@ void BTCapture::serviceDiscoveryCompleteReport()
     splash->hide();
     splash->clearMessage();
     start();
+
+    QIcon icon(":/images/led_green.png");
+    list->currentItem()->setIcon(icon);
 }
 
 #endif
@@ -290,7 +305,9 @@ void BTCapture::serviceDiscoveryCompleteReport()
 
 void BTCapture::deviceSelected()
 {
+    close();
     selectedDeviceName = list->currentItem()->text();
+    selectedDevice = foundDevices[list->currentRow()];
 }
 
 
@@ -316,10 +333,10 @@ void BTCapture::disconnectedFromServerReport()
 ////    ui.textEdit->append(str);
 //}
 
-//void BTCapture::errorReport(QBtSerialPortClient::ErrorCode code)
-//{
-//    QString str("--Error occurred: ");
-//        str += code;
-//    qDebug() << str;
-////    ui.textEdit->append(str);
-//}
+void BTCapture::errorReport(QBtSerialPortClient::ErrorCode code)
+{
+    QString str("--Error occurred: ");
+        str += code;
+    qDebug() << str;
+//    ui.textEdit->append(str);
+}
