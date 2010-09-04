@@ -49,11 +49,10 @@ protected:
 private:
     DTW dtw;
     RingBuffer buffer;
-    bool m_isInit;
     double bias;
     int curSmp;
-    QMap<QString, QList<int> > knownTricks;
     int trickLength;
+    QList<int> neutral_pattern;
 };
 
 #endif // TRICKDETECTOR_H

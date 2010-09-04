@@ -65,6 +65,5 @@ void TrainPage::saveTrick() {
         tm->addTrick(record->getEnteredTrick());
     }
     train->updateTrickList();
-    TrickDetector::instance()->init();
     showTraining();
 }

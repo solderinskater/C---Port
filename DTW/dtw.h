@@ -34,7 +34,7 @@ class DTW
 public:
     DTW();
 
-    DTWResult classify(QList<int> templ, QList<int> observation);
+    DTWResult classify(const QList<int> &templ, const QList<int> &observation);
 
     inline void init_int_array(int *a, int num_rows, int num_cols, int val)
     {

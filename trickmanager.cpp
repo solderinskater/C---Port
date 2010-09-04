@@ -30,7 +30,7 @@ TrickManager::Trick TrickManager::getTrick(QString name) {
     return tricks[name];
 }
 
-QStringList TrickManager::getTrickNames() {
+const QStringList TrickManager::getTrickNames() {
     return tricks.keys();
 }
 
@@ -39,7 +39,7 @@ int TrickManager::getPoints(QString name) {
     return tricks[name].points;
 }
 
-QList<int> TrickManager::getPattern(QString name) {
+const QList<int> &TrickManager::getPattern(QString name) {
     return tricks[name].pattern;
 }
 
