@@ -32,9 +32,9 @@ BTCapture* BTCapture::instance()
 
 BTCapture::BTCapture(QObject *parent) : conn(false)
 {
+    doClassify = false;
     setObjectName("Bluetooh");
     setupWidget();
-    doClassify = true;
 }
 
 void BTCapture::setupWidget()
@@ -220,8 +220,9 @@ void BTCapture::preprocess(const QString s)
         for(int i=0; i<splitted.size()-1;i++) {
             QString sp = splitted[i];
             sp.chop(2); // remove \n and last , from line
-     //       qDebug() << sp;
-            emit dataCaptured(splitted[i]);
+            qDebug() << sp;
+//            emit dataCaptured(splitted[i]);
+            emit dataCaptured(sp);
         }
         t = splitted.last();
     }

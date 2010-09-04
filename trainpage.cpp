@@ -19,6 +19,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 
 #include "trainpage.h"
 #include "trickmanager.h"
+#include "trickdetector.h"
 
 TrainPage::TrainPage(QWidget *parent) :
     QWidget(parent)
@@ -64,5 +65,6 @@ void TrainPage::saveTrick() {
         tm->addTrick(record->getEnteredTrick());
     }
     train->updateTrickList();
+    TrickDetector::instance()->init();
     showTraining();
 }

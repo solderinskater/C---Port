@@ -38,6 +38,7 @@ TrickDetector::TrickDetector(QObject *parent) :
 void TrickDetector::init()
 {
     if(!m_isInit) {
+        trickLength = 40;
         m_isInit = true;
         curSmp = 0;
 
@@ -82,7 +83,7 @@ void TrickDetector::addSample(QString smp)
     curSmp++;
     buffer.add(d);
 
-    qDebug() << smp;
+    qDebug("ADD SAMPLE DETECTOR");
 
     if(buffer.isFilled())
         classify();
@@ -96,7 +97,7 @@ void TrickDetector::classify()
     t.start();
 
     QList<int> chans;
-    chans << 7<<8;
+    chans << 6<<7;
     QList<int> window;
     foreach(int ch, chans) {
         window.append(buffer.getChannel(ch));
@@ -107,7 +108,7 @@ void TrickDetector::classify()
     QList<int> subwindow = window2.mid(0,15);
 //    qSort(subwindow.begin(),subwindow.end());
     qDebug("CLassify PRE");
-    if(subwindow.last()<450)
+    if(subwindow.last()<430)
         return;
     qDebug("CLassify POST");
 

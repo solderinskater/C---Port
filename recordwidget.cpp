@@ -143,6 +143,7 @@ void RecordWidget::addData(QString smp)
     QStringList s = smp.split(",");
     QList<int> d;
 
+
     if(s.size()<10) {   // workaround for missing numbers. lost during transmission
         for(int i=0;i<10;i++)
             d << 300;
@@ -155,6 +156,7 @@ void RecordWidget::addData(QString smp)
             d << v;
         }
     }
+    qDebug() << d;
     recordedData << d;
 }
 
@@ -176,7 +178,6 @@ void RecordWidget::recordClicked()
         recordedData.clear();
         patternStatusLabel->setText("recording...");
         connect(sim,SIGNAL(dataCaptured(QString)), this, SLOT(addData(QString)));
-        sim->start();
     } else {
 //        sim->stop();
 //        sim->close();
@@ -194,27 +195,38 @@ void RecordWidget::recordClicked()
 
 void RecordWidget::trainTrick() {
     static int trickLength = 40; // 60 samples window
-    static int offset = -15; // start window 25 frames before peak
+    static int offset = 15; // start window 25 frames before peak
     static int peakThr = 430;   // peak detection threshold
 
-    int i=-offset;
-    int last_window_start=recordedData.size()-offset-trickLength;
-    while(i<last_window_start && recordedData[i][1]<peakThr) { i++; }
-    if (i==last_window_start-1)
-        throw QString("no\npeak");
-    if (i < trickLength*2)
+    if(recordedData.size() < trickLength*2)
         throw QString("too\nshort");
 
-    QList<QList<int> > trick = recordedData.mid(i+offset,trickLength);
+    QList<int> ch2;
+    for(int i=0; i<recordedData.size(); i++)
+        ch2 << recordedData[i][1];
 
-    /* dirty boy*/
+    int i=0;
+    for(i=15;i<ch2.size();i++) {
+        if(ch2[i]>=peakThr)
+                break;
+    }
+    if(i==ch2.size() || ((i-offset)+trickLength)>=ch2.size())
+        throw QString("no\npeak");
 
+    qDebug("Peak CH:");
+    qDebug() << ch2.mid(i-offset,trickLength);
+
+
+    /* save trick */
+    QList<QList<int> > trick = recordedData.mid(i-offset,trickLength);
     pattern.clear();
     QList<int> chans;
-    chans <<7<<8;
+    chans <<6<<7;
     foreach(int ch, chans) {
         for(i=0;i<trickLength;i++)
             pattern<<trick[i][ch];
     }
+
+    qDebug() << pattern;
 }
 
