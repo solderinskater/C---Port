@@ -48,11 +48,11 @@ public:
     /// Returns the Trick object with the passed name.
     Trick getTrick(QString name);
     /// Returns list of all known trick names.
-    QStringList getTrickNames();
+    const QStringList getTrickNames();
     /// Returns the points of the specified trick. Returns 0 if trick not known.
     int getPoints(QString name);
     /// Returns the pattern data of the specified trick.
-    QList<int> getPattern(QString name);
+    const QList<int> &getPattern(QString name);
 protected:
     TrickManager();
 

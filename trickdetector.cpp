@@ -19,6 +19,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 
 #include "trickdetector.h"
 #include <QtDebug>
+#include "trickmanager.h"
 
 TrickDetector* TrickDetector::instance()
 {
@@ -29,47 +30,16 @@ TrickDetector* TrickDetector::instance()
 }
 
 TrickDetector::TrickDetector(QObject *parent) :
-        QObject(parent), buffer(10),  m_isInit(false)
+        QObject(parent), buffer(40),  bias(0), curSmp(0), trickLength(40)
 {
-    bias = 0.0;
-    init();
+    /* this is the no-trick template */
+    QVector<int> tmp(trickLength);
+    tmp.fill(380);
+    neutral_pattern = tmp.toList();
 }
 
-void TrickDetector::init()
-{
-    if(!m_isInit) {
-        trickLength = 40;
-        m_isInit = true;
-        curSmp = 0;
 
-        QSettings s("SolderinSkaters", "TiltNRoll");
-        s.beginGroup("tricks");
-        QStringList trickNames = s.childGroups();
-
-        foreach(QString name, trickNames) {
-            qDebug() << name;
-            s.beginGroup(name);
-            qDebug() << s.childKeys();
-            knownTricks[name] = QList<int>();
-            QVariantList vl = s.value("pattern").toList();
-            foreach(QVariant v, vl)
-                knownTricks[name] << v.toInt();
-            trickLength = vl.size();
-            s.endGroup();
-        }
-
-        buffer.resize(trickLength);
-    }
-}
-
-void TrickDetector::addSample(QString smp)
-{
-    if(!m_isInit)
-    {
-        qDebug("[TrickDetector] Call init() first!");
-        return;
-    }
-
+void TrickDetector::addSample(QString smp) {
     QStringList s = smp.split(",");
     QList<int> d;
     if(s.size()<10) {   // workaround for missing numbers. lost during transmission
@@ -113,18 +83,16 @@ void TrickDetector::classify()
     qDebug("CLassify POST");
 
 
-    /* this is the no-trick template */
-    QVector<int> tmplNeutral(trickLength);
-    tmplNeutral.fill(380);
-    DTWResult res = dtw.classify(tmplNeutral.toList(), window);
+    DTWResult res = dtw.classify(neutral_pattern, window);
     int bestScore = (int)res.distance;
     QString bestMatch("");
     QList<int> scores;
     scores << bestScore;
 
     /* classify all trained tricks */
-    foreach(QString name, knownTricks.keys()) {
-        res = dtw.classify(knownTricks[name], window);
+    TrickManager *tm = TrickManager::instance();
+    foreach(QString name, tm->getTrickNames()) {
+        res = dtw.classify(tm->getPattern(name), window);
         scores << (int)res.distance;
         if(res.distance<bestScore) {
             bestMatch = name;

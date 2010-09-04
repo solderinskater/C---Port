@@ -86,14 +86,11 @@ FreestyleScreen::FreestyleScreen(QWidget *parent) :
     updateTimeLabel();
 }
 
-void FreestyleScreen::mousePressEvent(QMouseEvent *event)
-{
+void FreestyleScreen::mousePressEvent(QMouseEvent *event) {
     Q_UNUSED(event);
 
-    if(isPaused())
-        start();
-    else
-        pause();
+    if(isPaused()) start();
+    else pause();
 }
 
 void FreestyleScreen::updateTimeLabel()
@@ -120,10 +117,10 @@ void FreestyleScreen::updateLevel()
 
 void FreestyleScreen::updateTrickList() {
     for(int i=0; i<tricklabelcount;i++) {
-        if(tricksDone.size() > i)
-            tricklabels[i]->setText(tricksDone[i]);
-        else
+        if(tricksDone.size() <= i)
             tricklabels[i]->setText(" ");
+        else
+            tricklabels[i]->setText(tricksDone[i]);
     }
 }
 
@@ -135,7 +132,7 @@ void FreestyleScreen::trickEvent(QString trickid)
     qDebug() << "got trick " << trickid;
     points += TrickManager::instance()->getPoints(trickid);
     pointswidget->setText(QString::number(points));
-    tricksDone << trickid;
+    tricksDone.prepend(trickid);
     updateTrickList();
     SoundPlayer::playTrick(trickid);
     updateLevel();

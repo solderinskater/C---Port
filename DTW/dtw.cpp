@@ -24,7 +24,7 @@ DTW::DTW()
 {
 }
 
-DTWResult DTW::classify(QList<int> templ, QList<int> observation)
+DTWResult DTW::classify(const QList<int> &templ, const QList<int> &observation)
 {
     DTWResult res;
     qint16 N = templ.size();
