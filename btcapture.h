@@ -59,6 +59,7 @@ protected slots:
     void populateDeviceList(QBtDevice newDevice);
     void deviceDiscoveryCompleteReport();
     void serviceDiscoveryCompleteReport();
+    void errorReport(QBtSerialPortClient::ErrorCode code);
     void addService(const QBtDevice& targetDevice, QBtService service);
     void okClicked();
     void preprocess(const QString);
@@ -99,6 +100,7 @@ private:
     ShinyButton* refreshButton;
     QGridLayout*  mLayout;
     QString selectedDeviceName;
+    QBtDevice selectedDevice;
 
     bool conn;
     bool doClassify;

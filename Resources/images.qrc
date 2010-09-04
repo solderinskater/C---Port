@@ -27,10 +27,17 @@
         <file>backgrounds/settings_new.png</file>
         <file>backgrounds/singleplayer_new.png</file>
         <file>backgrounds/start_new.png</file>
-	<file>images/trace.png</file>
-	<file>images/bluetooth.png</file>
-	<file>images/bluetooth-active.png</file>
-	<file>images/input-gaming.png</file>
-	<file>images/connect.png</file> 
+        <file>images/trace.png</file>
+        <file>images/bluetooth.png</file>
+        <file>images/bluetooth-active.png</file>
+        <file>images/input-gaming.png</file>
+        <file>images/connect.png</file>
+        <file>images/led_yellow.png</file>
+        <file>images/led_blue.png</file>
+        <file>images/led_green.png</file>
+        <file>images/led_off.png</file>
+        <file>images/led_rect_green.png</file>
+        <file>images/led_rect_off.png</file>
+        <file>images/led_red.png</file>
     </qresource>
 </RCC>
