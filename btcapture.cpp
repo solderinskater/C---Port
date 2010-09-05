@@ -129,6 +129,7 @@ void BTCapture::setEnableClassification(bool on)
         TrickDetector* detector = TrickDetector::instance();
         if(doClassify)
             disconnect(detector);
+        doClassify = false;
     }
 }
 
