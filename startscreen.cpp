@@ -40,11 +40,16 @@ StartScreen::StartScreen(QWidget *parent) :
         connect(buttonQuit,     SIGNAL(clicked()), this, SIGNAL(quitPressed()));
         connect(buttonSimul,     SIGNAL(clicked()), this, SIGNAL(simulPressed()));
 
-        layout->setSpacing(10);
-        layout->addSpacing(105);
+        layout->setSpacing(0);
+        layout->addSpacing(115);
         layout->addWidget(buttonPlay);
+        layout->addSpacing(10);
         layout->addWidget(buttonTraining);
+        layout->addSpacing(10);
 //        layout->addWidget(buttonSimul);
         layout->addWidget(buttonQuit);
-        layout->addStretch();
+        layout->addSpacing(-10);
+
+        SkateLabel *version = new SkateLabel("v 0.8.1","font-family: sans; font-size:14px; color: white;");
+        layout->addWidget(version);
 }

@@ -2,3 +2,13 @@ C++ port of the Push2010 code of the Soldering Skaters
 ==========================================================
 
 Copyright 2010 Alexander Lenhardt, Erik Weitnauer
+
+
+Version history:
+----------------
+
+0.8.1 (2010/12/01)
+  * added tab to show statistics about received data
+
+0.8.0 (2010/09/06)
+  * first official release for Hyper
