@@ -82,6 +82,12 @@ QListView::item {
   border: black 1px solid;
 }
 
+QListView#tightList::item {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border: none;
+}
+
 QListView::item:selected {
   color: #86bc10;
   /*show-decoration-selected: 0;*/

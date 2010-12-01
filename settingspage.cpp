@@ -19,17 +19,21 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 
 #include "settingspage.h"
 #include "btcapture.h"
+#include "datapage.h"
 
 SettingsPage::SettingsPage()
 {
     trainWidget = new TrainPage();
+    dataWidget = new DataPage();
     captureWidget = BTCapture::instance()->widget();
 
     addTab(captureWidget,QIcon(":/images/bluetooth-active.png"),"Bluetooth");
+    addTab(dataWidget,"Data");
     addTab(trainWidget,QIcon(":/images/trace.png"),"Tricks");
 
     connect(BTCapture::instance(), SIGNAL(backPressed()), this, SIGNAL(backPressed()));
     connect(trainWidget, SIGNAL(backPressed()), this, SIGNAL(backPressed()));
+    connect(dataWidget, SIGNAL(backPressed()), this, SIGNAL(backPressed()));
     connect(this, SIGNAL(backPressed()), this, SLOT(saveChanges()));
 }
 

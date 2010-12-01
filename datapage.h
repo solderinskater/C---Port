@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright 2010 Keywan Tonekaboni, Florian Fusco, Stefanie Schirmer, Alexander Lenhardt, Erik Weitnauer <eweitnauer at gmail.com>
 
 This file is part of Soldering Skaters Nokia Push Project.
@@ -17,30 +17,48 @@ You should have received a copy of the GNU General Public License
 along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SETTINGSPAGE_H
-#define SETTINGSPAGE_H
+#ifndef DATAPAGE_H
+#define DATAPAGE_H
 
+#include <QWidget>
 #include <QtGui>
-#include "trainpage.h"
-#include "datapage.h"
+#include "buttons.h"
 
-class SettingsPage : public QTabWidget
+/** Shows some stats about the data received from the skateboard. User has to
+  press the record button to record some data and press it again to stop recording
+  and show the stats.
+*/
+class DataPage : public QWidget
 {
     Q_OBJECT
 public:
-    SettingsPage();
+    explicit DataPage(QWidget *parent = 0);
 
 signals:
+    /// back button pressed
     void backPressed();
 
 public slots:
-    /// writes the changes made to the list of known tricks to the device
-    void saveChanges();
+
+private slots:
+    void dataReceived(QString);
+    /// record button pressed, press again to stop recording
+    void recordPressed();
+
+protected:
+    void analyze();
+    QList<int> parseData(QString data);
 
 private:
-    TrainPage*  trainWidget;
-    DataPage*   dataWidget;
-    QWidget*    captureWidget;
+    QListWidget* listWidget;
+    QHBoxLayout *layout;
+    QVBoxLayout *vbox;
+    ShinyButton *buttonRecord;
+    ShinyButton* buttonBack;
+
+    QStringList data;
+    bool recording;
+    QTime time;
 };
 
-#endif // SETTINGSPAGE_H
+#endif // DATAPAGE_H

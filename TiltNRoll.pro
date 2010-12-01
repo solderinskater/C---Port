@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     recordwidget.cpp \
     btcapture.cpp \
     dialog.cpp \
-    settingspage.cpp
+    settingspage.cpp \
+    datapage.cpp
 
 HEADERS  += \
     startscreen.h \
@@ -62,7 +63,8 @@ HEADERS  += \
     recordwidget.h \
     btcapture.h \
     dialog.h \
-    settingspage.h
+    settingspage.h \
+    datapage.h
 
 #CONFIG += mobility
 #MOBILITY = systeminfo

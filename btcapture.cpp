@@ -19,7 +19,7 @@ along with Soldering Skaters Nokia Push Project. If not, see <http://www.gnu.org
 
 #include "btcapture.h"
 #include "trickdetector.h"
-#define OLD_BT
+//#define OLD_BT
 
 BTCapture* BTCapture::instance()
 {
